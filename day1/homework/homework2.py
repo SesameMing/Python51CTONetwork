@@ -14,7 +14,7 @@ three_menu={} #三级菜单
 menu_list = {'中国':{'北京':{'北京-直辖市'},'上海':['上海直辖市'],'湖北':['武汉','宜昌'],'广东':{'广州','深圳','东莞'}},'其他国家':{'其他国家省份/州':"其他国家城市/地区"}}
 cengji = 0
 
-menu = len(menu_list.keys())
+menu = menu_list.keys()
 while True:
     for i in (range(menu)):
         print(i)
