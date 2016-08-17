@@ -9,19 +9,31 @@
 # 输错三次后锁定
 #-----------------
 
-user = 'SemaseMing'
-passwd = '111111'
 
+userdict = {}
 
 print("Welcome System OS")
-username = input("username:")
-password = input("password:")
-i = 0
+# username = input("username:")
+# password = input("password:")
+
 
 user_data = open('user.txt')
-print(user_data)
+for i in user_data:
+    userlist = i.strip()
+    userdata = userlist.split(',')
+    user_name = userdata[0].strip()
+    user_passwd = userdata[1].strip()
+    user_lock = userdata[2].strip()
+    userdict[user_name] = {'username':user_name,'password':user_passwd,'lock':user_lock}
+
+print(userdict)
 user_data.close()
-if username == user and password == passwd:
-    print("Success!")
-else:
-    print("帐号密码错误")
+
+
+
+
+
+# if username == user and password == passwd:
+#     print("Success!")
+# else:
+#     print("帐号密码错误")
