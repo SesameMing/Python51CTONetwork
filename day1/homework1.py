@@ -16,4 +16,12 @@ passwd = '111111'
 print("Welcome System OS")
 username = input("username:")
 password = input("password:")
+i = 0
 
+user_data = open('user.txt')
+print(user_data)
+user_data.close()
+if username == user and password == passwd:
+    print("Success!")
+else:
+    print("帐号密码错误")
