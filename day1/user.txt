@@ -1,3 +1,3 @@
-username,password,0
-semaseming,111111,0
-root,111,0
+username,password,0,0
+root,111,0,3
+semaseming,111111,0,0

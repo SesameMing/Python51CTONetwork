@@ -11,29 +11,29 @@
 
 
 userdict = {}
-
 print("Welcome System OS")
-# username = input("username:")
-# password = input("password:")
+username = input("username:")
+password = input("password:")
 
 
 user_data = open('user.txt')
-for i in user_data:
-    userlist = i.strip()
+for data in user_data:
+    userlist = data.strip()
     userdata = userlist.split(',')
     user_name = userdata[0].strip()
     user_passwd = userdata[1].strip()
     user_lock = userdata[2].strip()
     userdict[user_name] = {'username':user_name,'password':user_passwd,'lock':user_lock}
-
-print(userdict)
 user_data.close()
 
 
+if userdict[username] :
+    if username == userdict[username]['username'] and password == userdict[username]['password']:
+        print("Success!")
+    else:
+        print("帐号密码错误")
+else:
+    print('帐号或密码错误')
 
 
 
-# if username == user and password == passwd:
-#     print("Success!")
-# else:
-#     print("帐号密码错误")
