@@ -28,3 +28,9 @@ print(dict)
 #循环字典的一种方法
 for key in dict:
     print(key,'.', dict[key])
+#加颜色
+'''
+\033[31;1m%s\033[0m
+
+'''
+print("我只是来看看\033[35;1m颜色\033[0m的")
