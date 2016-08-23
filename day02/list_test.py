@@ -38,3 +38,8 @@ print(namelist)
 #namelist.sort() #3.x不支持整型 和 字符串的 混排 2.x支持
 #print(namelist)
 print(namelist.pop()) #list.pop(index)删除指定的索引的值 并返回这个索引对应的值 默认最后一个元素
+
+print(len(namelist)) #查看列表的长度
+
+r = (1,2,5,4,52,2,3,1,2,3,)
+print(r.index(2))
