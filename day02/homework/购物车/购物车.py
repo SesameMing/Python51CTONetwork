@@ -111,7 +111,7 @@ while flag_user_login:
             flag_user_login = False
             continue
         if username == userdict[username]['username'] and password == userdict[username]['password']:
-            print("Success! 登录成功，欢迎%s 您的余额为%d" % (username,userdict[username]['balance']))
+            print("Success! 登录成功，欢迎%s 您的余额为%d" % (username, userdict[username]['balance']))
             flag_one = True
         else:
             userdict[username]['errornum'] += 1
@@ -129,11 +129,26 @@ while flag_user_login:
                 wirte_data.write(wuserdatestr)
             wirte_data.close()
         while flag_one:
+            flag_two = True # 二层循环标志
             for key in product_dict:
                 print(key, '.', product_dict[key]['name'])
-            num1 = input(tip_str + "请输入您需要的物品序号：")
+            num1 = input(tip_str + "请输入您需要的物品分类id：")
             if num1.isdigit():
-                pass
+                num_int_1 = int(num1)
+                if num_int_1 <= len(product_dict):
+                    while flag_two:
+                        # 产品列表循环 开始
+                        print(product_dict[num_int_1]['name'].center(40,'-'))
+                        for k in product_dict[num_int_1]['product']:
+                            print(str(k).center(10, ' '), product_dict[num_int_1]['product'][k]['name'].center(10, ' '),
+                                  str(product_dict[num_int_1]['product'][k]['price']).center(10, ' '),
+                                  str(product_dict[num_int_1]['product'][k]['amout']).center(10, ' '))
+                        print('列表结束'.center(40, '-'))
+                        # 产品列表徐欢 结束
+                        input(tip_str + "请输入您需要的物品分类id：")
+
+                else:
+                    print("超出选择范围")
             else:
                 if num1 == EXIT_CHAR:
                     print("退出程序")
