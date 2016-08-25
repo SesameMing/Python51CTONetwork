@@ -26,6 +26,7 @@ def shopcar():
     print("购物车".center(40, '-'))
     print(flag_user_login)
     print("结束".center(40, '-'))
+
 # 充值方法
 def recharge():
     print(username)
