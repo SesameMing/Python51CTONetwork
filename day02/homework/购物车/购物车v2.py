@@ -13,14 +13,14 @@ flag_one = False        # 循环标志
 EXIT_CHAR = 'q'         # 退出字符
 CAR_CHAR = 'c'          # 进入购物车字段
 RECHARGE_CHAR = 'p'     # 进入充值
-USERFILE = 'user.txt'   # 配置文件名称
+USERFILE = 'user.txt'   # 用户配置文件名称
+PRODUCTFILE = 'product.txt'  # 产品配置文件名称
 REEOR_NUM = 3           # 允许错误次数
 userdict = {}           # 初始化用户数据字典
 # login_username = ''     # 存储登录用户名称
 
 tip_str = "[%s = 退出， %s = 购物车 %s = 充值] " % (EXIT_CHAR, CAR_CHAR, RECHARGE_CHAR)
-product_dict={}
-product_dict = json.load(open('product.txt','r'))
+
 # 购物车方法
 def shopcar():
     print("购物车".center(40, '-'))
@@ -29,7 +29,7 @@ def shopcar():
 # 充值方法
 def recharge():
     print(username)
-    print("充值系统".center(40,'-'))
+    print("充值系统".center(40, '-'))
 
 # 修改保存用户数据文件
 def w_userfiel():
@@ -45,14 +45,15 @@ def w_userfiel():
 # 判断配置文件是否存在（用户登录文件）
 print("正在加载配置文件")
 time.sleep(1)
-if os.path.exists(USERFILE):
+if os.path.exists(USERFILE) and os.path.exists(PRODUCTFILE):
+    product_dict = json.load(open(PRODUCTFILE, 'r'))
     print("配置文件加载成功...")
     time.sleep(1)
 else:
     exit("配置文件丢失，请检查程序完整性...")
 
 while flag_user_login:
-    print("欢迎来到【Python】商店".center(40,'-'))
+    print("欢迎来到【Python】商店".center(40, '-'))
     username = input("帐号：")
     password = input("密码：")
     user_data = open(USERFILE)
@@ -88,7 +89,7 @@ while flag_user_login:
                 print('帐号密码错误')
             w_userfiel()
         while flag_one:
-            flag_two = True # 二层循环标志
+            flag_two = True  # 二层循环标志
             for val in sorted(product_dict):
                 print(val, '.', product_dict[val]['name'])
             num1 = input(tip_str + "请输入您需要的物品分类id：")
@@ -96,10 +97,10 @@ while flag_user_login:
                 if int(num1) <= len(product_dict):
                     while flag_two:
                         # 产品列表循环 开始
-                        print(product_dict[num1]['name'].center(40,'-'))
+                        print(product_dict[num1]['name'].center(40, '-'))
                         print('id', '产品名称'.ljust(15, ' '), '单价'.ljust(10, ' '), '库存'.ljust(10, ' '))
                         for v in sorted(product_dict[num1]['product']):
-                            print(str(v), '.',product_dict[num1]['product'][v]['name'].ljust(15, ' '),
+                            print(str(v), '.', product_dict[num1]['product'][v]['name'].ljust(15, ' '),
                                   str(product_dict[num1]['product'][v]['price']).ljust(10, ' '),
                                   str(product_dict[num1]['product'][v]['amout']).ljust(10, ' '))
                         print('列表结束'.center(40, '-'))
@@ -109,17 +110,17 @@ while flag_user_login:
                             if int(num2) < len(product_dict[num1]['product']):
                                 product_num = input("请输入您要购买的%s的数量：" %
                                                     product_dict[num1]['product'][num2]['name'])
-                                userdict[username]['balance'] -= product_dict[num1]['product'][num2]['price'] * \
-                                                                 int(product_num)
+                                userdict[username]['balance'] -= product_dict[num1]['product'][num2]['price'] * int(product_num)
 
-                                # 1.需要将购买记录写入到文件
+                                # 1.需要将购买记录写入到文件  START
 
+                                # 1.需要将购买记录写入到文件  END
 
-                                # 2.需要将用户余额写入到文件 START
+                                # 2.需要将用户余额写入到文件  START
                                 w_userfiel()
                                 # 2.需要将用户余额写入到文件 END
-                                print('购买成功',product_dict[num1]['product'][num2]['name'],
-                                      '数量：',product_num,'您的余额为',userdict[username]['balance'])
+                                print('购买成功', product_dict[num1]['product'][num2]['name'],
+                                      '数量：', product_num, '您的余额为', userdict[username]['balance'])
 
                             else:
                                 print("超出选择范围，请重新选择")
