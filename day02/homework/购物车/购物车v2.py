@@ -15,6 +15,7 @@ QUIT_CHAR = 'q'         # 退出登录字符
 CAR_CHAR = 'c'          # 进入购物车字段
 RECHARGE_CHAR = 'p'     # 进入充值
 LAST_CHAR = 'b'         # 返回上一级
+HISTORY_CHAR = 'h'      # 历史购买记录
 USERFILE = 'user.txt'   # 用户配置文件名称
 PRODUCTFILE = 'product.txt'  # 产品配置文件名称
 PAYFILE = 'pay.txt'     # 购买记录配置文件
@@ -22,7 +23,7 @@ REEOR_NUM = 3           # 允许错误次数
 userdict = {}           # 初始化用户数据字典
 ons_pay_history= []     # 本次购记录
 
-tip_str = "[%s：购物车 %s：充值 %s:返回上一级 %s：退出登录 %s：退出系统] " % (CAR_CHAR, RECHARGE_CHAR, LAST_CHAR, QUIT_CHAR, EXIT_CHAR)
+tip_str = "[%s：购物车 %s：充值 %s：历史 %s：返回上一级 %s：退出登录 %s：退出系统] " % (CAR_CHAR, RECHARGE_CHAR, HISTORY_CHAR, LAST_CHAR, QUIT_CHAR, EXIT_CHAR)
 
 # 修改保存用户数据文件
 def w_userfiel():
@@ -64,20 +65,25 @@ def get_pay_history():
                   str(pay_product_sumprice).ljust(10, ' '), pay_time)
 
     print("结束".center(40, '-'))
+    input("请输入任意字符继续：")
+
 # 本次登录的购物车
 def one_pay_list():
     print("购物车".center(40, '-'))
     print('产品名称'.ljust(7, ' '), '单价'.center(5, ' '), '数量'.center(5, ' '), '总价'.center(5, ' '), '购买时间'.center(15, ' '))
-    for k in ons_pay_history:
-        print(k[2].ljust(13, ' '), str(k[2]).ljust(10, ' '), str(k[3]).ljust(5, ' '),
-          str(k[4]).ljust(10, ' '), k[5])
-
+    if ons_pay_history:
+        for k in ons_pay_history:
+            print(k[1].ljust(13, ' '), str(k[2]).ljust(10, ' '), str(k[3]).ljust(5, ' '),
+              str(k[4]).ljust(10, ' '), k[5])
+    else:
+        print('购物车为空')
+    print("购物车END".center(40, '-'))
+    input("请输入任意字符继续：")
 
 # 充值方法
 def recharge():
     print("充值系统".center(40, '-'))
-    print(tip_str.center(40, ' '))
-    money = input(tip_str + "请输入充值金额：")
+    money = input("请输入充值金额：")
     if money.isdigit():
         if int(money) > 0:
             userdict[username]['balance'] += int(money)
@@ -221,6 +227,9 @@ while flag_user_login:
                                 print("退出系统")
                                 exit(0)
                             elif num2 == CAR_CHAR:
+                                one_pay_list()
+                                continue
+                            elif num2 == HISTORY_CHAR:
                                 get_pay_history()
                                 continue
                             elif num2 == RECHARGE_CHAR:
@@ -245,6 +254,9 @@ while flag_user_login:
                     print("退出系统")
                     exit(0)
                 elif num1 == CAR_CHAR:
+                    one_pay_list()
+                    continue
+                elif num1 == HISTORY_CHAR:
                     get_pay_history()
                     continue
                 elif num1 == RECHARGE_CHAR:
