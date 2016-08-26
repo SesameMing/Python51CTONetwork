@@ -1,3 +1,6 @@
+```
+第二周博客地址：http://blog.v-api.cn/code/python/967.html
+```
 #购物车小程序
 ## 需求
 1. 商品信息- 数量、单价、名称
@@ -10,4 +13,9 @@
 8. 用户下次登陆时可查看购物历史
 9. 商品列表分级显示
 
-第二周博客地址：http://blog.v-api.cn/code/python/967.html
+##程序说明
+* pay.txt 购买物品的历史记录<br/>
+用户名,产品名称,单价,数量,总价,购买时间
+* product.txt 商品产品文件 json格式
+* user.txt 用户登录文件
+
