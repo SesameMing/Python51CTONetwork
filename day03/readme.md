@@ -120,3 +120,25 @@ s = "i am {name}, age {age}".format(**dic)
     oct()  # 十进制转八进制
     hex()  # 十进制转十六进制
     bool()  # 布尔值
+    bytes()  # 字符串转换字节类型
+    bytearray()  #
+    str()  # 转换成字符串
+    open()  # 打开文件。具体可看文件操作
+
+
+
+
+
+###补充
+utf-8编码，一个汉字是三个字节
+gbk编码，一个汉字是两个字节
+字符串转换字节类型
+bytes(只要转换的字符串， 按照什么编码 )
+    s = "中国"
+    n = bytes(s, encoding="utf-8")
+    print(n)
+    
+字节转换成字符串
+str(bytes(s, encoding="utf-8"), enconding="utf-8")
+
+## 文件操作
