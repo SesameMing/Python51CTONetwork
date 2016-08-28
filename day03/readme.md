@@ -100,4 +100,23 @@ s = "i am {name}, age {age}".format(**dic)
     global 变量，能将局部的私有变量定义/表示为全局变量，在作用域里给全局变量*重新赋值*，需要使用global
     
     默认规则，定义全局变量全部大写
-   
+    
+    
+## 三元运算
+    name = "alxe" if 1 == 1 else "sb"
+    如果 1 == 1成立 那么 name = "alxe"
+    否则 name = 'sb'
+    
+## lambda表达式
+    f2 = lambda a1, a2=9: a1 + a2 + 100
+
+## 内置函数
+    # 0, None, "", [], {}, () 是False
+    abs()  # 绝对值 s = abs(-1)
+    all()  # 所有为真，才为真
+    any()  # 任何一个一个为真，就为真
+    ascii()  # 自动执行对象的 __repr__方法
+    bin()  # 十进制转二进制
+    oct()  # 十进制转八进制
+    hex()  # 十进制转十六进制
+    bool()  # 布尔值
