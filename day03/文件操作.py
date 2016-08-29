@@ -29,7 +29,10 @@ f.close()
 
 
 
-#
-# with open('db') as f:
-#     pass
 
+with open('db') as f:
+    pass
+with open('db1', 'r') as f1, open('db2','r') as f2:
+    for line in f1:
+        new_str = line.replace("alex",'st')
+        f2.write(new_str)
