@@ -19,7 +19,6 @@ else:
 
 def getinfo():
     """ 获取HAproxy配置信息 """
-    flag = True
     domainList =[]
     print(" 获取backend 和sever信息 ")
     f = open(CFG_FILE, 'r+', encoding='utf-8')
@@ -37,8 +36,7 @@ def getinfo():
             domain_1 = 'backend %s' % domainList[domain_int_num]
             with open(CFG_FILE, 'r+', encoding='utf-8') as f:
                 for link in f:
-                    if domain_1 in link.strip():
-                        print(f.readline().strip())
+                    print(link)
 
 
 def addinfo():
