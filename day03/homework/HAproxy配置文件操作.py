@@ -16,17 +16,19 @@ else:
     print("配置文件丢失。退出")
     exit(1)
 
+def getdominlist():
+    """ 获取配置信息中的域名列表 """
+    domainList = []
+    f = open(CFG_FILE, 'r+', encoding='utf-8')
+    for i in f:
+        if i.strip().startswith("backend"):
+            domainList.append(i.strip().split(" ")[1])
+    f.close()
+    return domainList
 
 def getinfo():
     """ 获取HAproxy配置信息 """
-    domainList =[]
-    print(" 获取backend 和sever信息 ")
-    f = open(CFG_FILE, 'r+', encoding='utf-8')
-    for i in f:
-        if 'use_backend' not in i.strip():
-            if 'backend' in i.strip():
-                domainList.append(i.strip().split(" ")[1])
-    f.close()
+    domainList = getdominlist()
     for i in domainList:
         print(domainList.index(i), i)
     domain_num = input("请输入您要查看的那个域名序号：")
@@ -35,13 +37,28 @@ def getinfo():
         if domain_int_num < len(domainList):
             domain_1 = 'backend %s' % domainList[domain_int_num]
             with open(CFG_FILE, 'r+', encoding='utf-8') as f:
-                for link in f:
-                    print(link)
+                flag = False
+                for i in f:
+                    if i.strip().startswith("backend") and i.strip() == domain_1:
+                        flag = True
+                        continue
+                    if flag and i.strip().startswith("backend"):
+                        flag = False
+                        break
+                    if flag and i.strip():
+                        print(i.strip())
+        else:
+            print("输入的序号不正确")
+    else:
+        pass
 
 
 def addinfo():
     """ 添加HAproxy配置信息 """
     print(" 添加backend 和sever信息 ")
+    domainList = getdominlist()
+    inputBackend = input("请输入的您要添加的Backend：")
+    inputserver = input("请输入server信息：")
 
 
 def updateinfo():
@@ -88,7 +105,7 @@ while flag:
             getinfo()
         elif num_int == 2:
             """ 添加backend 和sever信息 """
-            getinfo()
+            addinfo()
 
         elif num_int == 3:
             """ 修改backend 和sever信息 """
