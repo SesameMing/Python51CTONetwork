@@ -5,7 +5,9 @@
 # Time:2016-08-29 23:23
 
 import os
+import shutil
 CFG_FILE = "HAproxy.cfg"  # 配置文件名称
+CFG_FILE_BAK = "HAproxy.cfg.bak"
 QUIT_CHAR = 'q'  # 退出字符
 flag = True  # 循环标记
 
@@ -16,6 +18,7 @@ else:
     print("配置文件丢失。退出")
     exit(1)
 
+
 def getdominlist():
     """ 获取配置信息中的域名列表 """
     domainList = []
@@ -25,6 +28,7 @@ def getdominlist():
             domainList.append(i.strip().split(" ")[1])
     f.close()
     return domainList
+
 
 def getinfo():
     """ 获取HAproxy配置信息 """
@@ -55,10 +59,21 @@ def getinfo():
 
 def addinfo():
     """ 添加HAproxy配置信息 """
-    print(" 添加backend 和sever信息 ")
+    print("添加backend 和sever信息")
     domainList = getdominlist()
     inputBackend = input("请输入的您要添加的Backend：")
     inputserver = input("请输入server信息：")
+    if inputBackend not in domainList:
+        """ backend 不在原配置文件中 """
+        with open(CFG_FILE, 'r') as old , open(CFG_FILE_BAK, 'w') as new:
+            for line in old:
+                new.write(line)
+            new.write("\nbackend " + inputBackend + "\n")
+            new.write(" " * 8 + inputserver + "\n")
+    else:
+        pass
+
+
 
 
 def updateinfo():
