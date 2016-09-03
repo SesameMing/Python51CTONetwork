@@ -29,3 +29,5 @@ backend buy.oldboy.org
         server 100.1.7.90 100.1.7.90 weight 20 maxconn 3000
         server 100.1.7.90 100.1.7.90 weight 20 maxconn 3001
         server 100.1.7.90 100.1.7.90 weight 20 maxconn 3002
+backend blog.v-api.com
+        server 192.168.1.1 192.168.1.1 weight 30 maxconn 30021
