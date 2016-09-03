@@ -19,6 +19,9 @@ else:
     print("配置文件丢失。退出")
     exit(1)
 
+def filecopy():
+    shutil.copy(CFG_FILE, CFG_FILE_BAK)
+    shutil.copy(CFG_FILE_TEMP, CFG_FILE)
 
 def getdominlist():
     """ 获取配置信息中的域名列表 """
@@ -71,19 +74,23 @@ def addinfo():
     print("添加backend 和sever信息")
     domainList = getdominlist()
     inputBackend = input("请输入的您要添加的Backend：")
-    inputserver = input("请输入server信息：")
+    serverip = input("输入新的serverip值：")
+    weight = input("输入新的weight值：")
+    maxconn = input("输入新的maxconn值：")
+    inputserver = """        server %s %s weight %s maxconn %s
+                        """ % (serverip, serverip, weight, maxconn)
     if inputBackend not in domainList:
         """ backend 不在原配置文件中 """
         with open(CFG_FILE, 'r') as old, open(CFG_FILE_TEMP, 'w', encoding='utf-8') as new:
             for line in old:
                 new.write(line)
             new.write("\nbackend " + inputBackend + "\n")
-            new.write(" " * 8 + inputserver + "\n")
-        shutil.copy(CFG_FILE, CFG_FILE_BAK)
-        shutil.copy(CFG_FILE_TEMP, CFG_FILE)
+            new.write(inputserver)
+        filecopy()
+        print("添加数据成功")
     else:
         server = getserver(inputBackend)
-        if inputserver in server:
+        if inputserver.strip() in server:
             print("您要添加的数据已经存在")
         else:
             server.append(inputserver)
@@ -103,8 +110,8 @@ def addinfo():
                         continue
                     elif line.strip() and not flag:
                         new.write(line)
-            shutil.copy(CFG_FILE, CFG_FILE_BAK)
-            shutil.copy(CFG_FILE_TEMP, CFG_FILE)
+            filecopy()
+            print("添加数据成功")
 
 
 def updateinfo():
@@ -146,8 +153,7 @@ def updateinfo():
                                 continue
                             elif line.strip() and not flag:
                                 new.write(line)
-                    shutil.copy(CFG_FILE, CFG_FILE_BAK)
-                    shutil.copy(CFG_FILE_TEMP, CFG_FILE)
+                    filecopy()
                     print("修改成功")
                 else:
                     print("输入错误的序号")
@@ -159,7 +165,42 @@ def updateinfo():
 
 def delinfo():
     """ 删除HAproxy配置信息 """
-    print(" 删除backend 和sever信息 ")
+    print("删除backend和sever信息")
+    domainList = getdominlist()
+    for i in domainList:
+        print(domainList.index(i), i)
+    domain_num = input("请输入您要删除的域名序号：")
+    if domain_num.isdigit():
+        domain_int_num = int(domain_num)
+        if domain_int_num < len(domainList):
+            str_sip = """ 删除选项
+             1.整个backend
+             2.某条server信息"""
+            print(str_sip)
+            choose = input("您的选择：")
+            if choose == '1':
+                print("删除整个backend")
+                with open(CFG_FILE, 'r') as old, open(CFG_FILE_TEMP, 'w', encoding='utf-8') as new:
+                    flag = False
+                    for line in old:
+                        if line.strip().startswith("backend") and line.strip() == 'backend ' + domainList[domain_int_num]:
+                            flag = True
+                        elif flag and line.strip().startswith("backend"):
+                            new.write(line)
+                        elif line.strip() and not flag:
+                            new.write(line)
+                filecopy()
+                print("删除成功")
+            elif choose == '2':
+                print("删除某条server")
+                server = getserver(domainList[domain_int_num])
+                for i in server:
+                    print(server.index(i), i)
+                server_num = input("选择您要修改的server信息:")
+            else:
+                print("输入错误的序号")
+        else:
+            print("输入错误的序号")
 
 
 def bakupinfo():
