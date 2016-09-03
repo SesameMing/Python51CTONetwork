@@ -31,7 +31,7 @@ s1.intersection_update(s2 )  # 取两个的交集,更新给s1
 s1.isdisjoint(s2)  # 判断两个集合有没有交集
 s1.issubset(s2)  # 是否是子序列
 s1.issuperset(s2)  # 是否是父序列
-s3 =  s1.union(s2)  # 并集
+s3 = s1.union(s2)  # 并集
 s1.update()  # 更新，接受一个可以迭代的对象，可以是list，元组，字符串
 ```
 

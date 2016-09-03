@@ -1,4 +1,4 @@
-[博客笔记](blog.v-api.com)
+[day03博客笔记](http://blog.v-api.cn/code/982.html)
 
 
 ## HAproxy配置文件操作（作业要求）
