@@ -78,7 +78,7 @@ def addinfo():
     weight = input("输入新的weight值：")
     maxconn = input("输入新的maxconn值：")
     inputserver = """        server %s %s weight %s maxconn %s
-                        """ % (serverip, serverip, weight, maxconn)
+""" % (serverip, serverip, weight, maxconn)
     if inputBackend not in domainList:
         """ backend 不在原配置文件中 """
         with open(CFG_FILE, 'r') as old, open(CFG_FILE_TEMP, 'w', encoding='utf-8') as new:
@@ -135,7 +135,7 @@ def updateinfo():
                     weight = input("输入新的weight值：")
                     maxconn = input("输入新的maxconn值：")
                     upserverdate = """        server %s %s weight %s maxconn %s
-                    """ % (serverip, serverip, weight, maxconn)
+""" % (serverip, serverip, weight, maxconn)
                     with open(CFG_FILE, 'r') as old, open(CFG_FILE_TEMP, 'w', encoding='utf-8') as new:
                         flag = False
                         for line in old:
