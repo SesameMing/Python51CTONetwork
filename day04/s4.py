@@ -2,6 +2,14 @@
 # -*-coding:utf-8-*-
 # Author:SemaseMing <blog.v-api.cn>
 # Email:admin@v-api.cn
-# Time:2016-09-01 12:57
+# Time:2016-09-04 15:32
 
-from PIL import Image
+
+# def f1():
+#     print(123)
+#
+#
+# def f2():
+#     print(456)
+#
+
