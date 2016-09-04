@@ -13,3 +13,11 @@
 #     print(456)
 #
 
+def f1():
+    print("12322")
+
+
+def f2(xxx):
+    xxx()
+
+f2(f1)
