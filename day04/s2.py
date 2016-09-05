@@ -10,10 +10,21 @@ def outer(func):
         print('log')
         rs = func()
         print('before')
+        return rs
     return inner
+
+def ssssss(func):
+    def xxxxx():
+        print("sssss")
+        rs = func()
+        print("xxxxx")
+        return rs
+    return xxxxx
+
 
 
 @outer
+@ssssss
 def f1():
     print("F1")
 
