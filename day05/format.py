@@ -3,7 +3,6 @@
 # Author:SemaseMing <blog.v-api.cn>
 # Email:admin@v-api.cn
 # Time:2016-09-12 14:00
-import has
 
 tpl = "i am {}, age {}, {}".format("seven", 18, 'alex')
 print(tpl)
