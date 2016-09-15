@@ -67,3 +67,12 @@
 ### datetime模块
 
 ### logging模块
+|   级别  |什么时候时候使用|
+| ------- |:-------------:|
+|  DEBUG  |Detailed |
+|   INFO  |XXXX|
+| WARNING |AXXXX|
+| ERROR   |XXXXX|
+| CRITICAL|XXXXX|
+
+
