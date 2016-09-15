@@ -5,7 +5,12 @@
 # Time:2016-09-15 19:48
 # atm程序程序的执行启动程序
 
-import os
-os.system("modules/core/atmmian.py")
+import sys
+sys.path.append("..")
+from modules.core.atm_mian import main
+
 
 main()
+
+
+
