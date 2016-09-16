@@ -7,10 +7,8 @@
 
 import sys
 sys.path.append("..")
-from modules.core.atm_mian import main
-
-
-main()
+from modules.core.atm_admin_mian import run
+run()
 
 
 
