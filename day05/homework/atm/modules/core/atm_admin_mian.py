@@ -8,6 +8,8 @@
 
 import os
 import json
+import time
+import datetime
 from conf import setting
 QUIT_CHAR = 'q'  # 退出程序字符
 USER_STATUS = {'IS_LOGIN': False, 'LOGIN_USER_NAME': None}  # 用户登录状态
@@ -36,7 +38,25 @@ def addUser():
     """
     添加用户
     """
-    pass
+    cardnum = input("请输入创建的卡号：")
+    if not os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
+        username = input("设置姓名：")
+        password = input("设置密码：")
+        repassword = input("重复设置密码：")
+        credit = input("信用卡额度：")
+        cardinfo = {
+            "cardnum": cardnum,
+            "username": username,
+            "password": password,
+            "cradit": credit,
+            "enroll_date": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
+            "expire_date": datetime.datetime.now() + datetime.timedelta(days=10)
+        }
+        print(cardinfo)
+        # os.mkdir(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
+
+    else:
+        print("卡号存在")
 
 
 def setMaxTZED():
@@ -52,7 +72,7 @@ def setMaxTZED():
         userinput_int = int(userinput)
         if userinput_int > 0:
             set_dict['max_ed'] = userinput_int
-            json.dump(set_dict,open(setting.SET_DIR_FILE, 'w'))
+            json.dump(set_dict, open(setting.SET_DIR_FILE, 'w'))
             print("设置成功")
         else:
             print("输入不合法")
