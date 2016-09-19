@@ -10,4 +10,5 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # print(BASE_DIR)
 ADMIN_DIR_FOLDER = os.path.join(BASE_DIR, 'db', 'admin')
 USER_DIR_FOLDER = os.path.join(BASE_DIR, 'db', 'userinfo')
+SET_DIR_FILE = os.path.join(BASE_DIR, 'db', 'setting')
 
