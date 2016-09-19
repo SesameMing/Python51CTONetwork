@@ -53,8 +53,8 @@ def addUser():
             "expire_date": datetime.datetime.now() + datetime.timedelta(days=10)
         }
         print(cardinfo)
-        # os.mkdir(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
-
+        os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
+        json.dump(cardinfo, open(os.path.join(setting.USER_DIR_FOLDER, cardnumroot, "basic_info.json"), 'w'))
     else:
         print("卡号存在")
 
