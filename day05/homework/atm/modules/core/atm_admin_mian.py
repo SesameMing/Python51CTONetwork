@@ -25,7 +25,17 @@ def stopUser():
     """
     冻结用户
     """
+    cardnum = input("请输入要设置的卡号：")
+    if cardnum.isdigit():
+        if os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
+            restult = input("(y：为确定，n：为否)确定将该卡设置为禁用：")
+            if restult == 'y':
+                pass
 
+        else:
+            print("您输入的卡号不存在")
+    else:
+        print("您输入的卡号不符合规范")
 
 def setUserED():
     """
@@ -35,12 +45,17 @@ def setUserED():
     if cardnum.isdigit():
         if os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
             info_dic = json.load(open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'r'))
-            print("该用户现有额度： %s" %(info_dic['cradit']))
+            print("该用户现有额度： %s" % (info_dic['cradit']))
             ed = input("请输入新的用户额度：")
             if ed.isdigit():
-                info_dic['cradit'] = ed
-                json.dump(info_dic, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'w'))
-                print("修改成功")
+                ed_int = int(ed)
+                set_ed = json.load(open(setting.SET_DIR_FILE, "r"))
+                if ed_int <= set_ed['max_ed']:
+                    info_dic['cradit'] = ed
+                    json.dump(info_dic, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'w'))
+                    print("修改成功")
+                else:
+                    print("设置的额度超过设置的最大信用额度")
             else:
                 print("输入的额度不符合规范")
 
