@@ -50,11 +50,11 @@ def addUser():
             "password": password,
             "cradit": credit,
             "enroll_date": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-            "expire_date": datetime.datetime.now() + datetime.timedelta(days=10)
+            "expire_date": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
         }
         print(cardinfo)
         os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
-        json.dump(cardinfo, open(os.path.join(setting.USER_DIR_FOLDER, cardnumroot, "basic_info.json"), 'w'))
+        json.dump(cardinfo, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, "basic_info.json"), 'w'))
     else:
         print("卡号存在")
 
