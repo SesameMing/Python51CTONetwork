@@ -31,7 +31,7 @@ print(current_time.timetuple())  # 返回struct_time格式
 
 print(current_time.replace(2014, 9, 12))   # 输出2014-09-12 18:17:20.264601 返回当前时间，但是指定值将被替换
 
-str_to_date  = datetime.datetime.strptime("21/11/06 16:30", "%d/%m/%y %H:%M")
+str_to_date = datetime.datetime.strptime("21/11/06 16:30", "%d/%m/%y %H:%M")
 print(str_to_date)
 
 print(datetime.datetime.now() + datetime.timedelta(days=10))  # 比现在加10天

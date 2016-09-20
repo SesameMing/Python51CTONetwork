@@ -31,7 +31,23 @@ def setUserED():
     """
     设置用户额度
     """
-    pass
+    cardnum = input("请输入要设置的卡号：")
+    if cardnum.isdigit():
+        if os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
+            info_dic = json.load(open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'r'))
+            print("该用户现有额度： %s" %(info_dic['cradit']))
+            ed = input("请输入新的用户额度：")
+            if ed.isdigit():
+                info_dic['cradit'] = ed
+                json.dump(info_dic, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'w'))
+                print("修改成功")
+            else:
+                print("输入的额度不符合规范")
+
+        else:
+            print("您输入的卡号不存在")
+    else:
+        print("您输入的卡号不符合规范")
 
 
 def addUser():
@@ -42,15 +58,16 @@ def addUser():
     if not os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
         username = input("设置姓名：")
         password = input("设置密码：")
-        repassword = input("重复设置密码：")
         credit = input("信用卡额度：")
         cardinfo = {
             "cardnum": cardnum,
             "username": username,
             "password": password,
             "cradit": credit,
-            "enroll_date": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime()),
-            "expire_date": time.strftime("%Y-%m-%d %H:%M:%S", time.localtime())
+            "enroll_date": time.time(),
+            "expire_date": time.time()+157680000,
+            "status": 1,
+
         }
         print(cardinfo)
         os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
@@ -153,5 +170,5 @@ def run():
 
 
 if __name__ == '__main__':
-    print(settings.ADMIN_DIR_FOLDER)
+    print(setting.ADMIN_DIR_FOLDER)
     run()
