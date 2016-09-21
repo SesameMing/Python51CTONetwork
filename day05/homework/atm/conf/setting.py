@@ -12,3 +12,4 @@ ADMIN_DIR_FOLDER = os.path.join(BASE_DIR, 'db', 'admin')
 USER_DIR_FOLDER = os.path.join(BASE_DIR, 'db', 'user')
 SET_DIR_FILE = os.path.join(BASE_DIR, 'db', 'setting')
 
+

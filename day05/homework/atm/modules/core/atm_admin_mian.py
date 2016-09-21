@@ -9,16 +9,31 @@
 import os
 import json
 import time
-import datetime
+import shutil
+import logging
 from conf import setting
 QUIT_CHAR = 'q'  # 退出程序字符
 USER_STATUS = {'IS_LOGIN': False, 'LOGIN_USER_NAME': None}  # 用户登录状态
-
+logging.basicConfig(filename=os.path.join(setting.ADMIN_DIR_FOLDER, 'admin.log'), level=logging.INFO, format='%(asctime)s %(message)s',  datefmt='%m/%d/%Y %I:%M:%S %p')
 
 def delUser():
     """
     删除用户
     """
+    cardnum = input("请输入要设置的卡号：")
+    if cardnum.isdigit():
+        if os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
+            restult = input("<y：确定>确定将该卡用户删除：")
+            if restult == 'y':
+                shutil.rmtree(os.path.join(setting.USER_DIR_FOLDER, cardnum))
+                print("删除用户成功")
+                logging.info('%s 删除了卡号：%s ' % (USER_STATUS['LOGIN_USER_NAME'], cardnum))
+            else:
+                print("取消删除")
+        else:
+            print("您输入的卡号不存在")
+    else:
+        print("您输入的卡号不符合规范")
 
 
 def stopUser():
@@ -28,9 +43,15 @@ def stopUser():
     cardnum = input("请输入要设置的卡号：")
     if cardnum.isdigit():
         if os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
-            restult = input("(y：为确定，n：为否)确定将该卡设置为禁用：")
+            restult = input("<y：确定>确定将该卡设置为禁用：")
             if restult == 'y':
-                pass
+                info_dic = json.load(open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'r'))
+                info_dic['status'] = 0
+                json.dump(info_dic, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'w'))
+                print("该用户已被禁用")
+                logging.info('%s 冻结了卡号：%s ' % (USER_STATUS['LOGIN_USER_NAME'], cardnum))
+            else:
+                print("取消设置")
 
         else:
             print("您输入的卡号不存在")
@@ -54,6 +75,7 @@ def setUserED():
                     info_dic['cradit'] = ed
                     json.dump(info_dic, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'w'))
                     print("修改成功")
+                    logging.info('$s 修改了卡号：%s 的信用额度为 %s' % (USER_STATUS['LOGIN_USER_NAME'], cardnum, ed))
                 else:
                     print("设置的额度超过设置的最大信用额度")
             else:
@@ -79,14 +101,16 @@ def addUser():
             "username": username,
             "password": password,
             "cradit": credit,
+            "balance": 0,
             "enroll_date": time.time(),
             "expire_date": time.time()+157680000,
             "status": 1,
 
         }
-        print(cardinfo)
         os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
         json.dump(cardinfo, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, "basic_info.json"), 'w'))
+        logging.info('%s 添加新卡号：%s ' % (USER_STATUS['LOGIN_USER_NAME'], cardnum))
+        print("新用户添加成功")
     else:
         print("卡号存在")
 
@@ -106,6 +130,7 @@ def setMaxTZED():
             set_dict['max_ed'] = userinput_int
             json.dump(set_dict, open(setting.SET_DIR_FILE, 'w'))
             print("设置成功")
+            logging.info('%s 设置最大透支额度为 %s' % (USER_STATUS['LOGIN_USER_NAME'], userinput))
         else:
             print("输入不合法")
     else:
@@ -153,7 +178,6 @@ def main():
             print("输入不合法")
 
 
-
 def login():
     """
     用户登录方法
@@ -166,6 +190,7 @@ def login():
             if username == user_dict['username'] and password == user_dict['password']:
                 USER_STATUS['IS_LOGIN'] = True
                 USER_STATUS['LOGIN_USER_NAME'] = username
+                logging.info('%s 管理登录成功' % username)
                 return True
             else:
                 print('密码错误')
