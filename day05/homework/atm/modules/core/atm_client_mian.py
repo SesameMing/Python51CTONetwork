@@ -27,12 +27,32 @@ def xiugaimima():
     """
     修改密码
     """
+    old_password = input("请输入旧密码：")
+    userinfo = json.load(open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
+                                           'basic_info.json'), 'r'))
+    if old_password == userinfo['password']:
+        new_password = input("请输入新密码：")
+        userinfo['password'] = new_password
+        json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
+                                              'basic_info.json'), 'w'))
+        print("修改成功")
+    else:
+        print("密码输入错误")
 
 
 def chaxun():
     """
     查询
     """
+    userinfo = json.load(open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
+                                           'basic_info.json'), 'r'))
+    print_str = """ -------- 查询结果 ---------
+    余额    ：%s 元
+    信用额度 ：%s 元
+    可用额度 ：%s 元
+------------------------
+    """ % (userinfo['balance'], userinfo['cradit'], userinfo['kycradit'])
+    print(print_str)
 
 
 def qukuan():
@@ -106,13 +126,23 @@ def main():
             continue
         elif userchose.isdigit():
             userchose_int = int(userchose)
-            if userchose_int <= 6:
+            if userchose_int <= 7:
                 userchose_int = int(userchose)
                 if userchose_int == 1:
                     zhuangzhan()
                 elif userchose_int == 2:
                     cunqian()
                 elif userchose_int == 3:
+                    qukuan()
+                elif userchose_int == 4:
+                    chaxun()
+                elif userchose_int == 5:
+                    xiugaimima()
+                elif userchose_int == 6:
+                    chazhang()
+                elif userchose_int == 7:
+                    huankuan()
+                else:
                     pass
 
             else:

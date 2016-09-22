@@ -101,10 +101,12 @@ def addUser():
             "username": username,
             "password": password,
             "cradit": credit,
+            "kycradit": credit,
             "balance": 0,
             "enroll_date": time.time(),
             "expire_date": time.time()+157680000,
             "status": 1,
+            "debt": [],
 
         }
         os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
