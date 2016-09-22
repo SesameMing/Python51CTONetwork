@@ -92,30 +92,45 @@ def addUser():
     添加用户
     """
     cardnum = input("请输入创建的卡号：")
-    if not os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
-        username = input("设置姓名：")
-        password = input("设置密码：")
-        credit = input("信用卡额度：")
-        cardinfo = {
-            "cardnum": cardnum,
-            "username": username,
-            "password": password,
-            "cradit": credit,
-            "kycradit": credit,
-            "balance": 0,
-            "enroll_date": time.time(),
-            "expire_date": time.time()+157680000,
-            "status": 1,
-            "debt": [],
+    if cardnum.isdigit():
+        if not os.path.exists(os.path.join(setting.USER_DIR_FOLDER, cardnum)):
+            username = input("设置姓名：")
+            if username.isdigit():
+                print("姓名不能为纯数字")
+                return False
 
-        }
-        os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
-        json.dump(cardinfo, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, "basic_info.json"), 'w'))
-        logging.info('%s 添加新卡号：%s ' % (USER_STATUS['LOGIN_USER_NAME'], cardnum))
-        print("新用户添加成功")
+            password = input("设置密码：")
+
+            credit = input("信用卡额度：")
+            if not credit.isdigit():
+                print("输入的信用卡额度不符合规范")
+                return False
+
+            set_dict = json.load(open(setting.SET_DIR_FILE, 'r'))
+            if int(credit) <= int(set_dict['max_ed']):
+                cardinfo = {
+                    "cardnum": cardnum,
+                    "username": username,
+                    "password": password,
+                    "cradit": credit,
+                    "kycradit": credit,
+                    "balance": 0,
+                    "enroll_date": time.time(),
+                    "expire_date": time.time()+157680000,
+                    "status": 1,
+                    "debt": [],
+
+                }
+                os.makedirs(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'cardinfo'))
+                json.dump(cardinfo, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, "basic_info.json"), 'w'))
+                logging.info('%s 添加新卡号：%s ' % (USER_STATUS['LOGIN_USER_NAME'], cardnum))
+                print("新用户添加成功")
+            else:
+                print("超过了设置的最大信用额度")
+        else:
+            print("卡号存在")
     else:
-        print("卡号存在")
-
+        print("设置的卡号不符合规范")
 
 def setMaxTZED():
     """
@@ -152,7 +167,7 @@ def main():
 
     选择：数字   退出：%s
 ---------------------------
-        """ % (QUIT_CHAR)
+        """ % QUIT_CHAR
         print(print_str)
         User_Choose = input("请选择：")
         if User_Choose == QUIT_CHAR:
@@ -208,7 +223,6 @@ def run():
     print("程序开始运行")
     if login():
         main()
-
 
 
 if __name__ == '__main__':
