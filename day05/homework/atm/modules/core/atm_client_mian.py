@@ -16,6 +16,16 @@ def huankuan():
     """
     还款
     """
+    sum_money = 0
+    userinfo = json.load(
+        open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'], 'basic_info.json'), 'r'))
+    print("---------信用卡账单----------")
+    for item in userinfo['debt']:
+        print("%s  %s  %s元" % (item['date'], item['info'], item['money']))
+        sum_money += int(item['money'])
+    print("本期共透支：%s 元" % sum_money)
+    print("-----------账单结束----------")
+    input("您需要还款: ")
 
 
 def chazhang():
