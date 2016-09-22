@@ -8,9 +8,11 @@ import os
 import json
 import time
 from conf import setting
+from modules.core.backend.loggingset import loger
+
 QUIT_CHAR = 'q'  # 退出程序字符
 USER_STATUS = {'IS_LOGIN': False, 'LOGIN_USER_CARDNAME': None}  # 用户登录状态
-
+USER_PATH = ''
 
 def huankuan():
     """
@@ -25,8 +27,22 @@ def huankuan():
         sum_money += int(item['money'])
     print("本期共透支：%s 元" % sum_money)
     print("-----------账单结束----------")
-    input("您需要还款: ")
+    money = input("您需要还款<还款需要大于等于透支金额>: ")
+    if money.isdigit():
+        if int(money) < sum_money:
+            print("还款金额小于透支总额")
+        else:
+            userinfo['debt'].clear()
+            userinfo['balance'] = int(userinfo['balance']) + (int(money) - sum_money)
+            userinfo['kycradit'] = userinfo['cradit']
+            json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
+                                                  'basic_info.json'), 'w'))
+            msg = "卡号：%s 还款 - %s 元 - %s元存入余额 -成功" % (USER_STATUS['LOGIN_USER_CARDNAME'], money,
+                                                     (int(money) - sum_money))
+            logermsg.info(msg)
 
+    else:
+        print("金额格式不正确")
 
 def chazhang():
     """
@@ -54,7 +70,8 @@ def xiugaimima():
         userinfo['password'] = new_password
         json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
                                               'basic_info.json'), 'w'))
-        print("修改成功")
+        msg = "卡号：%s 修改密码 - 成功" % USER_STATUS['LOGIN_USER_CARDNAME']
+        logermsg.info(msg)
     else:
         print("密码输入错误")
 
@@ -87,9 +104,8 @@ def qukuan():
             """ 取款金额不大于存款余额的时候 直接扣除余额  """
             userinfo['balance'] -= money_int
             json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],'basic_info.json'), 'w'))
-            print("取款成功")
-            print("取款金额：%s 元 " % money_int)
-            print("存款余额：%s 元 " % userinfo['balance'])
+            msg = "卡号：%s 取款 %s 元" % (USER_STATUS['LOGIN_USER_CARDNAME'], money_int)
+            logermsg.info(msg)
         elif money_int <= (int(userinfo['balance']) + int(userinfo['kycradit'])):
             """ 取款金额不大于存款余额和可用信用额度 """
             xiaofeiedu = money_int - int(userinfo['balance'])
@@ -100,10 +116,8 @@ def qukuan():
             userinfo['debt'].insert(0, debt_list)
             json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
                                         'basic_info.json'), 'w'))
-            print("取款成功")
-            print("取款金额：%s 元 " % money_int)
-            print("存款余额：%s 元 " % userinfo['balance'])
-            print("可用信用额度：%s 元 " % userinfo['kycradit'])
+            msg = "卡号：%s 取款 %s 元 - 成功" % (USER_STATUS['LOGIN_USER_CARDNAME'], money_int)
+            logermsg.info(msg)
 
         else:
             """ 取款金额大于存款余额和可用信用额度 """
@@ -125,7 +139,8 @@ def cunqian():
             userinfo['balance'] = money_int
             json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
                                                   'basic_info.json'), 'w'))
-            print("存钱成功")
+            msg = "卡号：%s 存款 - %s 元 - 成功" % (USER_STATUS['LOGIN_USER_CARDNAME'], money_int)
+            logermsg.info(msg)
 
         pass
     else:
@@ -157,6 +172,8 @@ def zhuangzhan():
                     json.dump(zz_dic, open(os.path.join(setting.USER_DIR_FOLDER, zz_num,
                                                           'basic_info.json'), 'w'))
                     print("转账成功")
+                    msg = "卡号：%s 转账给 卡号：%s - %s 元 - 成功" % (USER_STATUS['LOGIN_USER_CARDNAME'], zz_num, zz_moeny)
+                    logermsg.info(msg)
 
                 else:
                     print("您没有这么多钱可以转")
@@ -187,7 +204,8 @@ def main():
         print(mian_str)
         userchose = input("请输入您的选择：")
         if userchose == QUIT_CHAR:
-            print("退出程序")
+            msg = "卡号：%s 退出登录" % USER_STATUS['LOGIN_USER_CARDNAME']
+            logermsg.info(msg)
             USER_STATUS['IS_LOGIN'] = True
             main_flat = False
             continue
@@ -225,10 +243,12 @@ def login():
             user_dic = json.load(open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json')))
             password = input("请输入密码：")
             if password == user_dic['password']:
-                print("密码正确")
-                USER_STATUS['IS_LOGIN'] = True
-                USER_STATUS['LOGIN_USER_CARDNAME'] = cardnum
-                return True
+                if user_dic['status'] == 1:
+                    USER_STATUS['IS_LOGIN'] = True
+                    USER_STATUS['LOGIN_USER_CARDNAME'] = cardnum
+                    return True
+                else:
+                    print("该卡号已被冻结,请联系管理员")
             else:
                 print("密码错误")
         else:
@@ -238,4 +258,10 @@ def login():
 def run():
     print("欢迎登录ATM系统")
     if login():
+        global USER_PATH
+        global logermsg
+        USER_PATH = os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'], 'cardinfo', 'access.log')
+        logermsg = loger(USER_PATH)
+        msg = "卡号：%s 登录成功" % USER_STATUS['LOGIN_USER_CARDNAME']
+        logermsg.info(msg)
         main()

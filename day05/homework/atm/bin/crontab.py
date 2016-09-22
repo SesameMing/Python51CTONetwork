@@ -4,6 +4,8 @@
 # Email:admin@v-api.cn
 # Time:2016-09-22 20:47
 
+# 设置每天0.点指定执行。 每个月10号自动统计透支，并从余额中扣除
+
 import os
 import sys
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
