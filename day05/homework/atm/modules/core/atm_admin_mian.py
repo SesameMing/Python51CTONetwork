@@ -98,7 +98,7 @@ def setUserED():
                 if ed_int <= set_ed['max_ed']:
                     info_dic['cradit'] = ed
                     json.dump(info_dic, open(os.path.join(setting.USER_DIR_FOLDER, cardnum, 'basic_info.json'), 'w'))
-                    msg = '$s 修改了卡号：%s 的信用额度为 %s' % (USER_STATUS['LOGIN_USER_NAME'], cardnum, ed)
+                    msg = '%s 修改了卡号：%s 的信用额度为 %s' % (USER_STATUS['LOGIN_USER_NAME'], cardnum, ed)
                     loger1.info(msg)
                 else:
                     print("设置的额度超过设置的最大信用额度")

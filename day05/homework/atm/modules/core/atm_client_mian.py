@@ -103,7 +103,8 @@ def qukuan():
         if money_int <= userinfo['balance']:
             """ 取款金额不大于存款余额的时候 直接扣除余额  """
             userinfo['balance'] -= money_int
-            json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],'basic_info.json'), 'w'))
+            json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'], 
+                                                  'basic_info.json'), 'w'))
             msg = "卡号：%s 取款 %s 元" % (USER_STATUS['LOGIN_USER_CARDNAME'], money_int)
             logermsg.info(msg)
         elif money_int <= (int(userinfo['balance']) + int(userinfo['kycradit'])):
@@ -136,7 +137,7 @@ def cunqian():
         if money_int > 0:
             userinfo = json.load(open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
                                                    'basic_info.json'), 'r'))
-            userinfo['balance'] = money_int
+            userinfo['balance'] = int(userinfo['balance']) + money_int
             json.dump(userinfo, open(os.path.join(setting.USER_DIR_FOLDER, USER_STATUS['LOGIN_USER_CARDNAME'],
                                                   'basic_info.json'), 'w'))
             msg = "卡号：%s 存款 - %s 元 - 成功" % (USER_STATUS['LOGIN_USER_CARDNAME'], money_int)
