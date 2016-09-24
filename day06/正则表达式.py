@@ -14,4 +14,8 @@ import re
 # ? 匹配前一个0或1次重复
 # {} 匹配前一个如意次数或者范围
 # []
-print(re.findall(r'I\b', 'I#am DamIng'))
+# print(re.findall(r'I\b', 'I#am DamIng'))
+
+s = "1+2+3*3/5"
+r = re.search('[*/]', s, 1).group()
+print(r)
