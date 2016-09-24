@@ -23,12 +23,19 @@ def compute_jj(arg):
         else:
             pass
 
+        if arg[0].startswith('-'):
+            arg[1] += 1
+            arg[0] = arg[0].replace('-', '&')
+            arg[0] = arg[0].replace('+', '-')
+            arg[0] = arg[0].replace('&', '+')
+            arg[0] = arg[0][1:]
+
         val = arg[0]
         mch = re.search('\d+\.*\d*[+\-]\d+\.*\d*', val)
         if not mch:
             return
         content = re.search('\d+\.*\d*[+\-]\d+\.*\d*', val).group()
-
+        # print(content)
         if len(content.split('+')) > 1:
             n1, n2 = content.split('+')
             value = float(n1) + float(n2)
@@ -52,7 +59,6 @@ def compute_cc(arg):
     if not number:
         return
     content = re.search('\d+\.*\d*[*/]+[+\-]?\d+\.*\d*', val).group()
-
     if len(content.split("*")) > 1:
         n1, n2 = content.split("*")
         value = float(n1) * float(n2)
@@ -85,6 +91,7 @@ def parentheses(formula):
     """
     while True:
         result = re.split(r"\(([0-9*/+\-.]+)\)", formula, 1)
+
         if len(result) == 1:
             break
         result[1] = str(compute(result[1]))
@@ -94,10 +101,10 @@ def parentheses(formula):
 
 
 def main():
-    # formula = input("请输入计算公式：")
-    formula = '1-1*2+4+(5+5*2+(2*1+1))'
+    formula = input("请输入计算公式：")
+    # formula = '1-1*2+4+(5+5*2+(2*1+1+4))'
     # print(eval(formula))
-    formula = re.sub("\s*", "", formula)
+    formula = re.sub("\s*", "", formula)  # 替换掉输入中的空格
     num = parentheses(formula)
     print("您的计算结果是：", num)
     print("另一种计算结果验证：", eval(formula))
