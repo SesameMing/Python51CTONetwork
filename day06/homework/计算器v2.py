@@ -9,11 +9,16 @@
 import re
 
 
+def __replace_sign():
+    pass
+
+
 def compute_jj(arg):
     """
     计算加减
     :return:
     """
+    # 处理存在多个符号问题
     while True:
         if arg[0].find('--') != -1 or arg[0].find('-+') != -1 or arg[0].find('++') != -1 or arg[0].find('+-') != -1:
             arg[0] = arg[0].replace('+-', '-')
@@ -21,32 +26,33 @@ def compute_jj(arg):
             arg[0] = arg[0].replace('-+', '-')
             arg[0] = arg[0].replace('--', '+')
         else:
-            pass
+            break
 
-        if arg[0].startswith('-'):
-            arg[1] += 1
-            arg[0] = arg[0].replace('-', '&')
-            arg[0] = arg[0].replace('+', '-')
-            arg[0] = arg[0].replace('&', '+')
-            arg[0] = arg[0][1:]
+    # 处理以-号开头的公式 类似 -1+3
+    if arg[0].startswith('-'):
+        arg[1] += 1
+        arg[0] = arg[0].replace('-', '&')
+        arg[0] = arg[0].replace('+', '-')
+        arg[0] = arg[0].replace('&', '+')
+        arg[0] = arg[0][1:]
 
-        val = arg[0]
-        mch = re.search('\d+\.*\d*[+\-]\d+\.*\d*', val)
-        if not mch:
-            return
-        content = re.search('\d+\.*\d*[+\-]\d+\.*\d*', val).group()
-        # print(content)
-        if len(content.split('+')) > 1:
-            n1, n2 = content.split('+')
-            value = float(n1) + float(n2)
-        else:
-            n1, n2 = content.split('-')
-            value = float(n1) - float(n2)
+    val = arg[0]
+    mch = re.search('\d+\.*\d*[+\-]\d+\.*\d*', val)
+    if not mch:
+        return
+    content = re.search('\d+\.*\d*[+\-]\d+\.*\d*', val).group()
+    # print(content)
+    if len(content.split('+')) > 1:
+        n1, n2 = content.split('+')
+        value = float(n1) + float(n2)
+    else:
+        n1, n2 = content.split('-')
+        value = float(n1) - float(n2)
 
-        before, after = re.split('\d+\.*\d*[+\-]\d+\.*\d*', val, 1)
-        new_str = "%s%s%s" % (before, value, after)
-        arg[0] = new_str
-        compute_jj(arg)
+    before, after = re.split('\d+\.*\d*[+\-]\d+\.*\d*', val, 1)
+    new_str = "%s%s%s" % (before, value, after)
+    arg[0] = new_str
+    compute_jj(arg)
 
 
 def compute_cc(arg):
@@ -80,8 +86,14 @@ def compute(formula):
     inp = [formula, 0]
     compute_cc(inp)
     compute_jj(inp)
-    return inp[0]
 
+    # 处理在加减法中 以-开头的公式
+    if divmod(inp[1], 2)[1] == 1:
+        result = float(inp[0])
+        result = result * -1
+    else:
+        result = float(inp[0])
+    return result
 
 
 def parentheses(formula):
@@ -96,13 +108,14 @@ def parentheses(formula):
             break
         result[1] = str(compute(result[1]))
         formula = ''.join(result)
+        print(formula)
     result = compute(formula)
     return result
 
 
 def main():
-    formula = input("请输入计算公式：")
-    # formula = '1-1*2+4+(5+5*2+(2*1+1+4))'
+    # formula = input("请输入计算公式：")
+    formula = '-0.2*0.22-(3.3/23.5-22*23)+2*(1-(1.3*(2/25-2*(2.3-1))))'
     # print(eval(formula))
     formula = re.sub("\s*", "", formula)  # 替换掉输入中的空格
     num = parentheses(formula)
