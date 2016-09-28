@@ -49,8 +49,6 @@ def createstudent():
         return False
 
 
-
-
 def showcoires():
     """ 显示课程列表 """
     filename = os.listdir(os.path.join(setting.COURSE_DIR_FILE))
@@ -179,7 +177,6 @@ def main():
 3. 添加课程信息
 4. 查看课程信息
 5. 添加学生信息
-6. 查看学生信息
 
 【数字】：选择  【%s】：退出
 ---------------------------------------""" % QUIT_CHAR
@@ -235,7 +232,7 @@ def run():
     global logobj
     logobj = log.loger()
     syslog = logobj.log()
-    syslog.info('执行程序')
+    syslog.info('学生选课系统-管理员端运行')
     time.sleep(.5)
 
     if login():

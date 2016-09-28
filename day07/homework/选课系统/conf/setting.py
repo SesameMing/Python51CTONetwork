@@ -8,5 +8,5 @@ import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 ADMIN_DIR_FILE = os.path.join(BASE_DIR, 'db', 'admin')
 TEACHER_DIR_FILE = os.path.join(BASE_DIR, 'db', 'teadcher')
-STUDEN_DIR_FILE = os.path.join(BASE_DIR, 'db', 'studen')
+STUDEN_DIR_FILE = os.path.join(BASE_DIR, 'db', 'student')
 COURSE_DIR_FILE = os.path.join(BASE_DIR, 'db', 'course')
