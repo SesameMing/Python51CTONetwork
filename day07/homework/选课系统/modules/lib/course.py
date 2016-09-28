@@ -8,13 +8,22 @@
 这是一个课程类
 """
 
+
 class course:
-    def __init__(self, name, time, money, teacher ,shangkeneirong):
+
+    def __init__(self, name, money, teacher, shangkeneirong):
         self.name = name
-        self.time = time
+        self.time = 0
         self.money = money
         self.teacher = teacher
         self.shangkeneirong = shangkeneirong
 
     def shangke(self):
         print("今天学习了", self.shangkeneirong)
+
+    def courseinfo(self):
+        cinfo = {'name': self.name, 'money': self.money, 'teacher': self.getteacher()}
+        return cinfo
+
+    def getteacher(self):
+        return self.teacher.getname()

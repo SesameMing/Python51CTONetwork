@@ -6,7 +6,7 @@
 
 import os
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-
-TEACHER_DIR_FILE = os.path.join(BASE_DIR, 'db', 'teadcher')
 ADMIN_DIR_FILE = os.path.join(BASE_DIR, 'db', 'admin')
+TEACHER_DIR_FILE = os.path.join(BASE_DIR, 'db', 'teadcher')
 STUDEN_DIR_FILE = os.path.join(BASE_DIR, 'db', 'studen')
+COURSE_DIR_FILE = os.path.join(BASE_DIR, 'db', 'course')
