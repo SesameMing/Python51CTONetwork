@@ -9,12 +9,64 @@ import os
 import pickle
 import time
 from modules import log
-from modules.lib import teacher, course
+from modules.lib import teacher, course, student
 from conf import setting
 
 USER_LOGIN_STATUS = {'login': False, 'name': None}
 USER_LOGIN_FILE = ''
 QUIT_CHAR = 'q'
+
+
+def createstudent():
+    """ 创建一个学生信息 """
+    name = input("<提示：不能是纯数字>学生姓名：").strip()
+    if name.isdigit():
+        syslog1.debug('学生姓名不能为纯数字，退出')
+        time.sleep(.5)
+        return False
+    password = input("学生登录密码：").strip()
+    age = input("<提示：0-99>学生年龄：").strip()
+    if not age.isdigit():
+        syslog1.debug('年龄不能为非数字，退出')
+        time.sleep(.5)
+        return False
+    gender = input("<提示：男or女>性别：").strip()
+    if gender not in ['男', '女']:
+        syslog1.debug('性别只能为"男"or"女"')
+        time.sleep(.5)
+        return False
+
+    if not os.path.exists(os.path.join(setting.STUDEN_DIR_FILE, name)):
+        os.makedirs(os.path.join(setting.STUDEN_DIR_FILE, name))
+        new_student = student.student(name, password, gender, age)
+        pickle.dump(new_student, open(os.path.join(setting.STUDEN_DIR_FILE, name, 'info.db'), 'wb'))
+        syslog1.info('%s 创建了新的学生信息 %s' % (USER_LOGIN_STATUS['name'], name))
+        time.sleep(.5)
+        return True
+    else:
+        syslog1.debug("学生已存在")
+        time.sleep(.5)
+        return False
+
+
+
+
+def showcoires():
+    """ 显示课程列表 """
+    filename = os.listdir(os.path.join(setting.COURSE_DIR_FILE))
+    print("--------------课程列表---------------")
+    print("课程名称  课时费  上课老师    上课内容")
+    for name in filename:
+        cinfo = pickle.load(open(os.path.join(setting.COURSE_DIR_FILE, name, 'info.db'), 'rb'))
+        cinfo_dic = cinfo.courseinfo()
+        print_str = '{name}       {money}   {teacher}      {shangkeneirong} '.format(**cinfo_dic)
+        print(print_str)
+    print("-----------------------------------")
+
+    syslog1.debug('%s 成功查询了课程信息' % USER_LOGIN_STATUS['name'])
+    time.sleep(.5)
+    return True
+
 
 
 def createcourse():
@@ -24,16 +76,19 @@ def createcourse():
         syslog1.debug('课程名称不能为纯数字, 返回主菜单')
         time.sleep(.5)
         return False
+
     kmoney = input("<提示:0-99999>课程课时费：").strip()
     if not kmoney.isdigit():
         syslog1.debug('课时费只能为数字, 返回主菜单')
         time.sleep(.5)
         return False
+
     kneirong = input("请输入上课内容：").strip()
     if not kneirong:
         syslog1.debug('上课内容不能为空')
         time.sleep(.5)
         return False
+
     filename = os.listdir(os.path.join(setting.TEACHER_DIR_FILE))
     print("---------老师列表-----------")
     for name in filename:
@@ -52,7 +107,6 @@ def createcourse():
     pickle.dump(new_course, open(os.path.join(setting.COURSE_DIR_FILE, kname, 'info.db'), 'wb'))
     syslog1.info('%s 创建了新的课程 %s' % (USER_LOGIN_STATUS['name'], kname))
     time.sleep(.5)
-    print(new_course.getteacher())
     return True
 
 
@@ -144,6 +198,10 @@ def main():
                     showteteacher()
                 elif chooes_int == 3:
                     createcourse()
+                elif chooes_int == 4:
+                    showcoires()
+                elif chooes_int == 5:
+                    createstudent()
 
             else:
                 syslog1.debug("输入错误")

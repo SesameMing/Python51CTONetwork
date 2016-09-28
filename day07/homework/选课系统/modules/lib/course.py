@@ -22,7 +22,7 @@ class course:
         print("今天学习了", self.shangkeneirong)
 
     def courseinfo(self):
-        cinfo = {'name': self.name, 'money': self.money, 'teacher': self.getteacher()}
+        cinfo = {'name': self.name, 'money': self.money, 'teacher': self.getteacher(), 'shangkeneirong': self.shangkeneirong}
         return cinfo
 
     def getteacher(self):
