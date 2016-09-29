@@ -19,7 +19,7 @@ class course:
         self.shangkeneirong = shangkeneirong
 
     def shangke(self):
-        print("今天学习了", self.shangkeneirong)
+        return self.money
 
     def courseinfo(self):
         cinfo = {'name': self.name, 'money': self.money, 'teacher': self.getteacher(), 'shangkeneirong': self.shangkeneirong}

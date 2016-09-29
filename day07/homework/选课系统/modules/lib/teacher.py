@@ -28,6 +28,9 @@ class teacher:
     def getname(self):
         return self.name
 
+    def addmoney(self, money):
+        self.money = int(self.money) + int(money)
+        return True
 
 
 
