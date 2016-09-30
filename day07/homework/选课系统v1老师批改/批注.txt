@@ -1,0 +1,41 @@
+1、bug
+------选课系统菜单---------
+欢迎学生：王明
+
+1.选课
+2.上课
+3.选课列表
+4.上课记录
+5.老师测评
+
+【数字】：选择  【q】：退出
+------------------------------
+>>>:2
+已经选择了的课程有：
+0 mysql
+1 python
+2 数学
+>>>选择宁要上的课程的序号:2
+Traceback (most recent call last):
+  File "D:/51CTO学员作业/王明/day6/选课系统/student.py", line 9, in <module>
+    student_bin.run()
+  File "D:\51CTO学员作业\王明\day6\选课系统\modules\student_bin.py", line 227, in run
+    main()
+  File "D:\51CTO学员作业\王明\day6\选课系统\modules\student_bin.py", line 183, in main
+    shangke()
+  File "D:\51CTO学员作业\王明\day6\选课系统\modules\student_bin.py", line 125, in shangke
+    user_db.addshangkelist(item)
+  File "D:\51CTO学员作业\王明\day6\选课系统\modules\lib\student.py", line 41, in addshangkelist
+    if len(self.shangkelist[shangke.name]) == 0:
+KeyError: '数学'
+对于字典，通过key来取值，除非你肯定他有啥key否则建议用get方法来取至少不会报这个错误，或者先判断是否有值，没有的话先dict[key] = None处理下
+
+2、交互上可以改善一下
+---------老师列表-----------
+大明
+张晓宇
+请输入要查看的老师姓名
+---------------------------
+>>>:
+1）能输入数字编号就不要输入一堆字符串，容易错
+2）只要是子一级菜单，都要留一个操作直接返回到上以及菜单，现在我不想看，想直接返回上一级怎么做

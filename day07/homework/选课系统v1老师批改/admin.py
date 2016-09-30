@@ -1,0 +1,8 @@
+#!/usr/bin/env python
+# -*-coding:utf-8-*-
+# Author:SemaseMing <blog.v-api.cn>
+# Email:admin@v-api.cn
+# Time:2016-09-27 14:51
+from modules import admin_bin
+
+admin_bin.run()
