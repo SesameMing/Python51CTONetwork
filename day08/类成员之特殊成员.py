@@ -37,7 +37,6 @@ class Foo:
         print('del item')
 
 
-
 obj1 = Foo('alex', 73)  # 类后面加（） 执行 __init__() 方法
 obj2 = Foo('eric', 84)
 obj1()  # 对象() 执行 __call__() 方法
