@@ -10,3 +10,4 @@ class Gaofushuai(Person.Person):
 
     def __str__(self):
         return '高富帅类'
+

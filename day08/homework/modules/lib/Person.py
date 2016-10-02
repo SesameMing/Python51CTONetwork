@@ -37,25 +37,33 @@ class Person:
         self.duixiang.duixiang = None
         self.duixiang = newobj
         newobj.duixiang = self
+        print("%s 劈腿和%s在一起了" % (self.name, newobj.name))
 
     # 分手
     def fenshou(self):
+        print("%s 和 %s 分手了" % (self.name, self.duixiang.name))
         self.duixiang.duixiang = None
         self.duixiang = None
 
-    # 努力奋斗 加金币
-    def nuli(self):
-        self.money += int(self.money) + 10000000
-        self.fang += int(self.fang) + 1
-        self.che += int(self.che) + 1
-
-    # 不误正业
-    def buwuzhengye(self):
-        self.money = int(self.money) - 1000000
 
     # 过了好几年
     def addage(self, age):
         self.age = int(self.age) + int(age)
+
+    # 人物介绍
+    def rwjs(self):
+        print("%s,年龄：%s, 是一个%s，资产：%s" % (self.name, self.age, self.job, self.money))
+
+    # 不误正业
+    def buwuzhengye(self):
+        self.money = int(self.money) - 1000
+
+
+    # 努力奋斗 加金币
+    def nuli(self):
+        self.money += int(self.money) + 1000000
+        self.fang += int(self.fang) + 1
+        self.che += int(self.che) + 1
 
     def __str__(self):
         if self.garden == '男':

@@ -51,7 +51,7 @@ ret = obj1.__dict__
 print(ret)
 print(Foo.__dict__)
 
-obj1['ad']  # 对象['XXX'] 自动用的 __getitem__()方法
+obj1['ad']  # 对象['XXX'] 自动用的 __getitem__()方
 obj1['k1'] = 111 # 对象['XXX']=111 自动用的 __setitem__()方法
 del obj1['k1'] # del 对象['XXX'] 自动用的 __delitem__()方法'
-obj[1:2]  # 执行__getitem__()方法
+obj1[1:2]  # 执行__getitem__()方法

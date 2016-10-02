@@ -10,3 +10,6 @@ from modules.lib import Person
 class Meinv(Person.Person):
     def __str__(self):
         return '美女类'
+
+    def guangjie(self):
+        self.money = int(self.money) - 1000

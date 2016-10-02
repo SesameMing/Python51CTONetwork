@@ -10,3 +10,4 @@ from modules.lib import Person
 class Diaosi(Person.Person):
     def __str__(self):
         return '屌丝类'
+
