@@ -20,7 +20,10 @@ while True:
             print("收到来自", addr, "的消息：", str(recv_data, encoding='utf-8'))
             p = subprocess.Popen(str(recv_data, encoding='utf-8'), shell=True, stdout=subprocess.PIPE)
             res = p.stdout.read()
-            send_data = str(res, encoding='gbk')
+            if len(res) == 0:
+                send_data = 'cmd error'
+            else:
+                send_data = str(res, encoding='gbk')
             conn.send(bytes(send_data, encoding='utf-8'))
         except Exception:
             break
