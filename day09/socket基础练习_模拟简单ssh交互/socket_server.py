@@ -24,7 +24,17 @@ while True:
                 send_data = 'cmd error'
             else:
                 send_data = str(res, encoding='gbk')
-            conn.send(bytes(send_data, encoding='utf-8'))
+
+            send_data = bytes(send_data, encoding='utf8')
+
+            ready_tag = 'Ready|%s' % len(send_data)
+            conn.send(bytes(ready_tag, encoding='utf8'))
+            feedback = conn.recv(1024)
+            feedback = str(feedback, encoding='utf-8')
+
+            if feedback.startswith('Start'):
+                conn.send(send_data)
+
         except Exception:
             break
     conn.close()
