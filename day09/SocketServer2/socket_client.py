@@ -4,8 +4,8 @@
 # Email: admin@v-api.cn
 # Time:2016-10-03 17:51
 import socket
-ip = '192.168.199.213'
-port = 8009
+ip = '192.168.199.120'
+port = 8000
 s = socket.socket()
 s.connect((ip, port))
 recv_data = s.recv(1024).decode()
