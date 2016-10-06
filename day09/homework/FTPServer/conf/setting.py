@@ -9,4 +9,4 @@ BASE_PATH = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SERVER_CONFIG_DIR = os.path.join(BASE_PATH, 'db', 'server')
 USER_CONFIG_DIR = os.path.join(BASE_PATH, 'db', 'user')
-USER_HOME_DIR = os.path.join(BASE_PATH, 'HOME', 'user')
+USER_HOME_DIR = os.path.join(BASE_PATH, 'home', 'user')
