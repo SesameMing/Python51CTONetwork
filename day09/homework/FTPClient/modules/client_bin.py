@@ -18,6 +18,7 @@ def main(ip_port, user):
     print(yz_data)
     input(">>>:")
 
+
 def login():
     print("欢迎使用FTPv1.0")
     ip = input("请输入服务端ip地址：").strip()
