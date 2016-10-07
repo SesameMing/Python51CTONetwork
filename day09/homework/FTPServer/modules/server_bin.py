@@ -7,6 +7,7 @@ import os
 import time
 import json
 import socket
+import shutil
 import hashlib
 import socketserver
 from modules.lib import log
@@ -19,21 +20,57 @@ QUIT_CHAR = 'q'
 class MyServer(socketserver.BaseRequestHandler):
     def handle(self):
         data = self.request.recv(1024)
-        print(len(data))
         data = json.loads(data.decode())
-        print(data)
         if not os.path.exists(os.path.join(setting.USER_CONFIG_DIR, data.get('username'))) or \
                 not os.path.exists(os.path.join(setting.USER_HOME_DIR, data.get('username'))):
-            self.request.sendall(bytes('文件目录不存在', encoding='utf-8'))
-        logmsg.debug("%s 链接了服务端" % self.client_address[0])
+            self.request.sendall(bytes('用户名或密码不正确', encoding='utf-8'))
+            logmsg.debug("%s 尝试用 %s 链接,但是，用户或HOME目录不存在" % (self.client_address[0], data.get('username')))
+        else:
+            user_dic = json.load(open(os.path.join(setting.USER_CONFIG_DIR, data.get('username'), 'user.config'), 'r'))
+            if user_dic.get('username') == data.get('username') and data.get('password') == user_dic.get('password'):
+                logmsg.debug("%s 用 %s 链接了服务端" % (self.client_address[0], data.get('username')))
+                self.request.sendall(bytes('欢迎 %s 登录到FTP服务器' % data.get('username'), encoding='utf-8'))
+
+
+            else:
+                logmsg.debug("%s 尝试用 %s 链接,但是密码错误" % (self.client_address[0], data.get('username')))
+                self.request.sendall(bytes('用户名或密码不正确', encoding='utf-8'))
 
 
 def FileSize(path):
+    """
+
+    计算目录下的所有文件的大小
+
+    """
     size = 0
     for root, dirs, files in os.walk(path, True):
         size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
-        #目录下文件大小累加
+        # 目录下文件大小累加
     return size
+
+
+def deluser():
+    """
+
+    删除用户以及home目录
+
+    """
+    userlist = os.listdir(os.path.join(setting.USER_CONFIG_DIR))
+    for index, name in enumerate(userlist):
+        print(index, name)
+    chooes = input("请选择要删除的用户序号>>>:")
+    if chooes.isdigit():
+        if int(chooes) <= len(userlist):
+            zfqr = input("是否确认立即删除用户以及其目录[y/n]:")
+            if zfqr == 'y' or zfqr == 'Y':
+                if os.path.exists(os.path.join(setting.USER_CONFIG_DIR, userlist[int(chooes)])):
+                    shutil.rmtree(os.path.join(setting.USER_CONFIG_DIR, userlist[int(chooes)]))
+                if os.path.exists(os.path.join(setting.USER_HOME_DIR, userlist[int(chooes)])):
+                    shutil.rmtree(os.path.join(setting.USER_HOME_DIR, userlist[int(chooes)]))
+                logmsg.debug("成功删除了 %s 用户以及其目录" % userlist[int(chooes)])
+    else:
+        logmsg.debug("输入不正确。")
 
 
 def edituser():
@@ -43,16 +80,49 @@ def edituser():
     chooes = input("请选择要修改的用户序号>>>:")
     if chooes.isdigit():
         if int(chooes) <= len(userlist):
-            user_dic = json.load(open(os.path.join(setting.USER_CONFIG_DIR, userlist[int(chooes)])))
+            user_dic = json.load(open(os.path.join(setting.USER_CONFIG_DIR, userlist[int(chooes)], 'user.config'), 'r'))
             str1 = """
+用户名：{username}
+分配存储：{storesizi}MB
 
-
-"""
+1.修改密码
+2.修改存储大小
+""".format(**user_dic)
+            print(str1)
+            choose_set = input("输入您的选择>>>:")
+            if choose_set == '1':
+                new_password = input("请输入新密码：").strip()
+                if not new_password:
+                    new_password = input("密码不能为空，请重新输入：").strip()
+                obj = hashlib.md5()
+                obj.update(bytes(new_password, encoding='utf-8'))
+                new_password = obj.hexdigest()
+                user_dic['password'] = new_password
+                json.dump(user_dic, open(os.path.join(setting.USER_CONFIG_DIR, userlist[int(chooes)], 'user.config'),
+                                         'w'))
+                logmsg.debug("成功修改了 %s 的密码" % userlist[int(chooes)])
+                return True
+            elif choose_set == '2':
+                storesizi = input("请输入新的配额：").strip()
+                if not storesizi:
+                    storesizi = input("新的配额不能为空，请重新输入：").strip()
+                user_dic['storesizi'] = storesizi
+                json.dump(user_dic, open(os.path.join(setting.USER_CONFIG_DIR, userlist[int(chooes)], 'user.config'),
+                                         'w'))
+                logmsg.debug("成功修改了 %s 的配额" % userlist[int(chooes)])
+                return True
+            else:
+                pass
     else:
         logmsg.debug("输入不符合规范")
 
+
 def adduser():
-    """ 添加FTP用户 """
+    """
+
+    添加FTP用户
+
+    """
     username = input("新用户名：").strip()
     while not username:
         username = input("用户名不能为空,请重新输入：").strip()
@@ -80,7 +150,11 @@ def adduser():
 
 
 def showuser():
-    """ 显示用户列表  """
+    """
+
+    显示用户列表
+
+    """
     info_sum_list = []
     user_dir_name = os.listdir(os.path.join(setting.USER_CONFIG_DIR))
     for iteminfo in user_dir_name:
@@ -104,7 +178,11 @@ def showuser():
 
 
 def editport():
-    """ 修改FTP端口 """
+    """
+
+    修改FTP端口
+
+    """
     if os.path.exists(os.path.join(setting.SERVER_CONFIG_DIR, 'server.db')):
         conf_dic = json.load(open(os.path.join(setting.SERVER_CONFIG_DIR, 'server.db'), 'r'))
         print("默认上次设置端口号：%s" % conf_dic.get('port'))
@@ -125,9 +203,12 @@ def editport():
         time.sleep(.5)
 
 
-
 def startServer():
-    """ 启动FTPserver服务 """
+    """
+
+    启动FTPserver服务
+
+    """
     logmsg.debug("服务端开启")
     time.sleep(.5)
     logmsg.debug("正在初始化服务端软件")
@@ -181,6 +262,8 @@ def run():
             adduser()
         elif choose == '5':
             edituser()
+        elif choose == '6':
+            deluser()
         elif choose == 'q':
             logmsg.debug('FTPServer退出')
 

@@ -9,7 +9,6 @@ import socket
 import json
 ip_port = ()
 
-
 def main(ip_port, user):
     s = socket.socket()
     s.connect(ip_port)
@@ -17,6 +16,7 @@ def main(ip_port, user):
     s.send(bytes(yz_send, encoding='utf8'))
     yz_data = s.recv(1024).decode()
     print(yz_data)
+    input(">>>:")
 
 def login():
     print("欢迎使用FTPv1.0")
