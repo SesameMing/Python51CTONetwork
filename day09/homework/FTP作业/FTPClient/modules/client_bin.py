@@ -31,6 +31,8 @@ def main(ip_port, user):
     str1 = s.recv(1024).decode()
     print(str1)
 
+    input(">>>:")
+
 
 def login():
     print("欢迎使用FTPv1.0")

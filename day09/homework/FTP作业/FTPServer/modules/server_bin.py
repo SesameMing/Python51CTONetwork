@@ -35,9 +35,9 @@ class MyServer(socketserver.BaseRequestHandler):
                 data = self.request.recv(1024)
                 print(data)
                 p = subprocess.Popen(str(data, encoding='utf-8'), shell=True, stdout=subprocess.PIPE)
-                res = p.stdout.read()
-                print(res)
-                self.request.sendall(res)
+                send_data = p.stdout.read()
+                send_data = str(send_data, encoding='gbk')
+                self.request.sendall(bytes(send_data, encoding='utf8'))
                 # 开始循环接收
                 while True:
                     data = self.request.recv(1024)
