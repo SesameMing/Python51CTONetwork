@@ -9,14 +9,27 @@ import socket
 import json
 ip_port = ()
 
+
 def main(ip_port, user):
     s = socket.socket()
     s.connect(ip_port)
+
+    # 发送 和 接收登录帐号和信息
     yz_send = json.dumps(user)
     s.send(bytes(yz_send, encoding='utf8'))
     yz_data = s.recv(1024).decode()
     print(yz_data)
-    input(">>>:")
+
+    # 发送成功信息，接收HOME目录列表
+    # confirm_data = 'success'
+    # s.send(bytes(confirm_data, encoding='utf8'))
+    # str1 = s.recv(1024).decode()
+    # print(str1)
+
+    confirm_data = 'dir'
+    s.send(bytes(confirm_data, encoding='utf8'))
+    str1 = s.recv(1024).decode()
+    print(str1)
 
 
 def login():

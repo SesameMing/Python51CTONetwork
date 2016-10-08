@@ -4,5 +4,11 @@
 # Email: admin@v-api.cn
 # Time:2016-10-06 0:15
 
-def put():
-    pass
+
+class ftpserver():
+
+    def cd(self):
+        print('cd')
+
+    def put(self):
+        print('上传')

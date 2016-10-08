@@ -4,13 +4,15 @@
 # Email: admin@v-api.cn
 # Time:2016-10-05 23:48
 import os
+import sys
 import time
 import json
 import socket
 import shutil
 import hashlib
+import subprocess
 import socketserver
-from modules.lib import log
+from modules.lib import log, ftpserver
 from conf import setting
 logmsg= log.log()
 ip_port = ()
@@ -30,7 +32,18 @@ class MyServer(socketserver.BaseRequestHandler):
             if user_dic.get('username') == data.get('username') and data.get('password') == user_dic.get('password'):
                 logmsg.debug("%s 用 %s 链接了服务端" % (self.client_address[0], data.get('username')))
                 self.request.sendall(bytes('欢迎 %s 登录到FTP服务器' % data.get('username'), encoding='utf-8'))
-
+                data = self.request.recv(1024)
+                print(data)
+                p = subprocess.Popen(str(data, encoding='utf-8'), shell=True, stdout=subprocess.PIPE)
+                res = p.stdout.read()
+                print(res)
+                self.request.sendall(res)
+                # 开始循环接收
+                while True:
+                    data = self.request.recv(1024)
+                    print(data.decode())
+                    obj = ftpserver.ftpserver()
+                    print(hasattr(obj, 'cd'))
 
             else:
                 logmsg.debug("%s 尝试用 %s 链接,但是密码错误" % (self.client_address[0], data.get('username')))
@@ -234,6 +247,7 @@ def startServer():
 
 
 def run():
+    print(sys.stdin.encoding)
     while True:
         print_str = """
 ----------------------------------
