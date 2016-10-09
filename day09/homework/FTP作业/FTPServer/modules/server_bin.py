@@ -46,14 +46,16 @@ class MyServer(socketserver.BaseRequestHandler):
                         recv_data = self.request.recv(1024)
                         if len(recv_data) == 0:
                             break
-                        hasattr()
-
-
-
-
-
-                        self.request.sendall(bytes("卡住", encoding='utf8'))
-                    except Exception:
+                        print(recv_data.decode())
+                        recv_data = recv_data.decode().split(' ')
+                        print(recv_data)
+                        obj = ftpserver.ftpserver()
+                        if hasattr(obj, recv_data[0]):
+                            fun = getattr(obj, recv_data[0])
+                            fun(self)
+                        # self.request.sendall(bytes("卡住", encoding='utf8'))
+                    except Exception as e:
+                        print(e)
                         logmsg.debug("%s 断开了服务端" % (self.client_address[0]))
                         break
 

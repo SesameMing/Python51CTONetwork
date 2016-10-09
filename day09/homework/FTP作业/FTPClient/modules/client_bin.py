@@ -31,11 +31,15 @@ def main(ip_port, user):
     str1 = s.recv(1024).decode()
     print(str1)
     while True:
-        send_data = input(">>>:")
-        s.send(bytes(confirm_data, encoding='utf8'))
-        recv_data = s.recv(1024).decode()
+        inp_data = input(">>>:").strip()
+        int_data = inp_data.split(' ')
+        if len(int_data) >= 2:
 
-        print(recv_data)
+            s.send(bytes(inp_data, encoding='utf8'))
+            recv_data = s.recv(1024).decode()
+            print(recv_data)
+        else:
+            print("错误的指令，请重新输入")
 
 
 
