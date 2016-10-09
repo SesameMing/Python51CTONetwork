@@ -33,21 +33,34 @@ class MyServer(socketserver.BaseRequestHandler):
                 logmsg.debug("%s 用 %s 链接了服务端" % (self.client_address[0], data.get('username')))
                 self.request.sendall(bytes('欢迎 %s 登录到FTP服务器' % data.get('username'), encoding='utf-8'))
                 data = self.request.recv(1024)
-                print(data)
-                p = subprocess.Popen(str(data, encoding='utf-8'), shell=True, stdout=subprocess.PIPE)
+                # 返回用户家目录
+                data = "dir %s" % (os.path.join(setting.USER_HOME_DIR, user_dic.get('username'),))
+                p = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE)
                 send_data = p.stdout.read()
                 send_data = str(send_data, encoding='gbk')
                 self.request.sendall(bytes(send_data, encoding='utf8'))
+
                 # 开始循环接收
                 while True:
-                    data = self.request.recv(1024)
-                    print(data.decode())
-                    obj = ftpserver.ftpserver()
-                    print(hasattr(obj, 'cd'))
+                    try:
+                        recv_data = self.request.recv(1024)
+                        if len(recv_data) == 0:
+                            break
+                        hasattr()
+
+
+
+
+
+                        self.request.sendall(bytes("卡住", encoding='utf8'))
+                    except Exception:
+                        logmsg.debug("%s 断开了服务端" % (self.client_address[0]))
+                        break
 
             else:
                 logmsg.debug("%s 尝试用 %s 链接,但是密码错误" % (self.client_address[0], data.get('username')))
                 self.request.sendall(bytes('用户名或密码不正确', encoding='utf-8'))
+                sys.exit()
 
 
 def FileSize(path):

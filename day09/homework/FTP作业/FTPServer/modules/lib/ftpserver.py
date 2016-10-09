@@ -5,10 +5,16 @@
 # Time:2016-10-06 0:15
 
 
-class ftpserver():
+def cd(*args, **kwargs):
+    """ 打开目录 """
+    print('cd')
 
-    def cd(self):
-        print('cd')
 
-    def put(self):
-        print('上传')
+def put():
+    """ 上传 """
+    print('上传')
+
+
+def down():
+    """ 下载 """
+    print("下载")

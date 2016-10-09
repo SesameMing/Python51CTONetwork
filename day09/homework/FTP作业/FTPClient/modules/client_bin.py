@@ -30,8 +30,13 @@ def main(ip_port, user):
     s.send(bytes(confirm_data, encoding='utf8'))
     str1 = s.recv(1024).decode()
     print(str1)
+    while True:
+        send_data = input(">>>:")
+        s.send(bytes(confirm_data, encoding='utf8'))
+        recv_data = s.recv(1024).decode()
 
-    input(">>>:")
+        print(recv_data)
+
 
 
 def login():
