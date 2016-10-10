@@ -7,6 +7,7 @@ import re
 import hashlib
 import socket
 import json
+from modules.lib import ftpserver
 ip_port = ()
 
 
@@ -30,17 +31,19 @@ def main(ip_port, user):
     s.send(bytes(confirm_data, encoding='utf8'))
     str1 = s.recv(1024).decode()
     print(str1)
+
+    obj = ftpserver.ftpserver()
     while True:
         inp_data = input(">>>:").strip()
         int_data = inp_data.split(' ')
         if len(int_data) >= 2:
-
-            s.send(bytes(inp_data, encoding='utf8'))
-            recv_data = s.recv(1024).decode()
-            print(recv_data)
+            if hasattr(obj, int_data[0]):
+                func = getattr(obj, int_data[0])
+                func(s, int_data)
+            else:
+                print("不存在的方法")
         else:
             print("错误的指令，请重新输入")
-
 
 
 def login():
