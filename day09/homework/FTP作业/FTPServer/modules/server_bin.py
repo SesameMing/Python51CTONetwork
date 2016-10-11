@@ -12,7 +12,7 @@ import shutil
 import hashlib
 import subprocess
 import socketserver
-from modules.lib import log, ftpserver
+from modules.lib import log, ftpserver, publicdef
 from conf import setting
 logmsg= log.log()
 ip_port = ()
@@ -27,58 +27,46 @@ class MyServer(socketserver.BaseRequestHandler):
         data = json.loads(data.decode())
         if not os.path.exists(os.path.join(setting.USER_CONFIG_DIR, data.get('username'))) or \
                 not os.path.exists(os.path.join(setting.USER_HOME_DIR, data.get('username'))):
-            self.request.sendall(bytes('用户名或密码不正确', encoding='utf-8'))
+            self.request.sendall(bytes('error|用户名或密码不正确', encoding='utf-8'))
             logmsg.debug("%s 尝试用 %s 链接,但是，用户或HOME目录不存在" % (self.client_address[0], data.get('username')))
         else:
             user_dic = json.load(open(os.path.join(setting.USER_CONFIG_DIR, data.get('username'), 'user.config'), 'r'))
             if user_dic.get('username') == data.get('username') and data.get('password') == user_dic.get('password'):
                 logmsg.debug("%s 用 %s 链接了服务端" % (self.client_address[0], data.get('username')))
                 self.request.sendall(bytes('欢迎 %s 登录到FTP服务器' % data.get('username'), encoding='utf-8'))
-                data = self.request.recv(1024)
-                # 返回用户家目录
-                now_path = os.path.join(setting.USER_HOME_DIR, user_dic.get('username'))
-                data = "dir %s" % now_path
-                p = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE)
-                send_data = p.stdout.read()
-                send_data = str(send_data, encoding='gbk')
-                self.request.sendall(bytes(send_data, encoding='utf8'))
+                recv_data = self.request.recv(1024)
+                if recv_data.decode() == 'successdir':
+                    now_path = os.path.join(setting.USER_HOME_DIR, user_dic.get('username'))
 
-                # 开始循环接收
-                obj = ftpserver.ftpserver(now_path, his_path)
-                while True:
-                    try:
-                        recv_data = self.request.recv(1024)
-                        if len(recv_data) == 0:
+                    # 返回用户家目录列表
+                    data = "dir %s" % now_path
+                    p = subprocess.Popen(data, shell=True, stdout=subprocess.PIPE)
+                    send_data = p.stdout.read()
+                    send_data = str(send_data, encoding='gbk')
+                    self.request.sendall(bytes(send_data, encoding='utf8'))
+
+                    # 开始循环接收
+                    obj = ftpserver.ftpserver(now_path, now_path, his_path, user_dic.get('username'))
+                    while True:
+                        try:
+                            recv_data = self.request.recv(1024)
+                            if len(recv_data) == 0:
+                                break
+                            recv_data = json.loads(recv_data.decode())
+                            if hasattr(obj, recv_data['action']):
+                                dic = {"recv_data": recv_data}
+                                fun = getattr(obj, recv_data['action'])
+                                fun(self, dic)
+
+                        except Exception as e:
+                            print(e)
+                            logmsg.debug("%s 断开了服务端" % (self.client_address[0]))
                             break
-                        recv_data = json.loads(recv_data.decode())
-                        print(recv_data)
-                        if hasattr(obj, recv_data['action']):
-                            dic = {"recv_data": recv_data, "his_path": his_path, "now_path": now_path}
-                            fun = getattr(obj, recv_data['action'])
-                            fun(self, dic)
-
-                    except Exception as e:
-                        print(e)
-                        logmsg.debug("%s 断开了服务端" % (self.client_address[0]))
-                        break
 
             else:
                 logmsg.debug("%s 尝试用 %s 链接,但是密码错误" % (self.client_address[0], data.get('username')))
-                self.request.sendall(bytes('用户名或密码不正确', encoding='utf-8'))
+                self.request.sendall(bytes('error|用户名或密码不正确', encoding='utf-8'))
                 sys.exit()
-
-
-def FileSize(path):
-    """
-
-    计算目录下的所有文件的大小
-
-    """
-    size = 0
-    for root, dirs, files in os.walk(path, True):
-        size += sum([os.path.getsize(os.path.join(root, name)) for name in files])
-        # 目录下文件大小累加
-    return size
 
 
 def deluser():
@@ -105,6 +93,9 @@ def deluser():
 
 
 def edituser():
+    """
+    编辑用户信息
+    """
     userlist = os.listdir(os.path.join(setting.USER_CONFIG_DIR))
     for index, name in enumerate(userlist):
         print(index, name)
@@ -193,7 +184,7 @@ def showuser():
         info = json.load(open(os.path.join(setting.USER_CONFIG_DIR, iteminfo, 'user.config')))
         info_list.append(info.get('username'))
         info_list.append(info.get('storesizi'))
-        size = FileSize(os.path.join(setting.USER_HOME_DIR, iteminfo)) / 1024 / 1024
+        size = publicdef.FileSize(os.path.join(setting.USER_HOME_DIR, iteminfo)) / 1024 / 1024
         info_list.append("%.2f" % size)
         info_list.append(os.path.join(setting.USER_HOME_DIR, info.get('username')))
         info_sum_list.append(info_list)
