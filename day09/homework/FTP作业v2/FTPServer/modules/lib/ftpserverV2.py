@@ -52,6 +52,11 @@ class ftpserver():
 
         if int(userconf.get('storesizi'))*1024*1024 >= int(publicdef.FileSize(self.home_path)) + int(file_size):
             if file_size > 0:
+
+
+
+
+
                 obj.request.sendall(bytes("start", encoding='utf8'))
                 recv_file_size = 0
                 recv_file_data = b''
@@ -67,8 +72,14 @@ class ftpserver():
                 fo = open(os.path.join(self.now_path, args[0]['recv_data']['filename']), 'wb')
                 fo.write(recv_file_data)
                 fo.close()
-            print("上传了文件 %s" % args[0]['recv_data']['filename'])
-            obj.request.sendall(bytes("上传成功", encoding='utf8'))
+                put_file_md5 = publicdef.getMD5(os.path.join(self.now_path, args[0]['recv_data']['filename']))
+                if put_file_md5 != args[0]['recv_data']['filemd5']:
+                    print("上传文件和源文件不一致")
+                else:
+                    print("上传了文件 %s" % args[0]['recv_data']['filename'])
+                    obj.request.sendall(bytes("上传成功", encoding='utf8'))
+            else:
+                obj.request.sendall(bytes("不能上传大小为0的文件", encoding='utf8'))
         else:
             print("您的存储不够")
             obj.request.sendall(bytes("您的存储不够, 不能上传了", encoding='utf8'))
@@ -76,7 +87,10 @@ class ftpserver():
     def down(self, obj, *args, **kwargs):
         """ 下载 """
         if os.path.isfile(os.path.join(self.now_path, args[0]['recv_data']['filename'])):
-            readydate = "Ready|%s" % os.path.getsize(os.path.join(self.now_path, args[0]['recv_data']['filename']))
+            readydate = "Ready|%s|%s" % (publicdef.getMD5(os.path.join(self.now_path, args[0]['recv_data']['filename']))
+                                         , os.path.getsize(os.path.join(self.now_path, args[0]['recv_data']['filename'])
+                                                           )
+                                         )
             obj.request.sendall(bytes(readydate, encoding='utf8'))
             racv_ready = obj.request.recv(1024)
             if racv_ready.decode() == 'start':
@@ -90,3 +104,16 @@ class ftpserver():
                 print("发送文件完毕")
         else:
             obj.request.sendall(bytes("下载的文件不存在，或者不是文件,暂时不支持下载文件夹", encoding='utf8'))
+
+    def mk(self, obj, *args, **kwargs):
+        """ 创建一个目录 """
+        print(args[0]['recv_data']['filename'])
+        if os.path.exists(os.path.join(self.now_path, args[0]['recv_data']['filename'])):
+            if os.path.isdir(os.path.join(self.now_path, args[0]['recv_data']['filename'])):
+                obj.request.sendall(bytes("该目录已经存在", encoding='utf8'))
+            else:
+                os.makedirs(os.path.join(self.now_path, args[0]['recv_data']['filename']))
+                obj.request.sendall(bytes("文件夹创建成功", encoding='utf8'))
+        else:
+            os.makedirs(os.path.join(self.now_path, args[0]['recv_data']['filename']))
+            obj.request.sendall(bytes("文件夹创建成功", encoding='utf8'))
