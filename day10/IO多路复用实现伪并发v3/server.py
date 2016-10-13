@@ -13,6 +13,7 @@ sk.listen(5)
 
 inputs = [sk, ]
 outputs = []
+messages = {}
 while True:
     rlist, wlist, e = select.select(inputs, outputs, [], 1)
     print(len(inputs), len(rlist), len(wlist), len(outputs))
@@ -20,6 +21,7 @@ while True:
         if r == sk:
             conn, address = r.accept()
             inputs.append(conn)
+            messages[conn] = []
             conn.sendall(bytes('hello', encoding='utf-8'))
         else:
             print("============")
@@ -30,11 +32,15 @@ while True:
                     raise Exception('断开连接')
                 else:
                     outputs.append(r)
+                    messages[r].append(ret)
             except Exception as e:
                 inputs.remove(r)
+                del messages[r]
 
     for w in wlist:
-        w.sendall(bytes('response', encoding='utf-8'))
+        msg = messages[w].pop()
+        resp = msg + bytes('response', encoding='utf-8')
+        w.sendall(resp)
         outputs.remove(w)
 
 
