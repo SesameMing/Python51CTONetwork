@@ -19,8 +19,12 @@
     array
     Manager.dict
   
+  ps：IO密集型-多线程
+      计算密集型-多进程
+      
 
 ## 协程
+  原理：利用一个线程，分解一个线程成为多“微线程” ==》 程序级别
 * greenlet
 * gevent
 
