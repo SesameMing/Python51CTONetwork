@@ -6,6 +6,6 @@
 
 import redis
 
-r = redis.Redis(host='192.168.199.213', port=6379)
+r = redis.Redis(host='127.0.0.1', port=6379)
 r.set('foo', 'Bar')
-print(r.get('foo'))
+print(r.get('foo').decode())
