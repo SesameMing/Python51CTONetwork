@@ -31,7 +31,12 @@
 ## 缓存
     1.安装软件
     2.程序：安装其对应的模块
+    socket 链接
 * mem
+    1. 天生集群
+    2. 基本
+    3. gets, cas
+    
 * redis
 
 ## rabbitMQ
