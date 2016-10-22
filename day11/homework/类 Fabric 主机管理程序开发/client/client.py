@@ -4,3 +4,6 @@
 # Email: admin@v-api.cn
 # Time: 2016-10-20 19:49
 
+from bin import client_bin
+
+client_bin.run()
