@@ -33,6 +33,7 @@ def login():
     username = input("请输入账号：").strip()
     password = input("请输入密码：").strip()
     if os.path.exists(os.path.join(setting.USER_DIR_PATH, username)):
+        pass
 
 
 
