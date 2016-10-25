@@ -75,11 +75,12 @@ def lianjiefuwuqi():
                 host_action = host.HostClent(host_list[int(innp)][1], int(host_list[int(innp)][2]), host_list[int(innp)][3], host_list[int(innp)][4])
                 if host_action.ssh_host():
                     Log.info("链接成功")
+                    time.sleep(.1)
                     while True:
                         # cd 方法转换成ls 方法
                         innp_commend = input("[%s@%s]:" % (host_list[int(innp)][3], host_list[int(innp)][0]))
 
-                        print(host_action.ssh_command(innp_commend))
+                        print(host_action.ssh_command(host_action.innp(innp_commend)))
                 else:
                     Log.warning("链接失败，请检查网络是否通畅或者服务器帐号密码是否正确")
             else:
