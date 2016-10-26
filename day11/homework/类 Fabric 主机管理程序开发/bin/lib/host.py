@@ -3,8 +3,9 @@
 # Author:SemaseMing <blog.v-api.cn>
 # Email: admin@v-api.cn
 # Time: 2016-10-23 20:00
-import socket
+import os
 import paramiko
+from conf import setting
 
 class HostClent():
     def __init__(self, ip, port, user, passwd):
@@ -64,6 +65,21 @@ class HostClent():
             sftp.put(inp.split()[1], inp.split()[2])
             transport.close()
             print("\033[32;0m【%s】 上传 文件【%s】 成功....\033[0m" % (self.ip, inp.split()[2]))
+        except Exception as error:  # 抓住异常
+            print("\033[31;0m错误:【%s】【%s】\033[0m" % (self.ip, error))
+
+    # 下载
+    def get(self, inp):
+        innp = inp.split()
+        try:
+            transport = paramiko.Transport((self.ip, int(self.port)))
+            transport.connect(username=self.user, password=self.passwd)
+            sftp = paramiko.SFTPClient.from_transport(transport)
+            if not os.path.exists(os.path.join(setting.BASE_PATH, str(self.ip))):
+                os.makedirs(os.path.join(setting.BASE_PATH, str(self.ip)))
+            sftp.get(inp.split()[1], os.path.join(setting.BASE_PATH, str(self.ip), innp[2]))
+            transport.close()
+            print("\033[32;0m【%s】 下载 文件【%s】 成功....\033[0m" % (self.ip, innp[2]))
         except Exception as error:  # 抓住异常
             print("\033[31;0m错误:【%s】【%s】\033[0m" % (self.ip, error))
 

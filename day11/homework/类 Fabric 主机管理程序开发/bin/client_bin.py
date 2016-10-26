@@ -88,8 +88,7 @@ def xiafaru():
                     print(" └ 主机: %s ip:%s " % (hostlist[0], hostlist[1]))
         print_str = """选择分组还是具体的服务器
 1.服务器分组
-2.单独服务器
-"""
+2.单独服务器"""
         print(print_str)
         uinnp = input(">>>:")
         if uinnp == '1':
@@ -97,13 +96,13 @@ def xiafaru():
             for hostclass in host_dic:
                 host_index.append(hostclass)
             for index, host_item in enumerate(host_index):
-                print("%s,  %s" % (index, host_item))
+                print("[%s].  %s" % (index, host_item))
             host_class_num = input(">>>:")
             host_list = host_dic.get(host_index[int(host_class_num)])
             if len(host_list) > 0:
                 print("------主机列表-------")
                 for item in host_list:
-                    print("%s %s" % (item[0], item[1]))
+                    print("%s ip:%s" % (item[0], item[1]))
                 while True:
                     cmd = input("[%s:退出]选择进行的操作的命令>>>>:" % QUIT_CHAR).strip()
                     thread_list = []
@@ -391,6 +390,15 @@ def main():
             pass
 
 
+def readme():
+    if os.path.exists(os.path.join(setting.BASE_PATH, 'readme.md')):
+        for line in open(os.path.join(setting.BASE_PATH, 'readme.md'), 'r', encoding='utf-8'):
+            if line.split():
+                print(line)
+    else:
+        Log.warning("readme.md文件丢失。读取失败")
+
+
 def check_conf_file():
     Log.info("检查配置文件")
     if os.path.exists(os.path.join(setting.USER_DIR_PATH)):
@@ -398,6 +406,10 @@ def check_conf_file():
             return True
     else:
         os.makedirs(os.path.join(setting.USER_DIR_PATH))
+    time.sleep(.1)
+    readinp = input("程序第一次运行，是否先读取readme.md[y/n]:")
+    if readinp == 'y':
+        readme()
     Log.info("程序第一次运行，请先设置登录用户信息")
     time.sleep(.1)
     username = input("设置登录的帐号：")
