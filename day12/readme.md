@@ -1,4 +1,27 @@
 # day12
-http://www.cnblogs.com/wupeiqi/articles/4839959.html
-http://www.cnblogs.com/wupeiqi/articles/5132791.html
-http://www.cnblogs.com/wupeiqi/articles/5699254.html
+线程池：http://www.cnblogs.com/wupeiqi/articles/4839959.html
+redis：http://www.cnblogs.com/wupeiqi/articles/5132791.html
+Mysql：http://www.cnblogs.com/wupeiqi/articles/5699254.html
+
+一、线程池
+
+
+二、redis, 发布和订阅
+
+
+三、rabbitMQ
+
+
+四、MySQL
+
+
+五、python pymysql
+
+
+六、Python ORM框架 SQLAchemy
+
+
+七、Paramiko
+
+
+八、堡垒机
