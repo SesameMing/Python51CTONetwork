@@ -4,12 +4,17 @@ redis：http://www.cnblogs.com/wupeiqi/articles/5132791.html
 Mysql：http://www.cnblogs.com/wupeiqi/articles/5699254.html
 
 一、线程池
-    * 上下文管理
-    * 终止线程池操作
+
+    上下文管理
+    终止线程池操作
 
 二、redis, 发布和订阅
+    
     连接池
     自定义列表操作
+    事务的操作
+        原子性操作
+        
 
 
 三、rabbitMQ
