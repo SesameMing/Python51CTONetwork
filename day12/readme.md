@@ -56,6 +56,10 @@ Mysql：http://www.cnblogs.com/wupeiqi/articles/5699254.html
         
 六、Python ORM框架 SQLAchemy
     
+    创建表
+    CURD
+    其他
+    
 
 七、Paramiko
 
