@@ -18,7 +18,7 @@ USER_LOGIN_STATUS = {'username': None, 'login': False}
 DB_DICT = {}  # Database config dict
 QUIT_CHAR = 'q'
 
-
+#  一些设置
 def setloggin():
     """
     设置log
@@ -42,20 +42,147 @@ def mysqlobj():
     conn = mysql_table.initdatebase()
     return conn
 
-sqlobj = mysqlobj()
+
+
+
+# 程序主要部分
+def setHostfz():
+    """
+    设置 host 分组
+    :return:
+    """
+    while True:
+        mun = """-------------------------------------
+|              分组列表             |
+-------------------------------------"""
+        print(mun)
+        ret = sqlobj.showHostfz()
+        if len(ret) == 0:
+            mun = """|         暂无分组,请先添加         | """
+            print(mun)
+        else:
+            for item in ret:
+                print(item.id, '.  ', item.classname)
+        mun = """-------------------------------------
+| a:添加 e:编辑 d:删除 %s:返回主菜单 |
+-------------------------------------""" % QUIT_CHAR
+        print(mun)
+        innp = input("请输入你的选择>>>:")
+        if innp == "a":
+            hostinnp = input("[为空则取消]输入新添加的分类名称>>>:").strip()
+            if not hostinnp:
+                Log.info("取消修改")
+                time.sleep(.1)
+                continue
+            else:
+                ret = sqlobj.setHostfz(hostinnp)
+                if ret:
+                    Log.info("添加成功")
+                else:
+                    Log.info("添加失败")
+                time.sleep(.1)
+                continue
+        elif innp == "e":
+            hostinnpid = input("[为空则取消]请输入要修改分类的id>>>:").strip()
+            if not hostinnpid:
+                Log.info("取消修改")
+                time.sleep(.1)
+                continue
+            else:
+                if hostinnpid.isdigit():
+                    if int(hostinnpid) <= len(ret):
+                        print("正常范围")
+                    else:
+                        Log.warning("输入错误,不在范围内")
+                        time.sleep(.1)
+                        continue
+                else:
+                    Log.warning("输入错误")
+                    time.sleep(.1)
+                    continue
+
+        elif innp == "d":
+            pass
+        elif innp == QUIT_CHAR:
+            Log.info("返回主菜单")
+            time.sleep(.1)
+            break
+        else:
+            Log.warning("错误的选项输入")
+            time.sleep(.1)
+            continue
+
+
+def setRabbitmq():
+    """
+    配置Rabbitmq
+    :return:
+    """
+    if not os.path.exists(setting.RB_FILE_PATH):
+        rbhost = input("请先配置RabbitMQ服务器地址：").strip()
+        while not rbhost:
+            rbhost = input("RabbitMQ服务器地址不能为空，请重新配置：").strip()
+        dic = {"rbhost": rbhost}
+        json.dump(dic, open(setting.RB_FILE_PATH, 'w'))
+        Log.info("设置")
+    while True:
+        rbhost_dic = json.load(open(setting.RB_FILE_PATH, 'r'))
+        mun = """-------------------------------------
+| RabbitMQ服务器地址: %s
+-------------------------------------
+| e:修改        %s:返回上级
+-------------------------------------""" % (rbhost_dic['rbhost'], QUIT_CHAR)
+        print(mun)
+        innp = input("请输入你的选择>>>:").strip()
+        if innp == 'e':
+            host_innp = input("[为空则取消修改]请输入你新的RabbitMQ>>>:").strip()
+            if not host_innp:
+                Log.info("取消修改")
+                time.sleep(.1)
+                continue
+            else:
+                rbhost_dic['rbhost'] = host_innp
+                json.dump(rbhost_dic, open(setting.RB_FILE_PATH, 'w'))
+                Log.info("修改成功")
+                time.sleep(.1)
+                continue
+        elif innp == QUIT_CHAR:
+            Log.info("返回主菜单")
+            time.sleep(.1)
+            break
+        else:
+            Log.warning("错误的选项输入")
+            time.sleep(.1)
+            continue
 
 
 def main():
-    str1 = """---------主菜单-----------
-
-1.设置RabbitMQ服务器链接
-2.主机分组
-3.主机列表
-4.下发任务
-
---------------------------
-"""
-    print(str1)
+    """
+    主方法
+    :return:
+    """
+    while True:
+        mun = """-------------------------------------
+|     简单远程调用模型PRC v1.0.0    |
+-------------------------------------
+|                                   |
+|  1.设置RabbitMQ服务器链接         |
+|  2.主机分组                       |
+|  3.主机列表                       |
+|  4.下发任务                       |
+|                                   |
+-------------------------------------
+| 数字：选择            %s:退出      |
+-------------------------------------""" % QUIT_CHAR
+        print(mun)
+        inpp = input("请输入你的选择>>>:").strip()
+        if inpp == QUIT_CHAR:
+            break
+        elif inpp.isdigit():
+            if int(inpp) == 1:
+                setRabbitmq()
+            elif int(inpp) == 2:
+                setHostfz()
 
 def login():
     """
@@ -71,6 +198,7 @@ def login():
         password = input("请输入密码：").strip()
         while not password:
             password = input("密码不能把为空,请重新输入：").strip()
+        sqlobj = mysqlobj()
         if sqlobj.yzuser(username, password):
             Log.info("登录成功")
             USER_LOGIN_STATUS['username'] = username
@@ -116,6 +244,7 @@ def ini_db():
                     create_database(engine.url)
                     json.dump(DB_DICT, open(setting.BD_FILE_PATH, 'w'))
                     time.sleep(.1)
+                    sqlobj = mysqlobj()
                     obj = sqlobj.init()
                     user = input("设置管理员帐号：").strip()
                     while user is null:
@@ -123,7 +252,7 @@ def ini_db():
                     passwd = input("设置管理员密码：").strip()
                     while passwd is null:
                         passwd = input("管理员密码不能为空,重新设置：").strip()
-                    obj.setadmin(user, passwd)
+                    sqlobj.setadmin(user, passwd)
                 return True
             except Exception as e:
                 print(e)
@@ -138,6 +267,8 @@ def run():
         Log.info("数据库配置异常，请先删除config/db.conf文件")
         sys.exit(1)
     if login():
+        global sqlobj
+        sqlobj = mysqlobj()
         main()
 
 

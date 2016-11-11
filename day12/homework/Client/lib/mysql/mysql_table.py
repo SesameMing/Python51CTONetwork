@@ -14,24 +14,22 @@ from config import setting
 
 
 class initdatebase():
-
     def __init__(self):
         if os.path.exists(setting.BD_FILE_PATH):
             db_dict = json.load(open(setting.BD_FILE_PATH, 'r'))
-            dbstr = "mysql+pymysql://%s:%s@%s:%s/%s" % (db_dict.get('db_username'),
+            dbstr = "mysql+pymysql://%s:%s@%s:%s/%s?charset=utf8" % (db_dict.get('db_username'),
                                                         db_dict.get('db_password'),
                                                         db_dict.get('db_host'),
                                                         int(db_dict.get('db_port')),
                                                         db_dict.get('db_name')
                                                         )
-            self.engine = create_engine(dbstr, max_overflow=5)
+            self.engine = create_engine(dbstr, max_overflow=5, encoding="utf8", convert_unicode=True)
             self.Session = sessionmaker(bind=self.engine)
             self.session = self.Session()
         else:
             print("创建数据表异常")
             return False
     Base = declarative_base()
-
     class User(Base):
         __tablename__ = 'users'
         id = Column(Integer, primary_key=True)
@@ -60,11 +58,24 @@ class initdatebase():
         self.Base.metadata.create_all(self.engine)
 
     def setadmin(self, username, password):
+        """
+        设置帐号密码
+        :param username: 帐号
+        :param password: 密码
+        :return:
+        """
         obj = self.User(name=username, password=password)
         self.session.add(obj)
         self.session.commit()
+        return True
 
     def yzuser(self, username, password):
+        """
+        验证用户帐号密码正确性
+        :param username: 帐号
+        :param password: 密码
+        :return: bool
+        """
         try:
             user = self.session.query(self.User).filter(self.User.name == username, self.User.password == password).one()
             if int(user.id) > 0:
@@ -74,3 +85,22 @@ class initdatebase():
                 return False
         except:
             return False
+
+    def setHostfz(self, classname):
+        """
+        添加分组
+        :param classname: 分组名称
+        :return: bool
+        """
+        obj = self.Classify(classname=classname)
+        self.session.add(obj)
+        self.session.commit()
+        return True
+
+    def showHostfz(self):
+        """
+        显示分组列表
+        :return: 分组列表
+        """
+        hostfz = self.session.query(self.Classify).all()
+        return hostfz
