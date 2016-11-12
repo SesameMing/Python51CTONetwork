@@ -13,7 +13,7 @@ import pymysql
 from sqlalchemy import *
 from sqlalchemy_utils import database_exists, create_database
 from config import setting
-from lib.mysql import mysql_table
+from bin.lib import mysql_table
 USER_LOGIN_STATUS = {'username': None, 'login': False}
 DB_DICT = {}  # Database config dict
 QUIT_CHAR = 'q'
@@ -43,9 +43,78 @@ def mysqlobj():
     return conn
 
 
-
-
 # 程序主要部分
+def setHost():
+    while True:
+        mun = """-------------------------------------
+|              主机列表             |
+-------------------------------------"""
+        print(mun)
+        ret = sqlobj.showHost()
+        if len(ret) == 0:
+            mun = """|         暂无主机,请先添加         | """
+            print(mun)
+        else:
+            hostlist = []  # 主机列表
+            for item in ret:
+                hostlist.append(item)
+                print(item.id, item.nickname, item.ip)
+
+        mun = """-------------------------------------
+| a:添加 e:编辑 d:删除 %s:返回主菜单 |
+-------------------------------------""" % QUIT_CHAR
+        print(mun)
+        innp = input("请输入你的选择>>>:")
+        if innp == "a":
+            hostname = input("[为空则取消]输入新添加的主机名称>>>:").strip()
+            if not hostname:
+                Log.info("取消操作")
+                time.sleep(.1)
+                continue
+            hostip = input("[为空则取消]输入新添加的ip地址>>>:").strip()
+            if not hostip:
+                Log.info("取消操作")
+                time.sleep(.1)
+                continue
+            ret = sqlobj.showHostfz()
+            while True:
+                if len(ret) == 0:
+                    Log.warning("暂无分组，请先添加分组")
+                    classname = input("[为空则取消]请先添加分组>>>:").strip()
+                    if not classname:
+                        Log.info("取消操作")
+                        time.sleep(.1)
+                        continue
+                    else:
+                        ret = sqlobj.setHostfz(classname)
+                        if ret:
+                            Log.info("添加成功")
+                        else:
+                            Log.info("添加失败")
+                        time.sleep(.1)
+                else:
+                    clidlist = []
+                    for item in ret:
+                        clidlist.append(item.id)
+                        print(item.id, item.classname)
+                    cid = input("[为空则取消]请选择主机分组>>>:").strip()
+                    if not cid:
+                        Log.info("取消操作")
+                        time.sleep(.1)
+                        break
+                    else:
+                        if int(cid) in clidlist:
+                            pass
+                        else:
+                            Log.info("")
+                            time.sleep(.1)
+                            break
+
+
+        else:
+            pass
+
+
 def setHostfz():
     """
     设置 host 分组
@@ -61,7 +130,9 @@ def setHostfz():
             mun = """|         暂无分组,请先添加         | """
             print(mun)
         else:
+            clidlist = []  # 分类id列表
             for item in ret:
+                clidlist.append(item.id)
                 print(item.id, '.  ', item.classname)
         mun = """-------------------------------------
 | a:添加 e:编辑 d:删除 %s:返回主菜单 |
@@ -71,7 +142,7 @@ def setHostfz():
         if innp == "a":
             hostinnp = input("[为空则取消]输入新添加的分类名称>>>:").strip()
             if not hostinnp:
-                Log.info("取消修改")
+                Log.info("取消添加")
                 time.sleep(.1)
                 continue
             else:
@@ -90,8 +161,21 @@ def setHostfz():
                 continue
             else:
                 if hostinnpid.isdigit():
-                    if int(hostinnpid) <= len(ret):
-                        print("正常范围")
+                    if int(hostinnpid) in clidlist:
+                        classname = input("[为空则取消]请输入新的分组名称>>>:").strip()
+                        if not classname:
+                            Log.info("取消修改")
+                            time.sleep(.1)
+                            continue
+                        else:
+                            if sqlobj.editHostfz(hostinnpid, classname):
+                                Log.info("修改成功")
+                                time.sleep(.1)
+                                continue
+                            else:
+                                Log.warning("修改失败")
+                                time.sleep(.1)
+                                continue
                     else:
                         Log.warning("输入错误,不在范围内")
                         time.sleep(.1)
@@ -100,9 +184,37 @@ def setHostfz():
                     Log.warning("输入错误")
                     time.sleep(.1)
                     continue
-
         elif innp == "d":
-            pass
+            hostinnpid = input("[为空则取消]请输入要删除分类的id>>>:").strip()
+            if not hostinnpid:
+                Log.info("取消删除")
+                time.sleep(.1)
+                continue
+            else:
+                if hostinnpid.isdigit():
+                    if int(hostinnpid) in clidlist:
+                        qr = input("[y:删除/n:取消”]是否确定删除：>>>:").strip()
+                        if qr == 'y':
+                            if sqlobj.delHostfz(hostinnpid):
+                                Log.info("删除成功")
+                                time.sleep(.1)
+                                continue
+                            else:
+                                Log.warning("删除失败")
+                                time.sleep(.1)
+                                continue
+                        else:
+                            Log.info("取消删除")
+                            time.sleep(.1)
+                            continue
+                    else:
+                        Log.warning("输入错误,不在范围内")
+                        time.sleep(.1)
+                        continue
+                else:
+                    Log.warning("输入错误")
+                    time.sleep(.1)
+                    continue
         elif innp == QUIT_CHAR:
             Log.info("返回主菜单")
             time.sleep(.1)
@@ -183,6 +295,15 @@ def main():
                 setRabbitmq()
             elif int(inpp) == 2:
                 setHostfz()
+            elif int(inpp) == 3:
+                setHost()
+            elif int(inpp) == 4:
+                pass
+            else:
+                pass
+        else:
+            pass
+
 
 def login():
     """

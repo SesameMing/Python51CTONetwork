@@ -45,6 +45,7 @@ class initdatebase():
         __tablename__ = 'hostlist'
         id = Column(Integer, primary_key=True)
         cid = Column(Integer)
+        nickname = Column(String(32))
         ip = Column(String(32))
         port = Column(Integer)
         uname = Column(String(32))
@@ -53,7 +54,7 @@ class initdatebase():
     def init(self):
         """
         创建数据表
-        :return:
+        :return: none
         """
         self.Base.metadata.create_all(self.engine)
 
@@ -62,7 +63,7 @@ class initdatebase():
         设置帐号密码
         :param username: 帐号
         :param password: 密码
-        :return:
+        :return: bool
         """
         obj = self.User(name=username, password=password)
         self.session.add(obj)
@@ -104,3 +105,40 @@ class initdatebase():
         """
         hostfz = self.session.query(self.Classify).all()
         return hostfz
+
+    def editHostfz(self, id, chassname):
+        """
+        修改分类名称
+        根据id号修改 分类名称
+        :param id: 分组的id
+        :param chassname: 新的分组名称
+        :return: bool
+        """
+        self.session.query(self.Classify).filter(self.Classify.id == int(id)).update({"classname": chassname})
+        self.session.commit()
+        return True
+
+    def delHostfz(self, id):
+        """
+        删除分类
+        根据id号 删除 分类名称
+        :param id: 分类的id
+        :return: bool
+        """
+        self.session.query(self.Classify).filter(self.Classify.id == int(id)).delete()
+        self.session.commit()
+        return True
+
+    def showHost(self):
+        """
+        显示主机列表
+        :return: 主机列表
+        """
+        hostlist = self.session.query(self.Hostlist).all()
+        return hostlist
+
+    def addHost(self, name, cid, ip):
+        obj = self.Hostlist(classname=classname)
+        self.session.add(obj)
+        self.session.commit()
+        return True

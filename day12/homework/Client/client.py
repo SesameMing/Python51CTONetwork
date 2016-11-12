@@ -5,7 +5,7 @@
 # Time: 2016-11-05 18:50
 # Version：3.x
 
-from lib import main_client
+from bin import main_client
 
 
 main_client.run()
