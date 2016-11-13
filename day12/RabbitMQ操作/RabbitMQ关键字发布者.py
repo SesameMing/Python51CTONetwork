@@ -15,11 +15,12 @@ channel = connection.channel()
 channel.exchange_declare(exchange='direct_logs',
                          type='direct')
 
-severity = 'info'
+severity = ['info', 'error']
+for severi in severity:
 
-message = ' '.join(sys.argv[2:]) or 'Hello World!'
-channel.basic_publish(exchange='direct_logs',
-                      routing_key=severity,
-                      body=message)
+    message = ' '.join(sys.argv[2:]) or 'Hello World!'
+    channel.basic_publish(exchange='direct_logs',
+                          routing_key=severi,
+                          body=message)
 print(" [x] Sent %r:%r" % (severity, message))
 connection.close()

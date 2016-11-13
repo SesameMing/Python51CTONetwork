@@ -138,7 +138,41 @@ class initdatebase():
         return hostlist
 
     def addHost(self, name, cid, ip):
-        obj = self.Hostlist(classname=classname)
+        """
+        添加主机
+        :param name: 主机昵称
+        :param cid: 主机分组id
+        :param ip: 主机ip地址
+        :return: bool
+        """
+        obj = self.Hostlist(nickname=name, cid=cid, ip=ip)
         self.session.add(obj)
+        self.session.commit()
+        return True
+
+    def editHost(self, id, name, ip):
+        """
+        根据id号修改主机信息
+        :param id: 主机id
+        :param name: 主机昵称
+        :param ip: 主机ip
+        :return: bool
+        """
+        updict = {}
+        if name:
+            updict['nickname'] = name
+        if ip:
+            updict['ip'] = ip
+        self.session.query(self.Hostlist).filter(self.Hostlist.id == int(id)).update(updict)
+        self.session.commit()
+        return True
+
+    def delHost(self, id):
+        """
+        删除主机
+        :param id: 主机id
+        :return:
+        """
+        self.session.query(self.Hostlist).filter(self.Hostlist.id == int(id)).delete()
         self.session.commit()
         return True

@@ -44,18 +44,74 @@ def mysqlobj():
 
 
 # 程序主要部分
+
+def xiafazhiling():
+    """
+    下发指令，只支持命令,暂时不支持上下载操作
+    :return:
+    """
+    while True:
+        innp = input("[%s退出]需要发送的命令>>>:" % QUIT_CHAR).strip()
+        while not innp:
+            innp = input("[%s退出]命令不能为空,需要发送的命令>>>:" % QUIT_CHAR).strip()
+        if innp == QUIT_CHAR:
+            Log.info("退出发送指令")
+            time.sleep(.1)
+            break
+        else:
+            while True:
+                mun = """-------------------------------------
+|              发送类型             |
+-------------------------------------
+|                                   |
+|  1.分组发送                       |
+|  2.主机单独发送                   |
+|                                   |
+-------------------------------------"""
+                print(mun)
+                sendtype = input("[%s退出]选择发送的类型>>>:" % QUIT_CHAR)
+                while not sendtype:
+                    sendtype = input("[%s退出]类型不能为空,请重新输入>>>:" % QUIT_CHAR)
+                if sendtype == QUIT_CHAR:
+                    Log.info("退出发送指令")
+                    time.sleep(.1)
+                    break
+                elif sendtype == '1':
+                    classify = sqlobj.showHostfz()
+                    if len(classify) == 0:
+                        mun = """|         暂无分组,请先添加分组         | """
+                        print(mun)
+                        Log.warning("还不存在分组，请先添加分组")
+                        break
+                    else:
+                        for item in classify:
+                            print(item.id, '.  ', item.classname)
+                        input("请选择分组")
+
+                elif sendtype == '2':
+                    pass
+                else:
+                    Log.warning("选择错误,重新选择")
+                    time.sleep(.1)
+                    continue
+
+
 def setHost():
+    """
+    主机列表
+    :return:
+    """
     while True:
         mun = """-------------------------------------
 |              主机列表             |
 -------------------------------------"""
         print(mun)
         ret = sqlobj.showHost()
+        hostlist = []  # 主机列表
         if len(ret) == 0:
             mun = """|         暂无主机,请先添加         | """
             print(mun)
         else:
-            hostlist = []  # 主机列表
             for item in ret:
                 hostlist.append(item)
                 print(item.id, item.nickname, item.ip)
@@ -76,10 +132,11 @@ def setHost():
                 Log.info("取消操作")
                 time.sleep(.1)
                 continue
-            ret = sqlobj.showHostfz()
             while True:
+                ret = sqlobj.showHostfz()
                 if len(ret) == 0:
                     Log.warning("暂无分组，请先添加分组")
+                    time.sleep(.1)
                     classname = input("[为空则取消]请先添加分组>>>:").strip()
                     if not classname:
                         Log.info("取消操作")
@@ -97,22 +154,98 @@ def setHost():
                     for item in ret:
                         clidlist.append(item.id)
                         print(item.id, item.classname)
-                    cid = input("[为空则取消]请选择主机分组>>>:").strip()
+                    cid = input("[为空则取消]请选择主机分组id>>>:").strip()
                     if not cid:
                         Log.info("取消操作")
                         time.sleep(.1)
                         break
                     else:
                         if int(cid) in clidlist:
-                            pass
+                            if sqlobj.addHost(hostname, cid, hostip):
+                                Log.info("添加成功")
+                                time.sleep(.1)
+                                break
+                            else:
+                                Log.warning("添加失败")
+                                time.sleep(.1)
+                                break
                         else:
-                            Log.info("")
+                            Log.info("选择主机分组错误")
                             time.sleep(.1)
-                            break
-
-
+                            continue
+        elif innp == "e":  # 编辑主机
+            if len(hostlist) == 0:
+                Log.info("主机都是空的,修改什么呢")
+                time.sleep(.1)
+                continue
+            edithostid = input("[为空则取消]输入需要修改的主机id>>>:").strip()
+            if edithostid.isdigit():
+                if int(edithostid) in [i.id for i in hostlist]:
+                    newhostname = input("[为空则不修改]输入需要新的主机昵称>>>:").strip()
+                    if not newhostname:
+                        newhostname = False
+                    newhostip = input("[为空则不修改]输入需要新的主机ip>>>:").strip()
+                    if not newhostip:
+                        newhostip = False
+                    if newhostname == False and newhostip == False:
+                        Log.info("没有修改主机")
+                        time.sleep(.1)
+                        continue
+                    else:
+                        if sqlobj.editHost(edithostid, newhostname, newhostip):
+                            Log.info("修改成功")
+                            time.sleep(.1)
+                            continue
+                        else:
+                            Log.warning("修改失败")
+                            time.sleep(.1)
+                            continue
+                else:
+                    Log.warning("输入不在范围内")
+                    time.sleep(.1)
+                    continue
+            else:
+                Log.warning("输入错误")
+                time.sleep(.1)
+                continue
+        elif innp == "d":  # 删除主机
+            if len(hostlist) == 0:
+                Log.info("主机都是空的,删除什么呢")
+                time.sleep(.1)
+                continue
+            hostid = input("[为空则取消]请输入要删除的主机id>>>:").strip()
+            if not hostid:
+                Log.info("取消删除")
+                time.sleep(.1)
+                continue
+            else:
+                if int(hostid) in [i.id for i in hostlist]:
+                    qr = input("[y:删除/n:取消”]是否确定删除：>>>:").strip()
+                    if qr == 'y':
+                        if sqlobj.delHost(hostid):
+                            Log.info("删除成功")
+                            time.sleep(.1)
+                            continue
+                        else:
+                            Log.warning("删除失败")
+                            time.sleep(.1)
+                            continue
+                    else:
+                        Log.info("取消删除")
+                        time.sleep(.1)
+                        continue
+                else:
+                    Log.warning("输入不在范围内")
+                    time.sleep(.1)
+                    continue
+        elif innp == QUIT_CHAR:
+            Log.info("返回主菜单")
+            time.sleep(.1)
+            break
         else:
-            pass
+            Log.warning("输入错误。请重新输入")
+            time.sleep(.1)
+            continue
 
 
 def setHostfz():
@@ -126,11 +259,12 @@ def setHostfz():
 -------------------------------------"""
         print(mun)
         ret = sqlobj.showHostfz()
+        clidlist = []
         if len(ret) == 0:
             mun = """|         暂无分组,请先添加         | """
             print(mun)
         else:
-            clidlist = []  # 分类id列表
+              # 分类id列表
             for item in ret:
                 clidlist.append(item.id)
                 print(item.id, '.  ', item.classname)
@@ -154,6 +288,10 @@ def setHostfz():
                 time.sleep(.1)
                 continue
         elif innp == "e":
+            if len(clidlist) == 0:
+                Log.info("分组都是空的,修改什么呢")
+                time.sleep(.1)
+                continue
             hostinnpid = input("[为空则取消]请输入要修改分类的id>>>:").strip()
             if not hostinnpid:
                 Log.info("取消修改")
@@ -185,6 +323,10 @@ def setHostfz():
                     time.sleep(.1)
                     continue
         elif innp == "d":
+            if len(clidlist) == 0:
+                Log.info("分组都是空的,删除什么呢")
+                time.sleep(.1)
+                continue
             hostinnpid = input("[为空则取消]请输入要删除分类的id>>>:").strip()
             if not hostinnpid:
                 Log.info("取消删除")
@@ -284,7 +426,7 @@ def main():
 |  4.下发任务                       |
 |                                   |
 -------------------------------------
-| 数字：选择            %s:退出      |
+|    数字：选择         %s:退出      |
 -------------------------------------""" % QUIT_CHAR
         print(mun)
         inpp = input("请输入你的选择>>>:").strip()
@@ -298,11 +440,13 @@ def main():
             elif int(inpp) == 3:
                 setHost()
             elif int(inpp) == 4:
-                pass
+                xiafazhiling()
             else:
-                pass
+                Log.warning("没有这个选项，请重新选择")
+                time.sleep(.1)
         else:
-            pass
+            Log.warning("没有这个选项，请重新选择")
+            time.sleep(.1)
 
 
 def login():

@@ -2,11 +2,10 @@
 # -*-coding:utf-8-*-
 # Author:SemaseMing <blog.v-api.cn>
 # Email: admin@v-api.cn
-# Time: 2016-10-30 18:45
+# Time: 2016-11-13 20:43
 # Version：3.x
 
 import pika
-import sys
 
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='192.168.199.213'))
@@ -18,7 +17,7 @@ channel.exchange_declare(exchange='direct_logs',
 result = channel.queue_declare(exclusive=True)
 queue_name = result.method.queue
 
-severities = ['warning', 'error']
+severities = ['192.168.199.213']
 
 
 for severity in severities:
