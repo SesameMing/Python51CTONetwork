@@ -1,0 +1,12 @@
+2016-06-05 19:17:49,986 - TEST-LOG - ERROR - error message
+2016-06-05 19:17:49,986 - TEST-LOG - CRITICAL - critical message
+2016-06-05 19:20:27,615 - TEST-LOG - ERROR - error message
+2016-06-05 19:20:27,615 - TEST-LOG - CRITICAL - critical message
+2016-06-05 19:20:51,520 - TEST-LOG - ERROR - error message
+2016-06-05 19:20:51,520 - TEST-LOG - CRITICAL - critical message
+2016-06-05 19:22:11,642 - TEST-LOG - ERROR - error message
+2016-06-05 19:22:11,642 - TEST-LOG - CRITICAL - critical message
+2016-06-05 19:23:05,408 - TEST-LOG - ERROR - error message
+2016-06-05 19:23:05,408 - TEST-LOG - CRITICAL - critical message
+2016-06-05 19:24:12,379 - TEST-LOG - ERROR - error message
+2016-06-05 19:24:12,379 - TEST-LOG - CRITICAL - critical message

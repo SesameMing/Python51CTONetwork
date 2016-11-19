@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<style>
+
+    body{
+        margin: 0px;
+    }
+    img {
+        border: 0;
+    }
+    ul{
+        padding: 0;
+        margin: 0;
+        list-style: none;
+    }
+    h1{
+        padding: 0;
+        margin: 0;
+    }
+    .clearfix:after {
+        content: ".";
+        display: block;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+    }
+
+    .wrap{
+        width: 980px;
+        margin: 0 auto;
+    }
+
+    .pg-header{
+        background-color: #303a40;
+        -webkit-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+        -moz-box-shadow: 0 2px 5px rgba(0,0,0,.2);
+        box-shadow: 0 2px 5px rgba(0,0,0,.2);
+    }
+    .pg-header .logo{
+        float: left;
+        padding:5px 10px 5px 0px;
+    }
+    .pg-header .logo img{
+        vertical-align: middle;
+        width: 110px;
+        height: 40px;
+
+    }
+    .pg-header .nav{
+        line-height: 50px;
+    }
+    .pg-header .nav ul li{
+        float: left;
+    }
+    .pg-header .nav ul li a{
+        display: block;
+        color: #ccc;
+        padding: 0 20px;
+        text-decoration: none;
+        font-size: 14px;
+    }
+    .pg-header .nav ul li a:hover{
+        color: #fff;
+        background-color: #425a66;
+    }
+    .pg-body{
+
+    }
+    .pg-body .catalog{
+        position: absolute;
+        top:60px;
+        width: 200px;
+        background-color: #fafafa;
+        bottom: 0px;
+    }
+    .pg-body .catalog.fixed{
+        position: fixed;
+        top:10px;
+    }
+
+    .pg-body .catalog .catalog-item.active{
+        color: #fff;
+        background-color: #425a66;
+    }
+
+    .pg-body .content{
+        position: absolute;
+        top:60px;
+        width: 700px;
+        margin-left: 210px;
+        background-color: #fafafa;
+        overflow: auto;
+    }
+    .pg-body .content .section{
+        height: 500px;
+        border: 1px solid red;
+    }
+</style>
+<body onscroll="ScrollEvent();">
+<div class="pg-header">
+    <div class="wrap clearfix">
+        <div class="logo">
+            <a href="#">
+                <img src="http://core.pc.lietou-static.com/revs/images/common/logo_7012c4a4.pn">
+            </a>
+        </div>
+        <div class="nav">
+            <ul>
+                <li>
+                    <a  href="#">首页</a>
+                </li>
+                <li>
+                    <a  href="#">功能一</a>
+                </li>
+                <li>
+                    <a  href="#">功能二</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+</div>
+<div class="pg-body">
+    <div class="wrap">
+        <div class="catalog" id="catalog">
+            <div class="catalog-item" auto-to="function1"><a>第1张</a></div>
+            <div class="catalog-item" auto-to="function2"><a>第2张</a></div>
+            <div class="catalog-item" auto-to="function3"><a>第3张</a></div>
+        </div>
+        <div class="content" id="content">
+            <div menu="function1" class="section">
+                <h1>第一章</h1>
+            </div>
+            <div menu="function2" class="section">
+                <h1>第二章</h1>
+            </div>
+            <div menu="function3" class="section">
+                <h1>第三章</h1>
+            </div>
+        </div>
+    </div>
+
+</div>
+    <script>
+        function ScrollEvent(){
+            var bodyScrollTop = document.body.scrollTop;
+            if(bodyScrollTop>50){
+                document.getElementsByClassName('catalog')[0].classList.add('fixed');
+            }else{
+                document.getElementsByClassName('catalog')[0].classList.remove('fixed');
+            }
+
+            var content = document.getElementById('content');
+            var sections = content.children;
+            for(var i=0;i<sections.length;i++){
+                var current_section = sections[i];
+
+                // 当前标签距离顶部绝对高度
+                var scOffTop = current_section.offsetTop + 60;
+
+                // 当前标签距离顶部，相对高度
+                var offTop = scOffTop - bodyScrollTop;
+
+                // 当前标签高度
+                var height = current_section.scrollHeight;
+
+                if(offTop<0 && -offTop < height){
+                    // 当前标签添加active
+                    // 其他移除 active
+                    var menus = document.getElementById('catalog').children;
+                    var current_menu = menus[i];
+                    current_menu.classList.add('active');
+                    for(var j=0;j<menus.length;j++){
+                        if(menus[j] == current_menu){
+
+                        }else{
+                            menus[j].classList.remove('active');
+                        }
+                    }
+                    break;
+                }
+
+            }
+
+
+        }
+    </script>
+</body>
+</html>

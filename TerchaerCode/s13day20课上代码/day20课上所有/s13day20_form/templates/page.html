@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style>
+        .pager a{
+            display: inline-block;
+            padding: 5px;
+            background-color: cadetblue;
+            margin: 2px;
+        }
+        .pager a.active{
+            background-color: chartreuse;
+        }
+    </style>
+</head>
+<body>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>名称</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for item in type_list %}
+                    <tr>
+                        <td>{{ item.id }}</td>
+                        <td>{{ item.caption }}</td>
+                    </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="pager">
+        {{ str_page }}
+    </div>
+</body>
+</html>

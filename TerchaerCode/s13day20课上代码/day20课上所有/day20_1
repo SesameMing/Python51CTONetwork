@@ -1,0 +1,72 @@
+http://www.cnblogs.com/wupeiqi/articles/5246483.html
+
+
+Form
+	- 验证
+	- 生成HTML标签
+	- （select标签的数据：来源于数据）
+	
+cookie
+
+session
+
+CSRF
+	
+	
+Model：
+	一对多
+		# 1，CEO    2，CIO    3，COO
+		class UserType(models.Model):
+		
+			name = models.CharField(max_lenght=32)
+			
+		
+		class UserInfo(models.Model):
+		
+			name = models.CharField(max_lenght=32)
+			pwd = models.CharField(max_lenght=32)
+			user_type = models.ForignKey('UserType')
+		
+		1、查询用户类是CEO所有用户
+			q = UserInfo.objects.filter(user_type__name='CEO')
+			QuerySet
+			[对象,]
+			q[0].name
+			q[0].pwd
+			q[0].user_type.name
+		2、
+			q = UserInfo.objects.filter(user_type__name='CEO').values('name','pwd','user_type__name')
+			q
+			[{'name':'xxx','pwd': 'xxx','user_type__name':'xxx'}]
+			
+		3、
+			q = UserInfo.objects.filter(user_type__name='CEO').value_list('name','pwd','user_type__name')
+			q
+			[(xx,xx,xx),]
+		
+			
+补充：（select标签的数据：来源于数据）
+
+
+		choices = [
+			(1,'CEO'),
+			(2,'COO')
+		]
+		
+		choices = UserType.objects.all().value_list('id','name')
+
+		
+			
+			
+			
+			
+			
+			
+
+
+
+
+
+
+
+

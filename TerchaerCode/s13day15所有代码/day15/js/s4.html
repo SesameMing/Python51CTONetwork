@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <script type="text/javascript">
+
+        var li = [11,22,33,44];
+        var dic = {'k1': 11,'k2': 22};
+        //第一种for
+        // for(var i = 0;i<li.length;i++){}
+        /*
+        for(var i = 0;i<li.length;i=i+2){
+            console.log(i,li[i]);
+        }
+        */
+        /*第二种for循环
+        for(var item in li){
+            console.log(item,li[item]);
+        }
+        */
+        for(var key in dic){
+            console.log(key,dic[key]);
+        }
+
+
+    </script>
+</body>
+</html>

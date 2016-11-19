@@ -1,0 +1,57 @@
+注册：
+	检测：
+		m = models.类.objects.filter(user="alex").count()
+		# 获取用户名等于alex的数据个数
+	创建：
+		models.类.objects.create(user=u,email=e)
+		
+登录：
+	检测：
+		m = models.类.objects.filter(user="alex").count()
+	成功后：跳转
+		from django.shortcuts import redirect
+		def login(request):
+			# ...
+			# 判断用户是否是POST请求
+			# return redirect('http://baidu.com')
+			return redirect('/index/')
+		
+	失败后：当前页面
+	
+后台管理：
+	Form提交数据：Form验证
+	后台添加数据
+	
+	
+预习Django：
+
+	django book
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,149 @@
+1、Form验证
+   - 用于做用户提交数据的验证
+	   a. 定义规则（类，字段名=html中name值）
+	   b. 数据提交 - 规则 匹配
+   - 
+     用于做用户提交数据的验证 + 生成HTML标签
+	 
+2、CSRF
+	-，内兜，外兜
+	Form提交
+	Ajax提交
+	
+3、cookie
+4、session
+5、model操作补充
+
+	a. 基本操作
+	b. 进阶
+	c. 双下滑线
+		__ 大小于操作
+		__ 可以跨表
+		
+		class UserInfo(models.Model):
+			
+			user = models.CharField(max_length=32)
+			pwd = models.CharField(max_length=32)
+		
+		queryset = UserInfo.objects.all()
+		
+		print(queryset.query) -- SQL语句
+		【UserInfo对象，UserInfo对象，UserInfo对象，】
+		
+		queryset = UserInfo.objects.all().values('user')
+		【｛‘user’: 'alex'｝,｛‘user’: 'eirc'｝】
+		
+		queryset = UserInfo.objects.all().value_list('user')
+		【（'alex'）,（'eirc'）】
+		
+		=======================
+		一对多
+		class UserType(models.Model):
+			catption = models.CharField(max_length=32)
+		# 超级管理员，普通用户，游客，黑河
+		
+		class UserInfo(models.Model):
+			
+			user = models.CharField(max_length=32)
+			pwd = models.CharField(max_length=32)
+			user_type = models.ForignKey('UserType')
+			# user_type_id
+			
+		# 创建UserInfo
+			1、 UserInfo.objects.create(user='alex',pwd='123',user_type=UserType.objects.get(id=2)) 
+			2、 UserInfo.objects.create(user='alex',pwd='123',user_type_id=2)
+		
+		# 查询：
+			UserInfo.objects.filter(user='alex')
+			1、查询所有用户类型等于 普通用户 的所有用户名和密码
+				uid = UserType.objects.get(caption='普通用户').id  
+				UserInfo.objects.filter(user_type_id=uid)
+				
+				querset = UserInfo.objects.filter(user_type__caption='普通用户')
+				querset = UserInfo.objects.filter(user_type__id__gt=2)
+				【UserInfo对象，UserInfo对象，UserInfo对象，】
+				row = querset[0]
+				row.user
+				row.pwd
+				row.user_type.id
+				row.user_type.caption
+				###### objects   __
+				###### row.外键字段.外键表的字段
+				
+				querset = UserInfo.objects.filter(user_type__caption='普通用户').values('user','user_type__caption')
+				【{'user': 'alex','user_type__caption': '普通用户'},{'user': 'eric','user_type__caption': '普通用户'},】
+				row = querset[0]
+				row['user']
+				row['user_type__caption']
+				
+			2、三张表跨表操作
+				class Somthing(models.Model):
+					name = models.CharField(max_length=32)
+				
+				class UserType(models.Model):
+					catption = models.CharField(max_length=32)
+					s = models.ForignKey('Somthing')
+				
+				# 超级管理员，普通用户，游客，黑河
+				
+				class UserInfo(models.Model):
+					
+					user = models.CharField(max_length=32)
+					pwd = models.CharField(max_length=32)
+					user_type = models.ForignKey('UserType')
+				
+				UserInfo.objects.filter(user_type__s__name='xx')
+			
+		===========================================================
+		多对多
+			1、创建表
+			2、操作
+				_set
+				
+				
+		
+作业：
+	用户认证Session
+	
+	{% if 登录陈功 %}
+	<h1>{{user}}</h1>
+	{% ekse %}
+	<a ></a>
+	<a></a>
+	{% end %}
+
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

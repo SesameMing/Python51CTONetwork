@@ -1,0 +1,246 @@
+1、路由系统
+
+	project：
+		django-admin startproject mysite
+		cd mysite
+		python manage.py startapp app01
+		
+	普通关系：
+		/index/ -> 函数
+		/login/ -> 函数
+		...
+		# 反射：
+			/(\w+)/(\w+)
+			/home/index
+			=> 导入：home模块，getattr(index)  fun()
+			
+		
+		
+	动态关系：
+		/index/(\w+)\  -> 函数(参数)
+		
+	路由分发：
+		/index/  ->   app.url文件[ /index/(\w+)\  -> 函数(参数) ,]
+		
+2、模版
+
+	a. 模版渲染的过程
+	
+	b. {{ k1 }} --> 索引是.
+	
+	c.  {% for item in k2 %}
+			<p>{{ item }},{{ forloop.counter }},{{ forloop.counter0 }},{{ forloop.first }},{{ forloop.last }},{{ forloop.revcounter }}</p>
+		{% endfor %}
+
+	d. 模版语言的内置方法
+	
+	e. 自定义方法
+		filter
+		simple_tag
+		
+		1、创建指定文件，名称不能改 templatetags
+		2、创建任意 .py 文件，如：xx.py
+			
+			from django import template
+			from django.utils.safestring import mark_safe
+			from django.template.base import resolve_variable, Node, TemplateSyntaxError
+			# 必须不变
+			register = template.Library()
+			
+			# 创建函数
+			@register.filter
+			def f1(value):
+				return value + "666"
+		3、在html模版的头部执行
+		
+			{% load xx %}
+		
+		4、
+			k1 = 'VVV'
+			{{k1}}    => vvv
+			{{k1|f1}} => vvv666
+		
+		5、 settings.py 中注册app
+		
+		总结：
+			filter
+				限制：传参
+				支持：模版语言的 if 条件
+			simple_tag
+				不支持：模版语言的 if 条件
+	
+	f. 模版的继承
+		母板： 
+				
+				balabala...
+				
+				{% block 名称 %} {% endblock %}
+				
+				balabala...
+				
+		
+		子板： 
+				{% extends '母板html文件名' %}
+				
+				
+				{% block 名称 %} 
+				
+					具体子页面的内容...
+					
+				{% endblock %}
+	
+	g. include
+	
+		小组件： x.html
+		
+		{% include 'x.html' %}
+	
+3、Ajax
+	a. 下载 
+	b. 放置在static目录下
+	c. setting配置
+	c. html导入
+	
+	$.ajax({
+		url: '/index/',
+		type: 'POST',
+		data: {'username': 'alex','password': '123'},
+		success: function(data){
+			// 当后台return之后，该函数自动执行
+			// data就是后台返回的数据
+		}
+	})
+	
+	
+	Ajax:
+		1、XMLHttpRequest对象（原生Ajax）
+		2、jQuery - XMLHttpRequest对象（jQuery ajax）
+		3、跨域Ajax
+			浏览器同源策略：
+				Ajax，只能给自己的域名发请求
+				跨域名，浏览器做拦截
+			
+			
+四、model，ORM
+	
+	1、创建（CURD）数据库表
+		class -> DB,表
+		DB,表 -> 类
+		
+		a. app.models.py写类
+			from django.db import models
+  
+			class userinfo(models.Model):
+				name = models.CharField(max_length=30) # string
+				email = models.EmailField()            # string,帮助admin做输入验证，modelform
+				memo = models.TextField()              # text
+		
+		
+		b. python manage.py makemigrations
+		   python manage.py migrate
+	
+		   python manage.py createsuperuser
+		   
+	
+	2、操作数据库的数据
+		类
+		1、models.AutoField　　自增列 = int(11)
+		　　如果没有的话，默认会生成一个名称为 id 的列，如果要显示的自定义一个自增列，必须将给列设置为主键 primary_key=True。
+		2、models.CharField　　字符串字段
+		　　必须 max_length 参数
+		3、models.BooleanField　　布尔类型=tinyint(1)
+		　　不能为空，Blank=True
+		4、models.ComaSeparatedIntegerField　　用逗号分割的数字=varchar
+			input:  12，345，989871234，
+		
+		　　继承CharField，所以必须 max_lenght 参数
+		5、models.DateField　　日期类型 date
+		　　对于参数，auto_now = True 则每次更新都会更新这个时间；auto_now_add 则只是第一次创建添加，之后的更新不再改变。
+		6、models.DateTimeField　　日期类型 datetime
+		　　同DateField的参数
+		7、models.Decimal　　十进制小数类型 = decimal
+		　　必须指定整数位max_digits和小数位decimal_places
+		8、models.EmailField　　字符串类型（正则表达式邮箱） =varchar
+		　　对字符串进行正则表达式
+		9、models.FloatField　　浮点类型 = double
+		10、models.IntegerField　　整形
+		11、models.BigIntegerField　　长整形
+		　　integer_field_ranges = {
+		　　　　'SmallIntegerField': (-32768, 32767),
+		　　　　'IntegerField': (-2147483648, 2147483647),
+		　　　　'BigIntegerField': (-9223372036854775808, 9223372036854775807),
+		　　　　'PositiveSmallIntegerField': (0, 32767),
+		　　　　'PositiveIntegerField': (0, 2147483647),
+		　　}
+		12、models.IPAddressField　　字符串类型（ip4正则表达式）
+		13、models.GenericIPAddressField　　字符串类型（ip4和ip6是可选的）
+		　　参数protocol可以是：both、ipv4、ipv6
+		　　验证时，会根据设置报错
+		14、models.NullBooleanField　　允许为空的布尔类型
+		15、models.PositiveIntegerFiel　　正Integer
+		16、models.PositiveSmallIntegerField　　正smallInteger
+		17、models.SlugField　　减号、下划线、字母、数字
+		18、models.SmallIntegerField　　数字
+		　　数据库中的字段有：tinyint、smallint、int、bigint
+		19、models.TextField　　字符串=longtext
+		20、models.TimeField　　时间 HH:MM[:ss[.uuuuuu]]
+		21、models.URLField　　字符串，地址正则表达式
+		22、models.BinaryField　　二进制
+		
+		23、models.ImageField   图片    字符串
+		24、models.FilePathField 文件   字符串
+
+
+
+	a. 单表
+	b. 一对多：Forigkey
+	c. 多对多
+	d. 一对一
+	
+		
+	obj = model.UserInfo.objects.filter(name='alex')
+	print obj.query 
+	
+	queryset -> python，Django的类
+	[obj1,obj2,obj3]
+	
+	obj = model.UserInfo.objects.filter(name='alex').values('id','email')
+	# select id from userinfo where name = 'alex'
+	
+	queryset -> python，Django的类
+	[{'id':1},{'id': 2},]
+	
+	obj = model.UserInfo.objects.filter(name='alex').value_list('id','email')
+	# select id from userinfo where name = 'alex'
+	
+	queryset -> python，Django的类
+	[(1,'1@qq.com'),(2,'alex@11.com'),]
+		
+		
+	queryset.query => SQL语句
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

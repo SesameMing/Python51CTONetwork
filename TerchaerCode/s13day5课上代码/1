@@ -1,0 +1,86 @@
+一、作业重点
+
+二、装饰器
+	1、单层装饰器
+	2、多层装饰器
+	3、更牛逼的装饰器
+
+
+三、模块
+	  py：模块
+	其他：类库
+	
+	模块的存在方式：
+		文件夹
+		文件
+
+	使用模块：
+		先导入
+		后使用
+	
+	
+	为什么要有模块？
+		将代码归类
+		
+	导入模块的依据？
+		import sys
+		sys.path
+		
+	**** 模块名称的重要性 ****
+	
+	
+	导入模块：
+		单模块：
+			import
+		嵌套在文件夹下：
+			from xxx import xxx 
+			from xxx import xxx  as ooo
+	
+	
+	
+	内置模块
+	自定义模块
+	第三方模块
+		安装：pip3
+			  源码
+			
+	1、序列化相关
+		import json
+		import pickle
+	
+四、字符串格式化
+	%[(name)][flags][width].[precision]typecode
+		1、顺序传参数
+		2、指定名称传入参数
+		3、保留小数点后几位
+		4、如果出现占位符，则写 %% ，打印时 %
+	[[fill]align][sign][#][0][width][,][.precision][type]
+	
+五、生成器和迭代器
+
+	http://www.cnblogs.com/wupeiqi/articles/5484747.html
+	foreach  == for
+	
+	
+六、递归
+	
+	def func(n):
+		n +=1
+		if n >= 4:
+			return 'end'
+		return func(n)
+
+	r = func(1)
+	print(r)
+	
+	思考题：1*2*3*4*5*6*7
+	
+	
+	
+	
+	
+	
+	
+	其他
+	冒泡排序
+	

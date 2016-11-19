@@ -1,0 +1,15 @@
+作业：
+
+	登录、注册：Ajax
+	
+	资产管理：
+		资产列表，[]
+		 models.Tb1.objects.all()[10:20]
+		资产详细：
+			
+		删除：（ajax）数据库删除，a.页面刷新，b. $().remove()
+		修改：
+			a. 跳转到另外一个页面修改
+			b. Ajax,EditRow
+		
+	

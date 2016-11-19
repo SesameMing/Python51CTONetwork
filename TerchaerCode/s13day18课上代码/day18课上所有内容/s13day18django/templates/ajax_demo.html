@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    <div>
+        <p>用户名：<input type="text" id="username" /></p>
+    </div>
+    <div>
+        <p>用户名：<input type="password" id="pwd" /></p>
+    </div>
+    <input type="button" value="提交" onclick="SubmitForm();" />
+
+    <script src="/static/jquery-1.8.2.min.js"></script>
+
+    <script>
+        function SubmitForm(){
+            $.ajax({
+                url: '/web/ajax_demo/',
+                type: 'POST',
+                data: {'user': $('#username').val(), 'pwd': $('#pwd').val()},
+                dataType: 'json',
+                success: function (data) {
+                    // data = 字符串 {status:xx,message:''}
+                    // data对象
+                    //var data_dict = JSON.parse(data);
+                    if(data.status){
+                        location.href = "http://www.baidu.com";
+                    }else{
+                        alert(data.message);
+                    }
+                }
+            })
+        }
+    </script>
+</body>
+</html>

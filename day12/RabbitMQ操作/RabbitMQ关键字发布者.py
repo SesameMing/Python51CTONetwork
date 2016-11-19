@@ -7,7 +7,7 @@
 
 import pika
 import sys
-
+import json
 connection = pika.BlockingConnection(pika.ConnectionParameters(
         host='192.168.199.213'))
 channel = connection.channel()
@@ -15,10 +15,14 @@ channel = connection.channel()
 channel.exchange_declare(exchange='direct_logs',
                          type='direct')
 
+
+dic = {"requeueu":"xxxxx","mingling":"xxxxxxxxxxx"}
+
+
 severity = ['info', 'error']
 for severi in severity:
 
-    message = ' '.join(sys.argv[2:]) or 'Hello World!'
+    message = ' '.join(sys.argv[2:]) or json.dumps(dic)
     channel.basic_publish(exchange='direct_logs',
                           routing_key=severi,
                           body=message)

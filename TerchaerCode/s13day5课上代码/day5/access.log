@@ -1,0 +1,24 @@
+2016-06-05 19:12:24,233 - WARNING - warn message
+2016-06-05 19:12:24,233 - ERROR - error message
+2016-06-05 19:12:24,233 - CRITICAL - critical message
+2016-06-05 19:14:35,423 - WARNING - warn message
+2016-06-05 19:14:35,423 - ERROR - error message
+2016-06-05 19:14:35,423 - CRITICAL - critical message
+2016-06-05 19:17:49,986 - WARNING - warn message
+2016-06-05 19:17:49,986 - ERROR - error message
+2016-06-05 19:17:49,986 - CRITICAL - critical message
+2016-06-05 19:20:27,615 - %(levelname)s - warn message
+2016-06-05 19:20:27,615 - %(levelname)s - error message
+2016-06-05 19:20:27,615 - %(levelname)s - critical message
+2016-06-05 19:20:51,520 - logger 模块进阶.py - WARNING - warn message
+2016-06-05 19:20:51,520 - logger 模块进阶.py - ERROR - error message
+2016-06-05 19:20:51,520 - logger 模块进阶.py - CRITICAL - critical message
+2016-06-05 19:22:11,642 - logger 模块进阶.py -<module> - WARNING - warn message
+2016-06-05 19:22:11,642 - logger 模块进阶.py -<module> - ERROR - error message
+2016-06-05 19:22:11,642 - logger 模块进阶.py -<module> - CRITICAL - critical message
+2016-06-05 19:23:05,408 - logger 模块进阶.py -40 - WARNING - warn message
+2016-06-05 19:23:05,408 - logger 模块进阶.py -41 - ERROR - error message
+2016-06-05 19:23:05,408 - logger 模块进阶.py -42 - CRITICAL - critical message
+2016-06-05 19:24:12,379 - logger 模块进阶 -40 - WARNING - warn message
+2016-06-05 19:24:12,379 - logger 模块进阶 -41 - ERROR - error message
+2016-06-05 19:24:12,379 - logger 模块进阶 -42 - CRITICAL - critical message

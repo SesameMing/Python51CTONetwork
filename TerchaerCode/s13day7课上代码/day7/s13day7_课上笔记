@@ -1,0 +1,119 @@
+1、python 函数式+面向对象
+
+2、函数式编程，面向对象编程实现：发送邮件的功能
+	# 函数
+	def mail(email, message):
+		print("去发吧")
+		return True
+		
+	mail("alex3714@126.com", "好人")
+	
+	面向对象：类，对象
+	
+	class Foo:
+	
+		# 方法
+		def mail(self, email, message):
+			print('去发吧')
+			return True
+		
+	# 调用
+	1、创建对象，类名()
+	obj = Foo()
+	2、通过对象去执行方法
+	obj.mail("alex3714@126.com", "好人")
+	
+3、类和对象
+
+	a. 创建类
+		class 类名:
+			
+			def 方法名(self,xxxx):
+				pass
+				
+	b. 创建对象
+		对象 = 类名()
+		
+	c. 通过对象执行方法
+		对象.方法名(123)
+		
+4、
+	函数式：
+		
+		def fetch(host, username, password, sql):
+			pass
+		def create(host, username, password, sql):
+			pass
+		def remove(host, username, password, nid):
+			pass
+		def modify(host, username, password, name):
+			pass
+		...
+	
+		fetch(....)
+	面向对象
+	
+		class SQLHelper:
+		
+			def fetch(self, sql):
+				pass
+				
+			def create(self, sql):
+				pass
+			def remove(self, nid):
+				pass
+			def modify(self, name):
+				pass
+				
+		obj1 = SQLHelper()
+		obj1.hhost = "c1.salt.com"
+		obj1.uuserane = "alex"
+		obj1.pwd = "123"
+		
+		obj1.fetch("select * from A")
+		
+	
+		obj2 = SQLHelper()
+		obj2.hhost = "c2.salt.com"
+		obj2.uuserane = "alex"
+		obj2.pwd = "123"
+		
+		obj2.fetch("select * from A")
+		
+		
+========> 什么时候用面向对象？当某一些函数具有相同参数时，可以使用面向对象的方式，将参数值一次性的封装到对象，以后去对象中取值即可
+	
+5、self是什么鬼？
+	self是一个python自动会给传值的参数
+	
+	那个对象执行方法，self就是谁。
+	
+	obj1.fetch('selec...')  self=obj1
+	
+	obj2.fetch('selec...')  self=obj2
+		
+6、构造方法
+
+	类中有一个特殊的方法 __init__，类()自动被执行
+	
+	
+7、面向对象
+	
+   三大特性：封装、继承、多态
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

@@ -1,0 +1,129 @@
+JavaScirpt
+	正则，字符串三个方法
+
+DOM
+	查找：
+		直接查找
+		间接查找
+		--getElementById
+		--getElementsByTagName
+	操作：
+		值
+			innerText
+			innerHtml
+			value
+		class：
+			className
+			classList.add
+			classList.remove
+		样式：
+			<input type='text' style="color:red;font-size:40px;"/>
+			tag = .....
+			tag.style.color = 'red';
+			tag.style.fontSize = '40px';
+		属性：
+			<input id='i1' name='n1' alex='sb' type='text' style="color:red;font-size:40px;"/>
+			setAttribute
+			getAttribute
+			removeAttribute
+			
+			===>
+				tabObj.checked = true
+			===>jQuery: 操作数据，prop(checked,true)
+		
+		标签：
+			创建标签：
+				字符串
+				对象
+			将标签添加到HTML中
+				字符串形式的标签：
+					p1.insertAdjacentHTML('beforeEnd',tag);
+				对象形式的标签：
+					p1.insertAdjacentElement('afterBegin',document.createElement('p'))
+					xxx.insertBefore(tag,xxx[1])
+		点赞：
+			创建标签，定时器（大小，位置，透明度）
+			1、this，当前触发事件的标签
+			2、createElement
+			3、appendChild
+			4、setInterval创建定时器
+			   clearInterval删除定时器
+			5、removeChild删除子标签
+		
+		定时器
+			setTimeOut,clearTimeout
+			setInterval,clearInter
+		
+		事件：
+			1、this，当前触发事件的标签
+			2、全局事件绑定   window.onKeyDown = function(){}
+			3、event，包含事件相关内容
+			4、默认事件
+					自定义优先：a,form
+					  默认优先：checkbox
+jQuery
+	模块，Dom和JavaScript，
+		1.12..  --> ...
+		2.x     --> IE9
+	
+	查找：
+		选择器
+			id选择器
+			标签选择器
+			类选择器
+			组合
+			层级 #i1 .c1
+			
+			$('input:eq(1),#i1 .item')
+			
+		筛选器
+			$('#i1').find('.item')
+			$('#i1').eq(1)
+		
+	操作：
+		CSS
+		属性
+			$('#i1').html() # 获取html内容
+			$('#i1').html("<span>123</span>") # 设置html内容
+			
+			text()
+			
+			val()
+			
+		文本操作
+	事件：
+		- 优化
+		1、如何使用jQuery绑定
+		2、当文档加载完毕后，自动执行
+			$(function(){
+				...
+			});
+		3、延迟绑定
+		4、return false;
+
+	扩展：
+		JavaScirpt
+			正则，字符串三个方法
+		$.login
+		Form表单验证（）
+	Ajax：
+		偷偷发请求
+		
+	-- jQuery循环
+		
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
+	

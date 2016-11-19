@@ -1,0 +1,61 @@
+上节回顾
+	socekt
+		1、导入模块
+		2、创建socket
+		3、
+			字节
+			send   sendall
+					10 = send('alexsdfasdfasdfasdf')
+				sendall:
+					while True:
+						10 = send('alexsdfasdfasdfasdf')
+						10 = send('alexsdfasdfasdfasdf')
+			recv(2048) // 上传文件时，最多接受2048
+	粘包：ack
+	socketserver
+		
+		1、自定义类
+		2、好像继承什么类，而且必须是用那个
+		3、好像还有什么方法
+		4、sockerserver -- 调用上面那个类
+		5、运行
+		
+上节作业
+
+	1、socket发送字符串
+	2、socket发送文件
+		客户端：
+			文件大小
+			发消息
+			
+		服务端：
+			接受消息（文件大小）
+	
+	客户端：
+		json -> 用户、密码
+		字符串
+	服务端：
+		用户验证
+		接受，subprocess> win>gbk编码的字节
+		上传文件（大小）
+		发消息
+		
+	断点续传：
+		文件：
+			a, 追加
+			w, 清空写
+		文件指针：
+			seek(num)
+			
+		
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

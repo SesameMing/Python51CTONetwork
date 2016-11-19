@@ -1,0 +1,196 @@
+1、补充
+
+2、model操作 F/Q
+	F:
+		temp = salary+500
+		models.UserInfo.objects.filter().update(salary=temp)
+		update userinfo set salary=salary+500 
+		
+		from django.db.models import F
+		models.UserInfo.objects.filter().update(salary=F('salary')+500)
+		
+	Q:
+		构造搜索条件
+		1、传参
+			models.UserInfo.objects.filter(id=123,name='alex')
+		
+		2、传字典
+			d = {'id': 123, 'name':'alex'}
+			models.UserInfo.objects.filter(**d)
+			
+				<input name='id' />
+				<input name='name' />
+				获取用户输入，并构造成字典：
+				models.UserInfo.objects.filter(**c)
+		3、传Q对象
+			models.UserInfo.objects.filter(Q对象)
+			
+			   from django.db.models import Q
+			   
+				# q1 = Q()
+				# q1.connector = 'OR'
+				# q1.children.append(('id', 1))
+				# q1.children.append(('id', 2))
+				# q1.children.append(('id', 3))
+			
+				# models.Tb1.objects.filter(q1)
+			   
+			   
+				# con = Q()
+				#
+				# q1 = Q()
+				# q1.connector = 'OR'
+				# q1.children.append(('id', 1))
+				# q1.children.append(('id', 2))
+				# q1.children.append(('id', 3))
+				#
+				# q2 = Q()
+				# q2.connector = 'OR'
+				# q2.children.append(('status', '在线'))
+				#
+				# con.add(q1, 'AND')
+				# con.add(q2, 'AND')
+				#
+				# models.Tb1.objects.filter(con)
+		
+3、model多对多操作
+	- 创建
+		a. 方式一：
+			class B2G(models.Model):
+				b_id = models.ForeignKey('Boy')
+				g_id = models.ForeignKey('Girl')
+
+			class Boy(models.Model):
+
+				username = models.CharField(max_length=16)
+
+			class Girl(models.Model):
+
+				name = models.CharField(max_length=16)
+		
+		b. 方式二：
+			class Boy(models.Model):
+
+				username = models.CharField(max_length=16)
+				# girl_set
+			class Girl(models.Model):
+
+				name = models.CharField(max_length=16)
+
+				b = models.ManyToManyField('Boy')
+
+			
+	- 操作：
+		添加：
+			正向
+				g1 = models.Girl.objects.get(id=1)
+				
+				g1.b.add(models.Boy.objects.get(id=1))
+				g1.b.add(1)
+		
+				bs = models.Boy.objects.all()
+				g1.b.add(*bs)
+				g1.b.add(*[1,2,3])
+			
+			反向
+				b1 = models.Boy.objects.get(id=1)
+				b1.girl_set.add(1)
+				b1.girl_set.add(models.Girl.objects.all())
+				
+				b1.girl_set.add(*[1,2,3,4])
+				...
+		删除：
+			g1 = models.Girl.objects.get(id=1)
+			g1.b.clear() # 清空和girl ID=1所关联的所有数据
+			
+			g1.b.remove(2)   
+			g1.b.remove(*[1,2])
+			
+		查询：
+			g1 = models.Girl.objects.get(id=1) # SQL
+			g1.b.all()						   # SQL
+			g1.b.filter().count()
+			
+			b1 = models.Boy.objects.get(id=1)
+			b1.girl_set.all()
+			
+			models.Girl.objects.all().values('id','name', 'b__username')
+			models.Boy.objects.all().values('id','username', 'girl__name')
+		更新：
+			
+			
+		
+		ORM:
+			python操作数据库模块：
+				MySQLdb
+				pymysql
+			
+		原生SQL
+			# from django.db import connection
+			# cursor = connection.cursor()
+			# cursor.execute("""SELECT * from tb where name = %s""", ['Lennon'])
+			# row = cursor.fetchone()
+			
+4、中间件
+	
+
+		配置文件：
+			MIDDLEWARE_CLASSES
+			
+		写类：
+			process_request
+			process_view
+			process_exception
+			process_response
+			
+			
+		1.10
+		配置文件：
+			MIDDLEWARE = 
+			
+		原版本：
+			如果process_request中有return, 则所有的process_response执行一遍
+			
+	
+5、缓存
+
+6、信号
+
+7、分页（公共插件）
+	作业：页码处理
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

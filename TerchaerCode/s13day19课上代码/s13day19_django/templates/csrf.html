@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+        <form action="/csrf/" method="post">
+            {% csrf_token %}
+            <input type="text" name="v" />
+            <input type="submit" value="提交" />
+        </form>
+
+        <input type="button"  value="Ajax提交" onclick="DoAjax();" />
+        <script src="/static/jquery-2.1.4.min.js"></script>
+        <script src="/static/jquery.cookie.js"></script>
+    <script>
+        // 去cookie中获取值
+        var csrftoken = $.cookie('csrftoken');
+
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+        function DoAjax(){
+            $.ajax({
+                url: '/csrf/',
+                type: 'POST',
+                data: {'k1': 'v1'},
+                success: function (data) {
+                    console.log(data);
+                }
+            })
+        }
+    </script>
+
+</body>
+</html>

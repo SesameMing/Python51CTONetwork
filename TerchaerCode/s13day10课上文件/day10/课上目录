@@ -1,0 +1,81 @@
+Day10
+
+作业问题：
+	断电续传
+	
+小知识点
+	python作用域
+	
+	li = [lambda: x for x in range(10)]
+	
+
+py27多继承、py35多继承
+	py3
+	py2
+		新式
+		经典类  一条道走到黑
+	
+	
+socketserver源码
+	支持并发处理socket
+	========== ***** ==========
+	salt c1.com cmd.run "xxxx"
+	
+	vim salt
+		from salt.script import salt_main
+		
+		if __name__ == '__main__':
+			salt_main()
+	
+IO多路复用
+	概述
+		select,poll,epoll
+	监听socket对象内部是否变化了？
+	什么时候变化？连接或收发消息
+	服务器端的socket对象发生变化 -》 有新连接来了...
+	sk: 有新连接来了...
+	conn:要收“发”消息了
+	IO多路复用 -- 监听socket对象内部是否变化了？
+	
+	实现读写分离
+
+多线程、多进程
+	概述：
+		Alex甄嬛西游传
+		
+	1、一个应用程序，可以有多进程和多线程
+	2、默认：单进程，单线程
+	3、单进程，多线程：IO操作，不占用CPU
+		IO操作，不占用CPU
+			多线程提高并发
+		计算性操作，占用CPU
+			多进程提高并发
+	4、GIL，全局解释器锁
+	===》
+		多线程、多进程  提供并发
+		IO密集型：多线程
+		计算密集型：多进程
+		   PS:IO操作，不占用CPU     GIL，全局解释器锁
+	
+如何创建线程
+
+
+
+上周：
+	
+
+
+
+协程
+	
+
+	
+	
+
+
+
+
+
+
+
+

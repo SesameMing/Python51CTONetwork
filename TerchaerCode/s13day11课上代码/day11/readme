@@ -1,0 +1,72 @@
+一、线程
+		基本使用
+		线程锁
+		自定义线程池
+		
+		生产者消费者模型（队列）
+二、进程
+		基本使用
+		进程锁
+		进程数据共享
+			默认数据不共享
+			queues
+			array
+			Manager.dict
+		进程池
+	
+	PS:
+		IO密集型-多线程
+		计算密集型 - 多进程
+	
+三、协程
+		原理：利用一个线程，分解一个线程成为多个“微线程”==》程序级别
+		greenlet
+		
+		gevent
+		
+		pip3 install gevent
+四、缓存
+		1、安装软件
+		2、程序：安装其对应的模块
+		Socket连接，
+		memecach
+			1、天生集群
+			2、基本
+			3、gets,cas
+			
+			k -> ""
+		redis
+			k -> ""
+			k -> [11,11，22,33,44]
+			k -> {"k1":xxx}
+			k -> [11，22]
+			k -> [(11,1),(13,2),]
+			
+作业：
+
+	1、线程池
+		- 自己实现
+		- 第三方模块 - 注释
+		- 模块       -
+	2、博客
+		多线程...
+		缓存
+	3、预习
+		rabbitMQ
+		mysql
+		sqlchemy - ORM框架
+			class: xxx}
+			
+			obj = Foo()
+			obj.delete()
+		sqlchemy - 堡垒机
+		
+		
+		
+五、rabbitMQ
+
+===================
+MySQL
+ORM
+堡垒机
+

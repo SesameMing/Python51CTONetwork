@@ -1,0 +1,125 @@
+jQuery示例：
+	表单验证，jQuery扩展
+	1、回顾基础内容
+	
+	2、dom事件绑定
+	
+	3、jquery事件绑定
+	
+	4、$.each     return false 表示break;
+	
+	5、jquery扩展方法：
+		两种方式：
+			
+	6、自定义jQuery扩展的正确方法：
+		a. 自执行
+		b. 闭包
+	
+	7、jquery扩展实现基本验证
+	
+		a. 支持是否允许为空
+		
+		b. 长度
+		
+		c. 正则表达式
+			定义正则表达式
+				reg = /正则表达式/  *****
+				g
+				i
+				m ==> 特殊
+				
+			利用正则匹配
+				reg.test(字符串)   *****
+				reg.exec(字符串)
+					全局
+					非全局
+			字符串三个方法：
+				search
+				match
+				replace
+					-- 特殊符号
+
+	滚动菜单
+		页面布局（absolute）
+		监听滚动事件：
+			如果滚动>60,菜单固定
+			如果滚动<60,菜单固定取消
+		
+	
+	Ajax(欠)
+	
+前端插件：
+	fontawsome
+	
+	easyui	
+	jqueryui
+	bootstrap
+	-- 引入css
+	
+	-- 引入jQuery（2.x，1.12）
+	-- 引入js
+	
+	-- bootstrap模版
+	
+
+	bxslider
+	jquery.lazyload
+	
+	==> 以后可以用模版
+	
+	
+	
+	
+Web框架
+	请求周期
+	处理用户请求       放置HTML模版        操作数据库
+	Controllers         Views               Modals
+	
+	  Views             Template            Modals
+	
+	MVC/MTV
+	
+	
+	Django => MTV
+	
+
+Django
+	功能齐全
+	安装：
+		pip3 install django 
+		
+		添加环境变量
+		
+	1、创建
+		
+		
+		
+	
+	
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		

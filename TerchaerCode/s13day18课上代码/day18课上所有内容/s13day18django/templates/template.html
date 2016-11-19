@@ -1,0 +1,36 @@
+{% load xx %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+    {{ k1 }}
+    {{ k2.1 }}
+    {{ k3.name }}
+
+    {% for item in k2 %}
+        <p>{{ item }},{{ forloop.counter }},{{ forloop.counter0 }},{{ forloop.first }},{{ forloop.last }},{{ forloop.revcounter }}</p>
+    {% endfor %}
+
+    {% if k1 == 'v1' %}
+        <h1>V1</h1>
+    {% elif k1 == 'v2' %}
+        <h1>V2</h1>
+    {% else %}
+        <h1>7777</h1>
+    {% endif %}
+    {{ k1 }}
+    {{ k1|lower }}
+    {{ k1|f1:"alex,123" }}
+    {% f2 1 2 3 4 %}
+
+    {% if k1|f3 %}
+    <h1>True</h1>
+    {% else %}
+    <h1>False</h1>
+    {% endif %}
+
+</body>
+</html>
