@@ -10,7 +10,8 @@ import time
 import json
 from sqlalchemy import *
 from sqlalchemy_utils import database_exists, create_database
-from bin.lib import setting
+from bin.lib import setting, mysql_table
+
 
 def setloggin():
     """
@@ -22,10 +23,20 @@ def setloggin():
     ch = logging.StreamHandler()
     ch.setFormatter(logging.Formatter('[%(asctime)s] [%(name)s %(levelname)s] %(message)s'))
     logger.addHandler(ch)
-
     return logger
 
 Log = setloggin()  # 获取Loggin对象
+
+
+def mysqlobj():
+    """
+    实例化 sqlalchemy对象
+    :return: sqlalchemy对象
+    """
+    conn = mysql_table.database()
+    return conn
+
+
 
 
 def check_db():
@@ -44,20 +55,21 @@ def check_db():
         db_username = input("数据库用户：").strip()
         db_password = input("数据库密码：").strip()
         db_dbname = input("数据库名称：").strip()
-        try:
-            DB_DICT = {"db_host": db_host, "db_port": db_port, "db_username": db_username,
-                       "db_password": db_password, "db_dbname": db_dbname}
-            dbstr = "mysql+pymysql://%s:%s@%s:%s/%s" % (db_username, db_password, db_host, db_port, db_dbname)
-            engine = create_engine(dbstr, echo=True, max_overflow=5)
-            if not database_exists(engine.url):  # 判断设置的数据库信息是否存在，不存在就新建数据库
-                Log.info("数据库不存在，新建数据库【%s】" % db_dbname)
-                json.dump(DB_DICT, open(setting.BD_FILE_PATH, 'w'))
-                time.sleep(.1)
 
-                create_database(engine.url)
-            else:
-                pass
-        except:
+        DB_DICT = {"db_host": db_host, "db_port": db_port, "db_username": db_username,
+                   "db_password": db_password, "db_dbname": db_dbname}
+        dbstr = "mysql+pymysql://%s:%s@%s:%s/%s" % (db_username, db_password, db_host, db_port, db_dbname)
+        engine = create_engine(dbstr, echo=True, max_overflow=5)
+        if not database_exists(engine.url):  # 判断设置的数据库信息是否存在，不存在就新建数据库
+            Log.info("数据库不存在，新建数据库【%s】" % db_dbname)
+            create_database(engine.url)
+            json.dump(DB_DICT, open(setting.BD_FILE_PATH, 'w'))  # 将数据库配置写入配置文件
+            time.sleep(.1)
+            objsql = mysqlobj()
+            objsql.create_table()
+
+
+        else:
             pass
 
 

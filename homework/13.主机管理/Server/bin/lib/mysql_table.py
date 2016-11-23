@@ -48,18 +48,18 @@ class database():
     class UserToGroup(Base):
         __tablename__ = 'user_to_group'
         id = Column(Integer, primary_key=True)
-        uid = Column(Integer, ForeignKey='user.id')
-        groupid = Column(Integer, ForeignKey='group.id')
+        uid = Column(Integer, ForeignKey('user.nd'))
+        groupid = Column(Integer, ForeignKey('group.nid'))
 
-    class Iplist(Base):
-        __tablename__ = 'ip_list'
-        id = Column(Integer, primary_key = True)
+    class Hostlist(Base):
+        __tablename__ = 'host_list'
+        id = Column(Integer, primary_key=True)
         ip_host = Column(String(50))
         ip_port = Column(Integer)
-        class_id = Column(Integer, ForeignKey='ip_class.id')
+        class_id = Column(Integer, ForeignKey('host_class.nid'))
 
-    class Ipclass(Base):
-        __tablename__ = 'ip_class'
+    class Hostclass(Base):
+        __tablename__ = 'host_class'
         id = Column(Integer, primary_key=True)
         title = Column(String(32))
 
