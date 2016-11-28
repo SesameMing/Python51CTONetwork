@@ -6,7 +6,16 @@
 
 
 def myrange():
-    yield 1
+    for i in range(10):
+        yield i
 
 
+def count(n):
+    while n > 0:
+        yield n   #生成值：n
+        n -= 1
 
+
+c = myrange()
+for i in c:
+    print(i)
