@@ -5,6 +5,34 @@
 # Time: 2016-11-22 17:19
 # Version：3.x
 
+#                    _ooOoo_
+#                   o8888888o
+#                   88" . "88
+#                   (| -_- |)
+#                   O\  =  /O
+#                ____/`---'\____
+#              .'  \\|     |//  `.
+#             /  \\|||  :  |||//  \
+#            /  _||||| -:- |||||-  \
+#            |   | \\\  -  /// |   |
+#            | \_|  ''\---/''  |   |
+#            \  .-\__  `-`  ___/-. /
+#          ___`. .'  /--.--\  `. . __
+#       ."" '<  `.___\_<|>_/___.'  >'"".
+#      | | :  `- \`.;`\ _ /`;.`/ - ` : | |
+#      \  \ `-.   \_ __\ /__ _/   .-` /  /
+# ======`-.____`-.___\_____/___.-`____.-'======
+#                    `=---='
+#
+#
+# ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# 佛祖保佑    永无bug    心外无法     法外无心
+
+
+
+
+
+
 import os
 import json
 from sqlalchemy.ext.declarative import declarative_base
@@ -51,7 +79,6 @@ class database():
         id = Column(Integer, primary_key=True)
         title = Column(String(32))
         class_id = Column(String(32))
-
 
     class Hostlist(Base):
         __tablename__ = 'host_list'
@@ -205,8 +232,7 @@ class database():
         except:
             return False
 
-
-    def queryAllUserClass(self):
+    def queryAllUserGroup(self):
         """
         查询所有用户分组
         :return: list
@@ -214,7 +240,146 @@ class database():
         ret = self.session.query(self.Group).all()
         return ret
 
+    def addUserGroup(self, title, class_id):
+        """
+        添加用户分组
+        :param title: 用户分组名称
+        :param class_id: 用户分组所包含的主机组
+        :return:
+        """
+        try:
+            obj = self.Group(title=title, class_id=class_id)
+            self.session.add(obj)
+            self.session.commit()
+            return True
+        except:
+            return False
 
+    def editUserGroup(self, id, title, class_id):
+        """
+        编辑用户分组
+        :param id: 分组id
+        :param title: 分组名称
+        :param class_id: 主机分组id
+        :return:
+        """
+        updict = {}
+        if title:
+            updict['title'] = title
+        if class_id:
+            updict['class_id'] = class_id
+        try:
+            self.session.query(self.Group).filter(self.Group.id == int(id)).update(updict)
+            self.session.commit()
+            return True
+        except:
+            return False
+
+    def delUserGroup(self, id):
+        """
+        根据id删除用户分组
+        :param id:
+        :return:
+        """
+        try:
+            self.session.query(self.Group).filter(self.Group.id==int(id)).delete()
+            self.session.commit()
+            return True
+        except:
+            return False
+
+    def queryAllUser(self):
+        """
+        查询所有的用户
+        :return:
+        """
+        ret = self.session.query(self.User, self.Group).filter(self.User.gid == self.Group.id).all()
+        return ret
+
+    def addUser(self, username, password, gid):
+        """
+        添加用户
+        :param username:
+        :param password:
+        :param gid:
+        :return:
+        """
+        try:
+            obj = self.User(username=username, password=password, gid=gid)
+            self.session.add(obj)
+            self.session.commit()
+            return True
+        except:
+            return False
+
+    def editUser(self, id, password, gid):
+        """
+        修改用户
+        :param id: 用户id
+        :param password: 新密码
+        :param gid: 新用户组
+        :return:
+        """
+        updict = {}
+        if password:
+            updict['password'] = password
+        if gid:
+            updict['gid'] = gid
+        try:
+            self.session.query(self.User).filter(self.User.id == int(id)).update(updict)
+            self.session.commit()
+            return True
+        except:
+            return False
+
+    def delUser(self, id):
+        """
+        删除用户
+        :param id: 用户id
+        :return: bool
+        """
+        try:
+            self.session.query(self.User).filter(self.User.id == int(id)).delete()
+            self.session.commit()
+            return True
+        except:
+            return False
+
+    def queryUser(self, username, password):
+        """
+        普通用户登录查询
+        :param username:
+        :param password:
+        :return:
+        """
+        try:
+            user = self.session.query(self.User).filter(self.User.username == username, self.User.password == password).one()
+            if int(user.id) > 0:
+                return int(user.id)
+            else:
+                return False
+        except:
+            return False
+
+    def showUserHost(self, id):
+        """
+        显示用户下面的主机
+        :param id: 用户id
+        :return:
+        """
+        ret = self.session.query(self.Hostlist).filter(self.User.id == id and self.User.gid == self.Group.id and self.Group.class_id == self.Hostlist.class_id).all()
+        return ret
+
+    def gethost(self, id):
+        """
+        通过id获取ip
+        :param id: 主机id
+        :return:
+        """
+        host = []
+        hostlist = self.session.query(self.Hostlist).filter(self.Hostlist.id == int(id)).one()
+        host.append(hostlist.ip_host)
+        return host
 
 
 
