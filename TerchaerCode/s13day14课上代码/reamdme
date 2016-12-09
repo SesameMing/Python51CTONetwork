@@ -1,0 +1,65 @@
+HTML
+	- 标签、
+	<h1>ALEX</h1>
+	
+ h,p,br:  id
+	  a:  id  href   target
+	div:  id
+	
+	input系列标签type：
+			text
+			password
+			radio
+			checkbox
+			file
+			button 按钮
+			subimit 提交当前表单
+			reset	重置表单
+	select
+	
+	textarea - 多行文本
+	
+	form     - 要提交的内容放置的form标签中
+			
+	--- from
+	--- <asdfadf 
+	
+CSS
+	存放位置：
+		单独css文件  低
+		html头部
+		标签属性     高
+		
+	- 效果
+		color: red;
+		
+		display: none;
+				 inline;
+				 block;
+				 inline-block
+		边距：
+			margin    外边距（本身不增加）
+			padding   内边距（本身增加）
+		
+		漂浮：
+			float:left;
+		
+		position:
+			relative
+			absolute   -- 固定窗口，滚动移动
+			fixed      -- 固定，窗口
+			==》
+			fixed
+			
+			absolute
+			
+			relative + absolute
+			
+JavaScript
+	- 语言基础
+	- 效果：
+		查找
+		操作
+
+	
+

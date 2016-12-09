@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <!--<link rel="stylesheet" href="common.css" />-->
+    <style>
+        /*标签选择器，找到所有的标签应用以下样式*/
+        div{
+            color: green;
+        }
+        /*id选择器，找到标签id等于i1的标签，应用以下样式*/
+        #i1{
+            font-size: 56px;
+            /* color: green; */
+        }
+        /*class选择器，找到class=c1的所有标签，应用一下样式*/
+        .c1{
+            background-color: red;
+        }
+        /*层级选择器，找到 class=c2 下的div下的p下的class=c3标签，应用以下样式*/
+        /*.c2 div p a{*/
+            /**/
+        /*}*/
+        .c2 div p .c3{
+            background-color: red;
+        }
+        /*组合选择器，找到class=c4,class=c5,class=c6,的标签，应用以下样式*/
+        .c4,.c5,.c6{
+            background-color: aqua;
+        }
+    </style>
+</head>
+<body>
+    <div class="c4">1</div>
+    <div class="c5">1</div>
+    <div class="c6">1</div>
+
+    <div class="c2">
+        <div></div>
+        <div>
+            <p>
+                <span>oo</span>
+                <a class="c3">uu</a>
+            </p>
+        </div>
+    </div>
+    <div class="c3">sdfsdf</div>
+
+    <span class="c1">1</span>
+    <div class="c1">2</div>
+    <a class="c1">3</a>
+
+
+    <a id="i1">baidu</a>
+    <div>99</div>
+    <div>99</div>
+    <div>99</div>
+    <div>
+        <div>asdf</div>
+    </div>
+</body>
+</html>
