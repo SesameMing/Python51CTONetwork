@@ -40,26 +40,21 @@ body{margin: 0 auto; background-color: #eeeeee}
 }
 .header ul li:hover{
     color: red;
+    background-color: #eeeeee;
 }
 .red{color: red}
 
 /*中间主体*/
 .main{
     margin: -20px 0 0 0;
-    border: 2px solid red;
-    height: 2000px;
+    height: 1500px;
 }
 .main div.w{
-    /*border: 1px solid red;*/
     margin: 0 auto;
     height: 200px;
     width: 1240px;
 }
 .main div.w div.logo{
-    /*background-image: url("../image/logo.png");*/
-    /*background-repeat: no-repeat;*/
-    /*border: 1px solid red;*/
-    /*margin: 25px;*/
     height: 200px;
     width: 200px;
     background-color: #ffffff;
@@ -142,12 +137,15 @@ body{margin: 0 auto; background-color: #eeeeee}
 .main div.h .left ul li{
     /*border: 1px solid red;*/
     list-style-type: none;
-    margin: 0 0 0 -25px;
+    margin: 0 0 0 -40px;
+    padding: 0 0 0 20px;
     line-height: 30px;
     font-size: 14px;
     cursor: pointer;
+}
 
-
+.main div.h .left ul li:hover{
+    background-color: #999999;
 }
 
 
@@ -291,7 +289,7 @@ body{margin: 0 auto; background-color: #eeeeee}
 }
 .main div.ms {
     /*border: 1px solid red;*/
-    margin: 0 auto;
+    margin: 10px auto 0 auto;
     height: 305px;
     width: 1240px;
 }
@@ -369,11 +367,143 @@ body{margin: 0 auto; background-color: #eeeeee}
     color: #999999;
 }
 
+.main div.faxian{
+    /*border: 1px solid red;*/
+    margin: 10px auto 0 auto;
+
+    width: 1240px;
+    height: 450px;
+}
+
+
+
+
+/*发现好货*/
+.main div.faxian div.fxhh{
+    /*border: 1px solid green;*/
+    height: 450px;
+    width: 400px;
+    float: left;
+}
+.main div.faxian div.fxhh div.fxheader{
+    background: #4998a1;
+    background-image: -webkit-linear-gradient(left,#4998a1,#2e828b);
+    background-image: -moz-linear-gradient(left,#4998a1,#2e828b);
+    background-image: linear-gradient(90deg,#4998a1,#2e828b);
+    position: relative;
+    margin: -20px 0 0 0;
+    padding: 0 20px 0 30px;
+    height: 55px;
+    line-height: 55px;
+    color: #fff;
+}
+
+.main div.faxian div.fxhh div.fxlist{
+
+}
+
+.main div.faxian div.fxhh div.fxlist ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    float: left;
+}
+.main div.faxian div.fxhh div.fxlist ul li{
+    border-right: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    width: 199px;
+    height: 133px;
+    float: left;
+}
+
+
+/*品牌头条*/
+.main div.faxian div.pptt{
+    /*border: 1px solid green;*/
+    margin: 0 0 0 17px;
+    height: 450px;
+    width: 400px;
+    float: left;
+}
+
+.main div.faxian div.pptt div.fxheader{
+    background: #7d2e5c;
+    background-image: -webkit-linear-gradient(left,#7d2e5c,#6f184a);
+    background-image: -moz-linear-gradient(left,#7d2e5c,#6f184a);
+    background-image: linear-gradient(90deg,#7d2e5c,#6f184a);
+    position: relative;
+    margin: -20px 0 0 0;
+    padding: 0 20px 0 30px;
+    height: 55px;
+    line-height: 55px;
+    color: #fff;
+}
+
+.main div.faxian div.pptt div.fxlist{
+
+}
+
+.main div.faxian div.pptt div.fxlist ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    float: left;
+}
+.main div.faxian div.pptt div.fxlist ul li{
+    border-right: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    width: 199px;
+    height: 133px;
+    float: left;
+}
+
+
+/*排行榜*/
+.main div.faxian div.phb{
+    /*border: 1px solid green;*/
+    margin: 0 0 0 17px;
+    height: 450px;
+    width: 400px;
+    float: left;
+}
+
+.main div.faxian div.phb div.fxheader{
+    background: #e77005;
+    background-image: -webkit-linear-gradient(left,#e77005,#e45d04);
+    background-image: -moz-linear-gradient(left,#e77005,#e45d04);
+    background-image: linear-gradient(90deg,#e77005,#e45d04);
+    position: relative;
+    margin: -20px 0 0 0;
+    padding: 0 20px 0 30px;
+    height: 55px;
+    line-height: 55px;
+    color: #fff;
+}
+
+.main div.faxian div.phb div.fxlist{
+
+}
+
+.main div.faxian div.phb div.fxlist ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    float: left;
+}
+.main div.faxian div.phb div.fxlist ul li{
+    border-right: 1px solid #dddddd;
+    border-top: 1px solid #dddddd;
+    width: 199px;
+    height: 133px;
+    float: left;
+}
+
+
 
 /*footer*/
 .footer{
-    border: 1px solid green;
-    height: 200px;
+    /*border: 1px solid green;*/
+    height: 100px;
     background-color: #dedede;
 }
 .footer .mo_li{
@@ -434,4 +564,9 @@ hr{
     margin: 0;
     padding: 0;
     color: #eeeeee;
+}
+.copy{
+    margin: 20px  auto 0 auto;
+    width: 200px;
+    color: #999999;
 }
