@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>模态对话框</title>
+    <style type="text/css">
+        body{
+            margin: 0;
+            padding: 0;
+        }
+        .hide{
+            display: none;!important;
+        }
+        .shade{
+            position: fixed;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background-color: rgba(0,0,0,.6);
+            z-index: 1000;
+        }
+        .modal{
+            height: 200px;
+            width: 400px;
+            background-color: white;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            margin-top: -100px;
+            margin-left: -200px;
+            z-index: 1001;
+        }
+
+    </style>
+</head>
+<body>
+<div style="height: 2000px; background-color: #dddddd">
+    <input type="button" value="点我" onclick="ShowModal()">
+</div>
+
+<div id="shade" class="shade hide"></div>
+<div id="modal" class="modal hide">
+    <a href="javascript:void(0)" onclick="HideModal();">取消</a>
+</div>
+<script type="text/javascript">
+   function ShowModal() {
+       var t1 = document.getElementById('shade');
+       var t2 = document.getElementById('modal');
+
+       t1.classList.remove('hide');
+       t2.classList.remove('hide');
+   }
+   function HideModal() {
+        var t1 = document.getElementById('shade');
+       var t2 = document.getElementById('modal');
+
+       t1.classList.add('hide');
+       t2.classList.add('hide');
+   }
+
+</script>
+</body>
+</html>
