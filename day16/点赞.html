@@ -3,8 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <title>实例：点赞</title>
+    <style>
+        .item{
+            padding: 50px;
+            position: relative;
+        }
+    </style>
 </head>
 <body>
+<div class="item">
+    <a onclick="Favor(this);">赞</a>
+</div>
+<div class="item">
+    <a onclick="Favor(this);">赞</a>
+</div>
+<div class="item">
+    <a onclick="Favor(this);">赞</a>
+</div>
+<script>
+    function Favor(ths) {
+        var top = 49;
+        var left = 71;
+        var op = 1;
+        var fontSize = 18;
 
+        var tag = document.createElement('span')
+        tag.innerText = '+1';
+        tag.style.position = 'absolute';
+        tag.style.top = top + 'px';
+        tag.style.left = left + 'px';
+        tag.style.opacity = op;
+        tag.style.fontSize = fontSize + 'px';
+        ths.parentElement.appendChild(tag)
+
+        var interval =  setInterval(function () {
+            top -= 10;
+            left += 10;
+            fontSize += 5;
+            op -= 0.1
+
+            tag.style.top = top + 'px';
+            tag.style.left = left + 'px';
+            tag.style.opacity = op;
+            tag.style.fontSize = fontSize + 'px';
+
+            if(op < 0.2){
+                clearInterval(interval)
+                ths.parentElement.removeChild(tag)
+            }
+        }, 50)
+    }
+</script>
 </body>
 </html>
