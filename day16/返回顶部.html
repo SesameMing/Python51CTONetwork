@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>返回顶部</title>
+    <style>
+        .back{
+            position: fixed;
+            right: 20px;
+            bottom: 10px;
+            color: red;
+        }
+        .hide{
+            display: none;
+        }
+    </style>
+</head>
+<body onscroll="BodyScroll()">
+    <div style="height: 2000px;background-color: #dddddd"></div>
+    <div id="back" class="back hide" onclick="BackTop()">返回顶部</div>
+    <script>
+        function BodyScroll() {
+            var s = document.body.scrollTop;
+            var t = document.getElementById('back');
+            if(s >= 100){
+                t.classList.remove('hide');
+            }else {
+                t.classList.add('hide');
+            }
+        }
+
+        function BackTop() {
+            document.body.scrollTop = 0
+        }
+
+    </script>
+</body>
+</html>
