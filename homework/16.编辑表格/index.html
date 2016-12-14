@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>编辑表格</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="main">
+    <input type="button" value="全选" onclick="CheckAll()">
+    <input type="button" value="取消" onclick="CancleAll()">
+    <input type="button" value="反选" onclick="ReverseAll()">
+    <input type="button" value="进入编辑模式">
+    <div >
+        <table border="1">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>主机</th>
+                    <th>端口</th>
+                    <th>在线</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>asdasdas</td>
+                    <td>3306</td>
+                    <td>上线</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>asdasdas</td>
+                    <td>3306</td>
+                    <td>上线</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox"></td>
+                    <td>asdasdas</td>
+                    <td>3306</td>
+                    <td>上线</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+<script src="js/jquery-1.12.4.js"></script>
+<script src="js/edit.js"></script>
+<script>
+
+    function CheckAll() {
+        $(':checkbox').prop('checked',true);
+
+    }
+
+    function CancleAll() {
+        $(':checkbox').prop('checked',false);
+    }
+    function ReverseAll() {
+        $(':checkbox').each(function () {
+            if($(this).prop('checked')){
+                $(this).prop('checked',false);
+            }else {
+                $(this).prop('checked',true);
+            }
+
+        })
+
+    }
+
+</script>
+</body>
+</html>
