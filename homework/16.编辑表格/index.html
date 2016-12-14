@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>编辑表格</title>
@@ -10,7 +10,7 @@
     <input type="button" value="全选" onclick="CheckAll()">
     <input type="button" value="取消" onclick="CancleAll()">
     <input type="button" value="反选" onclick="ReverseAll()">
-    <input type="button" value="进入编辑模式">
+    <input type="button" value="进入编辑模式"  onclick="editModel(this)" id="edit">
     <div >
         <table border="1">
             <thead>
@@ -23,20 +23,20 @@
             </thead>
             <tbody>
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>asdasdas</td>
+                    <td class="tb"><input id="1" type="checkbox"></td>
+                    <td>111</td>
                     <td>3306</td>
                     <td>上线</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>asdasdas</td>
+                    <td class="tb"><input id="2" type="checkbox"></td>
+                    <td>222</td>
                     <td>3306</td>
                     <td>上线</td>
                 </tr>
                 <tr>
-                    <td><input type="checkbox"></td>
-                    <td>asdasdas</td>
+                    <td class="tb"><input id="3" type="checkbox"></td>
+                    <td>333</td>
                     <td>3306</td>
                     <td>上线</td>
                 </tr>
@@ -50,13 +50,66 @@
 <script src="js/edit.js"></script>
 <script>
 
+    $(function () {
+        $('td.tb').delegate('input','click',function(i){
+            if($('#edit').prop('edit')){
+                if(!$(this).parent().parent().prop('edit')){
+                    $(this).parent().parent().prop('edit',true);
+
+                    var t1 =  $(this).parent().next().text();
+                    $(this).parent().next().html('<input type="text" value="' + t1 +'">');
+                    var t2 =  $(this).parent().next().next().text();
+                    $(this).parent().next().next().html('<input type="text" value="' + t2 +'">');
+
+                }else {
+
+                    $(this).parent().parent().prop('edit',false);
+                    var t1 =  $(this).parent().next().children().val();
+                    $(this).parent().next().html(t1);
+                    var t2 =  $(this).parent().next().next().children().val();
+                    $(this).parent().next().next().html(t2);
+                }
+
+            }
+        })
+    })
     function CheckAll() {
         $(':checkbox').prop('checked',true);
+        if($('#edit').prop('edit')){
+            $('input[type="checkbox"]').each(function (i) {
+                if($(this).prop('checked')){
+                    if(!$(this).parent().parent().prop('edit')){
+                        $(this).parent().parent().prop('edit',true);
 
+                        var t1 =  $(this).parent().next().text();
+                        $(this).parent().next().html('<input type="text" value="' + t1 +'">');
+                        var t2 =  $(this).parent().next().next().text();
+                        $(this).parent().next().next().html('<input type="text" value="' + t2 +'">');
+                    }
+
+                }
+            })
+        }
     }
 
     function CancleAll() {
         $(':checkbox').prop('checked',false);
+        if($('#edit').prop('edit')){
+            $('input[type="checkbox"]').each(function (i) {
+                if(!$(this).prop('checked')){
+                    if($(this).parent().parent().prop('edit')){
+                        $(this).parent().parent().prop('edit',false);
+
+                        var t1 =  $(this).parent().next().children().val();
+                        $(this).parent().next().html(t1);
+                        var t2 =  $(this).parent().next().next().children().val();
+                        $(this).parent().next().next().html(t2);
+
+                    }
+
+                }
+            })
+        }
     }
     function ReverseAll() {
         $(':checkbox').each(function () {
@@ -67,6 +120,53 @@
             }
 
         })
+    }
+
+    function editModel(ths) {
+        if($(ths).prop('edit')){
+            $(ths).prop('edit', false);
+            $(ths).val('进入编辑模式')
+
+            $('input[type="checkbox"]').each(function (i) {
+                if($(this).prop('checked')){
+                    if($(this).parent().parent().prop('edit')){
+                        $(this).parent().parent().prop('edit',false);
+
+                        var t1 =  $(this).parent().next().children().val();
+                        $(this).parent().next().html(t1);
+                        var t2 =  $(this).parent().next().next().children().val();
+                        $(this).parent().next().next().html(t2);
+
+                    }
+
+                }
+            })
+
+        }else {
+            $(ths).prop('edit',true)
+            $(ths).val('退出编辑模式')
+
+             $('input[type="checkbox"]').each(function (i) {
+                if($(this).prop('checked')){
+                    if(!$(this).parent().parent().prop('edit')){
+                        $(this).parent().parent().prop('edit',true);
+
+                        var t1 =  $(this).parent().next().text();
+                        $(this).parent().next().html('<input type="text" value="' + t1 +'">');
+                        var t2 =  $(this).parent().next().next().text();
+                        $(this).parent().next().next().html('<input type="text" value="' + t2 +'">');
+                    }
+
+                }
+            })
+
+        }
+    }
+
+    function editStart() {
+
+    }
+    function editEnd() {
 
     }
 
