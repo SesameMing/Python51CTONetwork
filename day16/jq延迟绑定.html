@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jq延时绑定</title>
+</head>
+<body>
+<input type="button" value="+" onclick="Add()">
+<ul>
+    <li>123</li>
+    <li>456</li>
+    <li>789</li>
+</ul>
+<script src="jquery-1.12.4.js"></script>
+<script>
+    $(function () {
+        /*
+        $('li').click(function () {
+            alert($(this).text());
+        });
+        */
+
+        $('ul').delegate('li','click',function () {
+            alert($(this).text());
+        })
+    })
+    function Add() {
+
+    }
+</script>
+
+</body>
+</html>
