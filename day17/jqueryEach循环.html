@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jQueryEach循环</title>
+</head>
+<body>
+<script src="jquery-1.12.4.js"></script>
+<script>
+    $.each([11,22,33,44],function (k, y) {
+        if(y == 22) {
+            //return;
+            return false;
+        }
+        console.log(y)
+    })
+</script>
+</body>
+</html>
