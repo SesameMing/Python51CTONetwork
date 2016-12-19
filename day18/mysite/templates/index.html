@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table>
+    <thead>
+        <tr>
+            <th>id</th>
+            <th>name</th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for item in user_list %}
+        <tr>
+            <td>{{ item.id }}</td>
+            <td>{{ item.username }}</td>
+            <td><a href="/detail/{{ item.id }}">查看详情</a></td>
+        </tr>
+    {% endfor %}
+
+    </tbody>
+</table>
+
+
+</body>
+</html>

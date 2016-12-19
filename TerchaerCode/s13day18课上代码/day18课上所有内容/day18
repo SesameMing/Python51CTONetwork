@@ -29,7 +29,7 @@
 	b. {{ k1 }} --> 索引是.
 	
 	c.  {% for item in k2 %}
-			<p>{{ item }},{{ forloop.counter }},{{ forloop.counter0 }},{{ forloop.first }},{{ forloop.last }},{{ forloop.revcounter }}</p>
+			<p>{{ item }},{{ forloop.counter }},{{ forloop.counter0 }},{{ forloop.first }},{{ forloop.l````ast }},{{ forloop.revcounter }}</p>
 		{% endfor %}
 
 	d. 模版语言的内置方法
