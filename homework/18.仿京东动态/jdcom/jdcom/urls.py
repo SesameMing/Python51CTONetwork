@@ -1,4 +1,4 @@
-"""mysite URL Configuration
+"""jdcom URL Configuration
 
 The `urlpatterns` list routes URLs to views. For more information please see:
     https://docs.djangoproject.com/en/1.10/topics/http/urls/
@@ -15,17 +15,9 @@ Including another URLconf
 """
 from django.conf.urls import url, include
 from django.contrib import admin
-from app01 import views
+from web import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    # url(r'^index/', views.f1),
-    # url(r'^login/', views.login),
-    # url(r'^deteil/(\d+)/', views.deteil),
-    # url(r'^deteil1/(\d+)/(\d+)/', views.deteil1),
-    # url(r'^deteil2/(?P<p1>\d+)/(?P<x2>\d+)/', views.deteil2),
-    # url(r'^index/(\d+)/', views.index),
-    # url(r'^detail/(\d+)/', views.detail),
-    url(r'^web/', include('app01.urls'))
-
+    url(r'^web/', include('web.urls')),
 ]
