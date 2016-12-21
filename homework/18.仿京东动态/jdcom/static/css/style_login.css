@@ -1,0 +1,157 @@
+body{
+    margin: 0;
+    padding:0;
+    font-family: 微软雅黑, serif;
+}
+/*头部*/
+.h {
+    margin: 10px 0 10px 0;
+    height: 60px;
+}
+.h .w{
+    /*border: 1px solid red;*/
+    margin: 0 auto;
+    width: 980px;
+
+}
+
+.h .w .logo{
+
+    /*border: 1px solid red;*/
+    float: left;
+}
+.h .w .logo-l{
+    /*border: 1px solid red;*/
+    margin: 10px 0 0 20px;
+    float: left;
+
+}
+.h .w .dcwj{
+    margin-top: 40px;
+    float: right;
+    font-size: 8px;
+    color: #999999;
+
+}
+
+/*主体*/
+.main{
+    /*border: 1px solid red;*/
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 475px;
+    background: #e93854;
+
+}
+.main .w{
+    background-image: url("/static/image/loginbg.png");
+    /*border: 1px solid green;*/
+    margin: 0 auto;
+    width: 980px;
+    height: 475px;
+}
+.main .w .loginform{
+
+    /*border: 1px solid green;*/
+    margin: 40px 5px 0 0 ;
+    height: 350px;
+    width: 350px;
+    float: right;
+    background-color: #ffffff;
+}
+
+.main .w .loginform .formtitle{
+
+    margin: 20px 0 20px 20px;
+    font-size: 24px;
+    font-family: 微软雅黑, serif;
+    font-weight: bold;
+    color: #e4393c;
+}
+
+.main .w .loginform .content_login{
+    margin: 0 auto;
+    width: 300px;
+    height: 200px;
+
+}
+.main .w .loginform .content_login .tip{
+    border: 1px solid #f6c090;
+    background-color: #fef4e5;
+    padding: 3px 10px 3px 40px;
+    line-height: 15px;
+    font-size: 8px;
+    color: #999999;
+}
+.main .w .loginform .content_login div.shuru{
+    margin: -5px 0 20px 0;
+    float: left;
+
+}
+
+.main .w .loginform .content_login div.shuru label{
+    /*margin-right: 1px;*/
+    border: 1px solid #99989A;
+    border-right: none;
+    margin: auto;
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
+    color: #999999;
+    line-height: 38px;
+    display: inline-block;
+    float: left;
+    background: url("/static/image/pwd-icons-new.png") no-repeat;
+}
+.main .w .loginform .content_login div.shuru .pwd{
+    background-position: -48px 0;
+}
+.main .w .loginform .content_login div.shuru input{
+    margin: 0;
+    height: 34px;
+    width: 255px;
+    float: left;
+}
+
+.main .w .loginform .content_login div.checkme{
+    width: 100%;
+    /*border: 1px solid red;*/
+    font-size: 12px;
+    float: left;
+}
+.main .w .loginform .content_login div.checkme input{
+    float: left;
+}
+.main .w .loginform .content_login div.checkme label{
+    float: left;
+}
+/*忘记密码*/
+.main .w .loginform .content_login div.checkme #wjmm{
+    float: right;
+    border-right: 0;
+}
+
+.main .w .loginform .content_login div #denglu{
+    margin-top: 10px;
+    border-style: none;
+    height: 38px;
+    width: 100%;
+    background-color: #e4393c;
+    color: white;
+    font-size: 20px;
+}
+
+
+
+/*底部*/
+.f{}
+
+.f .w{
+    /*border: 1px solid red;*/
+    margin: 0 auto;
+    width: 980px;
+    font-size: 14px;
+    text-align: center;
+    color: #999999;
+}

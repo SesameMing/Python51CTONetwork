@@ -1,11 +1,53 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
     <title>登录</title>
+    <link rel="stylesheet" href="/static/css/style_login.css">
+{#    <link rel="stylesheet" href="/static/plugins/font-awesome/css/bootstrap.min.css">#}
+{#    <link rel="stylesheet" href="/static/plugins/font-awesome/css/font-awesome.min.css">#}
 </head>
 <body>
-用户名：<input type="text" >
-密码：<input type="password" >
+<div class="h">
+    <div class="w">
+        <div class="logo"><img src="/static/image/login_logo.png"></div>
+        <div class="logo-l"><img src="/static/image/l-icon.png"></div>
+        <div class="dcwj">登录页面，调查问卷</div>
+    </div>
+</div>
+
+<div class="main">
+    <div class="w">
+        <div class="loginform">
+            <div class="formtitle">账户登录</div>
+            <div  class="content_login">
+                <b></b>
+                <p class="tip">公共场所不建议自动登录，以防账号丢失</p>
+                <div class="shuru">
+                    <label for="username" ></label>
+                    <input id="username" type="text" placeholder="请输入帐号或者邮箱">
+                </div>
+                <div class="shuru">
+                    <label for="password" class="pwd"></label>
+                    <input id="password" type="password" placeholder="请输入密码">
+                </div>
+                <div class="checkme">
+                    <input type="checkbox" id="check" ><label for="check">记住我</label>
+                    <div id="wjmm">忘记密码</div>
+                </div>
+                <div>
+                    <input type="button" id="denglu" value="登&nbsp;&nbsp;&nbsp;录">
+                </div>
+            </div>
+            <div></div>
+        </div>
+    </div>
+</div>
+<div class="f">
+    <div class='w'>
+        <p>关于我们 | 联系我们 | 人才招聘 | 商家入驻 | 广告服务 | 手机京东 | 友情链接 | 销售联盟 | 京东社区 | 京东公益 | English Site</p>
+        Copyright © 2004-2016  京东JD.com 版权所有
+    </div>
+</div>
 </body>
 </html>
