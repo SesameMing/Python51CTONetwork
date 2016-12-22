@@ -35,8 +35,11 @@
                     <input type="checkbox" id="check" ><label for="check">记住我</label>
                     <div id="wjmm">忘记密码</div>
                 </div>
-                <div>
-                    <input type="button" id="denglu" value="登&nbsp;&nbsp;&nbsp;录">
+                <div class="zc">
+                    <input type="button" id="denglu" value="登&nbsp;&nbsp;&nbsp;录" onclick="denglu()">
+                </div>
+                <div class="reg">
+                    <a href="/web/reg">立即注册</a>
                 </div>
             </div>
             <div></div>
@@ -49,5 +52,19 @@
         Copyright © 2004-2016  京东JD.com 版权所有
     </div>
 </div>
+<script src="/static/js/jquery-1.12.4.js"></script>
+<script>
+    function denglu() {
+        $.ajax({
+            url:'/web/login_ajax/',
+            type:'POST',
+            data:{},
+            dataType:'json',
+            success:function (data) {
+
+            }
+        })
+    }
+</script>
 </body>
 </html>

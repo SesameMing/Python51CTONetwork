@@ -1,0 +1,152 @@
+body{
+    margin: 0 auto;
+    padding: 0 auto;
+    font-family: 微软雅黑, serif;
+}
+/*头部*/
+.h{
+    /*border: 1px solid red;*/
+    height: 110px;
+    background: url(//misc.360buyimg.com/user/reg/1.0.0/css/i/headbg.jpg) repeat-x left bottom;
+}
+.h .w{
+    /*border: 1px solid red;*/
+    width: 1240px;
+    height: 100px;
+    margin: 0 auto;
+}
+
+.h .w .logo{
+    float: left;
+    margin-top: 15px;
+}
+
+.h .w .title{
+
+    margin: 30px 0 0 10px;
+    font-size: 30px;
+    float: left;
+}
+
+.h .w .dl{
+    margin: 55px 0 0 0;
+    color: #999999;
+    float: right;
+}
+.h .w .dl span{
+    color: black;
+}
+
+
+/*主体*/
+.rmain{
+    /*border: 1px solid red;*/
+}
+
+.rmain .w{
+
+    width: 1240px;
+    height: 800px;
+    margin: 0 auto;
+    border-bottom: 1px solid #ebebeb;
+}
+.rmain .w .left{
+    margin-top: 70px;
+    /*border: 1px solid red;*/
+    border-right: 1px solid #ebebeb;
+    height: 600px;
+    width: 49%;
+    float: left;
+}
+.rmain .w .left .centen{
+    margin: 0 0 0 150px ;
+    float: left;
+
+}
+.rmain .w .left .centen div.forminput{
+    margin-bottom: 35px;
+    float: left;
+}
+
+.rmain .w .left .centen div.forminput label{
+    border: 1px solid #cccccc;
+    border-right: none;
+    width: 100px;
+    height: 52px;
+    line-height: 50px;
+    display: inline-block;
+    font-size: 15px;
+    text-align: center;
+    float: left;
+}
+.rmain .w .left .centen div.forminput input{
+    border: 1px solid #cccccc;
+    border-left: none;
+    height: 50px;
+    width: 300px;
+    float: left;
+    font-size: 25px;
+}
+.rmain .w .left .centen div.check{
+    /*border: 1px solid red;*/
+    margin: 30px 0 0 0 ;
+    float: left;
+}
+
+.rmain .w .left .centen div.zc{
+    /*border: 1px solid red;*/
+    margin: 30px auto 0 auto ;
+    height: 50px;
+    width: 400px;
+
+    float: left;
+}
+
+.rmain .w .left .centen .zc input{
+    /*border: 1px solid red;*/
+    border-style: none;
+    height: 50px;
+    width: 100%;
+    float: left;
+    background-color: #e4393c;
+    color: white;
+    font-size: 25px;
+}
+
+
+.rmain .w .right{
+    margin-top: 70px;
+    /*border: 1px solid red;*/
+    height: 600px;
+    width: 49%;
+    float: left;
+}
+
+.rmain .w .left .centen{
+    margin: 0 0 0 150px ;
+    float: left;
+
+}
+.rmain .w .right .centen div{
+    margin: 0 0 0 50px;
+    /*border: 1px solid red;*/
+    height: 50px;
+    width: 100%;
+    float: left;
+}
+
+.rmain .w .right div .qyzc{
+
+}
+
+/*底部*/
+.f{}
+
+.f .w{
+    /*border: 1px solid red;*/
+    margin: 0 auto;
+    width: 980px;
+    font-size: 10px;
+    text-align: center;
+    color: #999999;
+}

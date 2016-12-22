@@ -61,6 +61,8 @@ body{
     background-color: #ffffff;
 }
 
+
+
 .main .w .loginform .formtitle{
 
     margin: 20px 0 20px 20px;
@@ -74,8 +76,18 @@ body{
     margin: 0 auto;
     width: 300px;
     height: 200px;
-
 }
+
+.main .w .loginform .content_login b{
+    /*border: 1px solid red;*/
+    margin: 3px 0 0 15px;
+    background: url("/static/image/pwd-icons-new.png")  -104px -23px no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    float: left;
+}
+
 .main .w .loginform .content_login .tip{
     border: 1px solid #f6c090;
     background-color: #fef4e5;
@@ -141,6 +153,18 @@ body{
     color: white;
     font-size: 20px;
 }
+.main .w .loginform .content_login div.reg a{
+    margin-top: 10px;
+    color: #999999;
+    font-size: 14px;
+    float: left;
+}
+
+.main .w .loginform .content_login div.reg a:link,a:visited{
+    text-decoration: none;
+
+}
+
 
 
 
@@ -151,7 +175,7 @@ body{
     /*border: 1px solid red;*/
     margin: 0 auto;
     width: 980px;
-    font-size: 14px;
+    font-size: 10px;
     text-align: center;
     color: #999999;
 }
