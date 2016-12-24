@@ -16,11 +16,11 @@ Including another URLconf
 from django.conf.urls import url, include
 from django.contrib import admin
 from web import views
-
 urlpatterns = [
     url(r'^index/', views.index),
     url(r'^login/', views.login),
     url(r'^login_ajax/', views.login_ajax),
 
     url(r'^reg/', views.reg),
+    url(r'^cart/', views.cart),
 ]

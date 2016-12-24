@@ -1,0 +1,128 @@
+body{margin: 0 auto; background-color: #ffffff}
+/*头部*/
+.header{
+    background-color: #dddddd;
+    height: 20px;
+
+}
+.header div.w{
+    /*border: 1px solid red;*/
+    height: 20px;
+    margin: 0 auto;
+    width: 1240px;
+}
+.header div.w a,a:hover{
+    text-decoration:none;
+    color: #999;
+}
+.header ul{
+    color: #999;
+}
+.header ul.addr{
+    /*border: 1px solid green;*/
+    margin: 0 0 0 210px;
+    padding: 0;
+    float: left;
+    list-style-type: none;
+    line-height: 20px;
+    font-size: 10px;
+}
+.header ul.top-nav{
+    /*border: 1px solid green;*/
+    margin: 0;
+    padding: 0;
+    float: right;
+    list-style-type: none;
+    line-height: 20px;
+    font-size: 10px;
+}
+.header ul.top-nav li{
+    padding: 0;
+    float: left;
+    margin: 0 10px 0 10px;
+    cursor: pointer;
+}
+
+.header ul li:hover{
+    color: red;
+    background-color: #eeeeee;
+}
+
+.header .login{
+    /*border: 1px solid red;*/
+    height: 70px;
+    margin: 0 auto;
+    width: 980px;
+}
+.header .login .logo{
+    margin: 10px 0 0 0;
+    float: left;
+}
+.header .login .title{
+    margin: 20px 0 0 10px;
+    font-family: 微软雅黑, serif;
+    font-size: 25px;
+    float: left;
+}
+
+.header .login .title{
+    float: left;
+}
+
+
+
+
+
+
+.red{color: red}
+
+/*中间主体*/
+.main{
+    /*border: 1px solid red;*/
+    margin: 70px 0 0 0;
+    height: 500px;
+}
+.main div.w{
+    /*border: 1px solid red;*/
+    margin: 0 auto;
+    height: 500px;
+    width: 1240px;
+}
+.main div.w .kong{
+    /*border: 1px solid green;*/
+    margin: 150px;
+    height: 100px;
+}
+
+.main div.w .kong .messge{
+    /*border: 1px solid green;*/
+    height: 100px;
+    float: left;
+    background: url("/static/image/no-login-icon.png") 250px 22px no-repeat;
+    padding-left: 341px;
+}
+
+.main div.w .kong .content{
+    /*border: 1px solid green;*/
+    font-family: 微软雅黑, serif;
+    /*color: #999999;*/
+    font-size: 14px;
+    margin: 30px 0 0 0;
+    float: left;
+
+}
+
+.main .kong .content a, .main .kong .content a:hover{
+    text-decoration:none;
+    color: white;
+    background-color: #f05356;
+    width: 45px;
+    height: 20px;
+    line-height:20px;
+    text-align: center;
+    display: inline-block;
+    border-radius: 10%;
+    float: left;
+    margin-right: 5px;
+}
+

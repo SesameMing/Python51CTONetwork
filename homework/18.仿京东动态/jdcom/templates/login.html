@@ -21,15 +21,15 @@
         <div class="loginform">
             <div class="formtitle">账户登录</div>
             <div  class="content_login">
-                <b></b>
+                <b class="tip"></b>
                 <p class="tip">公共场所不建议自动登录，以防账号丢失</p>
                 <div class="shuru">
-                    <label for="username" ></label>
-                    <input id="username" type="text" placeholder="请输入帐号或者邮箱">
+                    <label for="form_username" ></label>
+                    <input id="form_username" type="text" placeholder="请输入帐号或者邮箱">
                 </div>
                 <div class="shuru">
-                    <label for="password" class="pwd"></label>
-                    <input id="password" type="password" placeholder="请输入密码">
+                    <label for="form_password" class="pwd"></label>
+                    <input id="form_password" type="password" placeholder="请输入密码">
                 </div>
                 <div class="checkme">
                     <input type="checkbox" id="check" ><label for="check">记住我</label>
@@ -54,13 +54,30 @@
 </div>
 <script src="/static/js/jquery-1.12.4.js"></script>
 <script>
+    $(function () {
+
+    })
+    $("input[id^='form_']").focus(function(){
+        $('.tip').removeClass('error');
+        $('p.tip').text("公共场所不建议自动登录，以防账号丢失");
+    });
+
     function denglu() {
         $.ajax({
             url:'/web/login_ajax/',
             type:'POST',
-            data:{},
+            data:{
+                'username':$('#form_username').val(),
+                'password':$('#form_password').val()
+            },
             dataType:'json',
             success:function (data) {
+                if(data.status == 1){
+                    location.href = '/web/index';
+                }else {
+                    $('.tip').addClass('error');
+                    $('p.tip').text(data.message);
+                }
 
             }
         })

@@ -15,12 +15,21 @@ def login(request):
 
 
 def login_ajax(request):
-    ret = {"status": "", "message": ""}
+    ret = {"status": "0", "message": "帐号或密码错误"}
 
-
+    username = request.POST.get('username')
+    password = request.POST.get('password')
+    if username == 'admin' and password == '111':
+        ret['status'] = 1
+        ret['message'] = "验证成功"
+        return HttpResponse(json.dumps(ret))
     return HttpResponse(json.dumps(ret))
 
 
 # 注册
 def reg(request):
     return render(request, 'reg.html')
+
+
+def cart(request):
+    return render(request, 'cart.html')

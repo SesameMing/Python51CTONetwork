@@ -64,7 +64,7 @@ body{
 
 }
 .rmain .w .left .centen div.forminput{
-    margin-bottom: 35px;
+    margin-bottom: 25px;
     float: left;
 }
 
@@ -86,6 +86,12 @@ body{
     width: 300px;
     float: left;
     font-size: 25px;
+}
+.rmain .w .left .centen div.forminput span{
+    border: 1px solid #cccccc;
+     width: 300px;
+    float: left;
+
 }
 .rmain .w .left .centen div.check{
     /*border: 1px solid red;*/

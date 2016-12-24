@@ -11,6 +11,10 @@ body{margin: 0 auto; background-color: #eeeeee}
     margin: 0 auto;
     width: 1240px;
 }
+.header a,a:hover{
+    text-decoration:none;
+    color: #999;
+}
 .header ul{
     color: #999;
 }

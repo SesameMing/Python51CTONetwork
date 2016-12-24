@@ -78,7 +78,7 @@ body{
     height: 200px;
 }
 
-.main .w .loginform .content_login b{
+.main .w .loginform .content_login b.tip{
     /*border: 1px solid red;*/
     margin: 3px 0 0 15px;
     background: url("/static/image/pwd-icons-new.png")  -104px -23px no-repeat;
@@ -88,7 +88,7 @@ body{
     float: left;
 }
 
-.main .w .loginform .content_login .tip{
+.main .w .loginform .content_login p.tip{
     border: 1px solid #f6c090;
     background-color: #fef4e5;
     padding: 3px 10px 3px 40px;
@@ -96,6 +96,30 @@ body{
     font-size: 8px;
     color: #999999;
 }
+
+.main .w .loginform .content_login b.error{
+    /*border: 1px solid red;*/
+    margin: 3px 0 0 15px;
+    background: url("/static/image/pwd-icons-new.png")  -104px -49px no-repeat;
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    float: left;
+}
+
+.main .w .loginform .content_login p.error{
+    background: #ffebeb;
+    color: #e4393c;
+    border: 1px solid #faccc6;
+    padding: 3px 10px 3px 40px;
+    line-height: 15px;
+    font-size: 8px;
+}
+
+
+
+
+
 .main .w .loginform .content_login div.shuru{
     margin: -5px 0 20px 0;
     float: left;
