@@ -8,7 +8,7 @@
 <body>
 <div class="h">
     <div class="w">
-        <div class="logo"><img src="/static/image/login_logo.png"></div>
+        <a href="/web/index"><div class="logo"><img src="/static/image/login_logo.png"></div></a>
         <div class="title">欢迎注册</div>
         <div class="dl">已有账号？ <a href="/web/login"><span>请登录</span></a></div>
     </div>
@@ -19,34 +19,34 @@
             <div class="centen">
                 <div class="forminput">
                     <label for="username" >用&nbsp;户&nbsp;名</label>
-                    <input id="username" type="text" placeholder="您的账户名和登录名">
-                    <span style="visibility:hidden;">提示：</span>
+                    <input id="username" type="text" name="username" placeholder="您的账户名和登录名">
+                    <span class="tip hidden">提示：设置您的用户名</span>
                 </div>
                 <div class="forminput">
                     <label for="email">邮&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;箱</label>
-                    <input id="email" type="email" placeholder="邮箱地址">
-                    <span>提示：</span>
+                    <input id="email" type="email" name="email" placeholder="邮箱地址">
+                    <span class="tip hidden" >提示：设置您常用的邮箱地址</span>
                 </div>
                 <div class="forminput">
                     <label for="password">设&nbsp;置&nbsp;密&nbsp;码</label>
-                    <input id="password" type="password" placeholder="建议至少使用两种字符组合">
-                    <span>提示：</span>
+                    <input id="password" type="password" name="password" placeholder="建议至少使用两种字符组合">
+                    <span class="tip hidden">提示：设置您的登录密码</span>
                 </div>
                 <div class="forminput">
-                    <label for="password">确&nbsp;认&nbsp;密&nbsp;码</label>
-                    <input id="password" type="password" placeholder="请再次输入密码">
-                    <span>提示：</span>
+                    <label for="repassword">确&nbsp;认&nbsp;密&nbsp;码</label>
+                    <input id="repassword" type="password" name="repassword" placeholder="请再次输入密码">
+                    <span class="tip hidden" >提示：确认您输入的登录密码</span>
                 </div>
                 <div class="forminput">
-                    <label for="password">手&nbsp;机&nbsp;号&nbsp;码</label>
-                    <input id="password" type="password">
-                    <span>提示：</span>
+                    <label for="phone">手&nbsp;机&nbsp;号&nbsp;码</label>
+                    <input id="phone" name="phone" type="phone">
+                    <span class="tip hidden" >提示：输入您的手机号</span>
                 </div>
                 <div class="check" >
                     <input type="checkbox">我已阅读并同意《京东用户注册协议》
                 </div>
                 <div class="zc">
-                    <input type="button" value="立 即 注 册">
+                    <input type="button" value="立 即 注 册" onclick="tjzc()">
                 </div>
             </div>
         </div>
@@ -65,5 +65,40 @@
         Copyright © 2004-2016  京东JD.com 版权所有
     </div>
 </div>
+<script src="/static/js/jquery-1.12.4.js"></script>
+<script>
+    $('input').click(function () {
+        $('span').addClass('hidden');
+        $(this).next().removeClass('hidden')
+    });
+    function tjzc() {
+        var username = $('#username').val();
+        var email = $('#email').val();
+        var password = $('#password').val();
+        var repassword = $('#repassword').val();
+        var phone = $('#phone').val();
+
+        if(username == ''){
+            alert("用户名不能为空");
+            return　false;
+        }
+        if(email == ''){
+            alert("邮箱不能为空");
+            return　false;
+        }
+        if(password == ''){
+            alert("密码不能为空");
+            return　false;
+        }
+        if(password != repassword){
+            alert("二次确认密码不一致");
+            return　false;
+        }
+        if(phone == ''){
+            alert("手机号码不能为空");
+            return　false;
+        }
+    }
+</script>
 </body>
 </html>

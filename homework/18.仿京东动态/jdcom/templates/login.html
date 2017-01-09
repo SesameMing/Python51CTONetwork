@@ -63,12 +63,20 @@
     });
 
     function denglu() {
+        var username = $('#form_username').val();
+        var password = $('#form_password').val();
+        if (username == '' || password == ''){
+            $('.tip').addClass('error');
+            $('p.tip').text('账号密码不能为空');
+            return false
+        }
+
         $.ajax({
             url:'/web/login_ajax/',
             type:'POST',
             data:{
-                'username':$('#form_username').val(),
-                'password':$('#form_password').val()
+                'username':username,
+                'password':password
             },
             dataType:'json',
             success:function (data) {

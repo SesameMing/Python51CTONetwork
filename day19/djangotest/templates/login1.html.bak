@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录</title>
+    <style>
+        .error_msg{
+            color: red;
+        }
+    </style>
+</head>
+<body>
+<div>
+    <div><input type="text" name="user"></div>
+    <div><input type="password" name="pwd"></div>
+    <div><input type="text" name="num"></div>
+    <div><input type="text" name="phone"></div>
+    <div><input type="button" onclick="DoForm()" value="提交"></div>
+</div>
+</body>
+<script src="/static/jquery-1.12.4.js"></script>
+<script>
+    function DoForm() {
+        var input_dict = {};
+        $('input').each(function () {
+            var v = $(this).val();
+            var n = $(this).attr('name');
+            input_dict[n] = v
+
+        });
+        $('.error_msg').remove();
+        console.log(input_dict);
+        $.ajax({
+            url:'login',
+            data:input_dict,
+            type:'POST',
+            dataType:'json',
+            success:function (data) {
+                console.log(data);
+                if(data.status){
+                    location.href = '/index/';
+                }else {
+                    $.each(data.message,function (k, v) {
+                        console.log(k,v[0].message);
+                        var tag = document.createElement('span');
+                        tag.className = 'error_msg';
+                        tag.innerText = v[0].message;
+                        $('input[name="' + k +'"]').after(tag)
+                    })
+                }
+
+            },
+            error:function () {
+
+            }
+        })
+    }
+</script>
+</html>

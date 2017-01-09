@@ -4,7 +4,7 @@
 SELECTDATA=[
         {'id':1, 'value':"上线"},
         {'id':2, 'value':"下线"}
-    ]
+    ];
 
 $(function () {
         $('td.tb').delegate('input','click',function(i){

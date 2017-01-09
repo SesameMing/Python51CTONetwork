@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.shortcuts import HttpResponse
 import json
+from django.views.decorators.csrf import csrf_exempt
 # Create your views here.
 
 
@@ -14,6 +15,7 @@ def login(request):
     return render(request, 'login.html')
 
 
+@csrf_exempt
 def login_ajax(request):
     ret = {"status": "0", "message": "帐号或密码错误"}
 

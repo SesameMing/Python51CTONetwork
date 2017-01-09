@@ -71,9 +71,9 @@ body{
 .rmain .w .left .centen div.forminput label{
     border: 1px solid #cccccc;
     border-right: none;
-    width: 100px;
-    height: 52px;
-    line-height: 50px;
+    width: 90px;
+    height: 37px;
+    line-height: 37px;
     display: inline-block;
     font-size: 15px;
     text-align: center;
@@ -82,13 +82,13 @@ body{
 .rmain .w .left .centen div.forminput input{
     border: 1px solid #cccccc;
     border-left: none;
-    height: 50px;
-    width: 300px;
+    height: 35px;
+    width: 250px;
     float: left;
-    font-size: 25px;
+    font-size: 15px;
 }
 .rmain .w .left .centen div.forminput span{
-    border: 1px solid #cccccc;
+    /*border: 1px solid #cccccc;*/
      width: 300px;
     float: left;
 
@@ -109,7 +109,7 @@ body{
 }
 
 .rmain .w .left .centen .zc input{
-    /*border: 1px solid red;*/
+    border: 1px solid red;
     border-style: none;
     height: 50px;
     width: 100%;
@@ -155,4 +155,13 @@ body{
     font-size: 10px;
     text-align: center;
     color: #999999;
+}
+
+
+.hidden{
+    visibility:hidden;
+}
+.tip{
+    color: #999999;
+    font-size: 14px;
 }
