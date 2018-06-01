@@ -21,4 +21,9 @@ urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^index/', views.index),
     url(r'^login/', views.login),
+    url(r'^home/', views.Home.as_view()),
+    # url(r'^detail/', views.detail),
+    # url(r'^detail-(\d+).html', views.detail),
+    # url(r'^detail-(\d+)-(\d+).html', views.detail),
+    url(r'^detail-(?P<nid>\d+)-(?P<uid>\d+).html', views.detail),
 ]

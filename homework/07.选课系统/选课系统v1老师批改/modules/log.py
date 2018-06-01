@@ -78,7 +78,7 @@ class loger:
         self.logpath = logpath
 
     def getLoginpath(self):
-        return self.logpath
+        return self.l
 
 
 
