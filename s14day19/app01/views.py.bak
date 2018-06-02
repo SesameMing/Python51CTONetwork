@@ -24,7 +24,6 @@ USER_DICT = {
 def index(request):
     return render(request, 'index.html', {'user_dict': USER_DICT})
 
-
 # def detail(request):
 #     nid = request.GET.get('nid')
 #     user_info = USER_DICT[nid]
@@ -59,43 +58,20 @@ def login(request):
     if request.method == 'GET':
         return render(request, 'login.html')
     elif request.method == 'POST':
-        # 在数据库中做select
+        # gender = request.POST.get('gender')
+        #         # print(gender)
+        # favor = request.POST.getlist('favor')
+        # print(favor)
+        obj = request.FILES.get('fafafa')
+        import os
+        file_path = os.path.join('upload', obj.name)
+        f = open(file_path, 'wb')
+        for i in obj.chunks():
+            f.write(i)
+        f.close()
         return render(request, 'login.html')
     else:
         redirect('/index/')
-
-
-from app01 import models
-
-
-def orm(request):
-    # 创建
-    # models.UserInfo.objects.create(username='root', password='123')
-
-    # dict = {'username':'daming','password':'123'}
-    # models.UserInfo.objects.create(**dict)
-
-    #obj = models.UserInfo(username='root', password='123')
-    #obj.save()
-
-    # 查
-    # result = models.UserInfo.objects.all()
-    # result = models.UserInfo.objects.filter(username='root',password='123')
-    # for row in result:
-    #    print(row.id, row.username, row.password)
-
-    # 删除
-    # models.UserInfo.objects.filter(id=4).delete()
-
-
-    # 更新
-    models.UserInfo.objects.update(password="6669")
-    models.UserInfo.objects.filter(id=1).update(password="99999")
-
-
-
-
-    return HttpResponse('orm')
 
 
 from django.views import View
