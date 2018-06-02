@@ -24,7 +24,6 @@ USER_DICT = {
 def index(request):
     return render(request, 'index.html', {'user_dict': USER_DICT})
 
-
 # def detail(request):
 #     nid = request.GET.get('nid')
 #     user_info = USER_DICT[nid]

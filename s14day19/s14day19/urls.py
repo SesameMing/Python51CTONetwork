@@ -19,7 +19,7 @@ from app01 import views
 
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
-    url(r'^index/', views.index),
+    url(r'^index/', views.index, name='indexx'),
     url(r'^login/', views.login),
     url(r'^home/', views.Home.as_view()),
     # url(r'^detail/', views.detail),
